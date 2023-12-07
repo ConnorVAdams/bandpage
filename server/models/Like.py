@@ -4,8 +4,9 @@ class Like(db.Model):
     __tablename__ = 'likes'
 
     id = db.Column(db.Integer, primary_key=True)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'), nullable=False)
-    fan_id = db.Column(db.Integer, db.ForeignKey('fans.id'), nullable=False)
+    # TODO How to make one but not both of the below IDs nullable
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
+    fan_id = db.Column(db.Integer, db.ForeignKey('fans.id'))
     likeable_id = db.Column(db.Integer, nullable=False)
     likeable_type = db.Column(db.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())

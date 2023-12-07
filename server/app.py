@@ -7,6 +7,7 @@ from models.fan import Fan
 from models.track import Track
 from models.like import Like
 from models.band_member import BandMember
+from models.event import Event
 # from routes.crew_member_by_id import CrewMemberById
 # from routes.crew_members import CrewMembers
 # from routes.production_by_id import ProductionById
