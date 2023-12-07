@@ -59,6 +59,9 @@ from flask import render_template
 #     response = {"message": error.description}
 #     return response, error.code
 
+@app.route('/')
+def index():
+    return '<h1>BandPage</h1>'
 
 # @app.route("/")
 # @app.route("/production-detail/<int:id>")

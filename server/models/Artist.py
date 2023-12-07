@@ -29,7 +29,7 @@ class Artist(db.Model):
         secondary=artist_to_artist,
         primaryjoin=id == artist_to_artist.c.following_artist_id,
         secondaryjoin=id == artist_to_artist.c.followed_artist_id,
-        backref=db.backref('following', lazy='dynamic'),
+        # backref=db.backref('following', lazy='dynamic'),
         lazy='dynamic'
     )
 
@@ -38,17 +38,19 @@ class Artist(db.Model):
         secondary=artist_to_artist,
         primaryjoin=id == artist_to_artist.c.followed_artist_id,
         secondaryjoin=id == artist_to_artist.c.following_artist_id,
-        backref=db.backref('followed', lazy='dynamic'),
+        # backref=db.backref('followed', lazy='dynamic'),
         lazy='dynamic'
     )
 
     # Other artists that this artist follows
-    def followed(self):
-        return self.followed_artists_rel.all()
+    def following(self):
+        followed_artists = self.followed_artists_rel.all()
+        return followed_artists if followed_artists else 'no artists'
     
     # Followers of this artist
     def followers(self):
-        return self.following_artists_rel.all()
+        following_artists = self.following_artists_rel.all()
+        return following_artists if following_artists else 'no artists'
 
     fans_followed = db.relationship(
         'Fan',

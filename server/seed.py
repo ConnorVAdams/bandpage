@@ -67,6 +67,9 @@ def create_artist_follows():
         id_one = choice(all_artist_ids)
         id_two = choice(all_artist_ids)
 
+        while id_one == id_two:
+            id_two = choice(all_artist_ids)
+
         # If the pair doesn't exist in follows or in the database, add it to follows
         if not (id_one, id_two) in follows:
             follow = (id_one, id_two)
