@@ -24,6 +24,9 @@ class Artist(db.Model):
 
     # band_members = db.Relationship('BandMember', back_populates='bands')
 
+    tracks = db.relationship('Track', back_populates='artist')
+    events = db.relationship('Event', back_populates='artist')
+
     followed_artists_rel = db.relationship(
         'Artist',
         secondary=artist_to_artist,

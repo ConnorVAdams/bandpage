@@ -13,6 +13,8 @@ class Track(db.Model):
 
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
 
+    artist = db.relationship('Artist', back_populates='tracks')
+
     fans_liked = db.relationship(
         'Fan',
         secondary='likes',

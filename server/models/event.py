@@ -12,6 +12,8 @@ class Event(db.Model):
 
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
 
+    artist = db.relationship('Artist', back_populates='events')
+
     fans_rsvped = db.relationship(
         'Fan',
         secondary='likes',
