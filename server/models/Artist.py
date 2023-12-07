@@ -43,8 +43,14 @@ class Artist(db.Model):
         lazy='dynamic'
     )
 
-    followed = association_proxy('followed_artists_rel', 'artist')
-    following = association_proxy('following_artists_rel', 'artists')
+    # followed_artists = association_proxy('followed_artists_rel', 'artist')
+    # following_artists = association_proxy('following_artists_rel', 'artist')
+
+    def followed(self):
+        return self.followed_artists_rel.all()
+    
+    def followers(self):
+        return self.following_artists_rel.all()
 
     # Relationships for an artist's own content
     # own_events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
