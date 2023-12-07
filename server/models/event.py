@@ -11,6 +11,8 @@ class Event(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    artist_id = db.column(db.Integer, db.ForeignKey('artists.id'))
+
     fans_rsvped = db.relationship(
         'Fan',
         secondary='likes',

@@ -65,13 +65,5 @@ class Artist(db.Model):
         lazy='dynamic'
     )
 
-    # Relationships for an artist's own content
-    # events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
-    # tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')
-    # fans = db.relationship('Fan', back_populates='artists')
 
-    # Relationships for an artist's followed content
-    # my_events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
-    # my_tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')
-    # my_fans = db.relationship('Fan', back_populates='artists')
 

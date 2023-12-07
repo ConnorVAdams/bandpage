@@ -24,6 +24,6 @@ class Track(db.Model):
             "and_(Fan.id==Like.fan_id, "
             "Like.likeable_type=='track')"
         ),
-        backref=db.backref('liked_tracks', lazy='dynamic'),
+        # backref=db.backref('liked_tracks', lazy='dynamic'),
         lazy='dynamic'
     )
