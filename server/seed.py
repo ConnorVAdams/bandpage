@@ -2,7 +2,7 @@
 
 # Standard library imports
 from random import randint, choice as rc
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import choice, randint
 
 # Remote library imports
@@ -16,8 +16,30 @@ from models.fan import Fan
 from models.like import Like
 from models.track import Track
 from models.band_member import BandMember
+from models.event import Event
 
 fake = Faker()
+# *****************************
+# * RANDOM DATETIME FUNCTIONS *
+# *****************************
+
+def round_to_nearest_half_hour(dt):
+    new_minute = 0 if dt.minute < 15 else 30
+    rounded_dt = dt.replace(second=0, microsecond=0, minute=new_minute)
+    return rounded_dt
+
+def rand_date():
+    current_time = datetime.now()
+    one_year_ago = current_time - timedelta(days=365)
+    one_year_later = current_time + timedelta(days=365)
+    dt = current_time + timedelta(days=randint(-365, 365))
+    random_hour = randint(0, 23) 
+    dt = dt.replace(hour=random_hour, minute=randint(0, 1) * 30)
+    return round_to_nearest_half_hour(dt)
+
+# ********************************
+# * SEED DATA CREATION FUNCTIONS *
+# ********************************
 
 def create_artists():
     artists = []
@@ -64,7 +86,24 @@ def create_fans():
             updated_at=datetime.now()
         )
         fans.append(fan)
+
     return fans
+
+def create_events():
+    events = []
+
+    all_artist_ids = [artist.id for artist in Artist.query.all()]
+
+    for i in range(60):
+        venues = ['Melissa\'s', 'Jake\'s', 'Calypso', 'Circe', 'Agamemnon', 'Ajax', 'Red\'s Bar']
+        event = Event(
+            date_time = rand_date(),
+            venue = choice(venues),
+            artist_id = choice(all_artist_ids)
+        )
+        events.append(event)
+    
+    return events
 
 if __name__ == '__main__':
     with app.app_context():
@@ -77,10 +116,12 @@ if __name__ == '__main__':
         print("Starting seed...")
         artists = create_artists()
         db.session.add_all(artists)
-        db.session.commit()
 
         fans = create_fans()
         db.session.add_all(fans)
+
+        events = create_events()
+        db.session.add_all(events)
 
         db.session.commit()
 

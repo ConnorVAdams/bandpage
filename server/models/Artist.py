@@ -1,5 +1,4 @@
 from app_setup import db
-from sqlalchemy.ext.associationproxy import association_proxy
 
 from models.like import Like
 
@@ -56,17 +55,8 @@ class Artist(db.Model):
     # tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')
     # fans = db.relationship('Fan', back_populates='artists')
 
+    # Relationships for an artist's followed content
+    # my_events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
+    # my_tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')
+    # my_fans = db.relationship('Fan', back_populates='artists')
 
-    # Relationships for content that an artist likes
-    # following = db.relationship(
-    #     'Artist',
-    #     secondary='likes',
-    #     primaryjoin='foreign'(Like.artist_id),
-    #     secondaryjoin="and_(Like.likeable_type=='artist', foreign(Like.likeable_id)==Artist.id)",
-    #     backref=db.backref('artists_liked', lazy='dynamic'),
-    #     lazy='dynamic'
-    # )
-    # faves = 
-    # rsvps = 
-
-    # events = db.relationship('Event', )
