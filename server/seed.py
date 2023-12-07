@@ -21,7 +21,8 @@ fake = Faker()
 
 def create_artists():
     artists = []
-    for i in range(1, 11):
+
+    for i in range(11):
         artist = Artist(
             name=fake.word().title(),
             genres=choice(['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Electronic', 'Country', 'R&B', 'Classical']),
@@ -51,17 +52,36 @@ def create_artist_follows():
 
     return follows
 
+def create_fans():
+    fans = []
+
+    for i in range(50):
+        fan = Fan(
+            name=fake.name().title(),
+            bio=fake.text(max_nb_chars=200),
+            location=fake.city(),
+            created_at=datetime.now(),
+            updated_at=datetime.now()
+        )
+        fans.append(fan)
+    return fans
+
 if __name__ == '__main__':
-    fake = Faker()
     with app.app_context():
         print('Clearing db...')
         Artist.query.delete()
+        Fan.query.delete()
         db.session.query(artist_to_artist).delete()
         db.session.commit()
 
         print("Starting seed...")
         artists = create_artists()
         db.session.add_all(artists)
+        db.session.commit()
+
+        fans = create_fans()
+        db.session.add_all(fans)
+
         db.session.commit()
 
         artist_follows = create_artist_follows()

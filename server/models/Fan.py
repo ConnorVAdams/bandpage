@@ -4,8 +4,8 @@ class Fan(db.Model):
     __tablename__ = 'fans'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
-    _password_hash = db.Column(db.String, nullable=False)
+    # username = db.Column(db.String, unique=True)
+    # _password_hash = db.Column(db.String, nullable=False)
     name = db.Column(db.String)
     bio = db.Column(db.String)
     location = db.Column(db.String)
