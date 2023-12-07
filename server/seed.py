@@ -124,6 +124,22 @@ def create_band_members():
     
     return band_members
 
+def create_tracks():
+    all_artist_ids = [artist.id for artist in Artist.query.all()]
+    url = 'https://audio-hosting-service.com/audio1.mp3'
+
+    tracks = []
+    
+    for i in range(100):
+        track = Track(
+            name=fake.text(max_nb_chars=20),
+            audio=url,
+            artist_id = choice(all_artist_ids)
+        )
+        tracks.append(track)
+    
+    return tracks
+
 if __name__ == '__main__':
     with app.app_context():
         print('Clearing db...')
@@ -144,6 +160,9 @@ if __name__ == '__main__':
 
         band_members = create_band_members()
         db.session.add_all(band_members)
+
+        tracks = create_tracks()
+        db.session.add_all(tracks)
 
         db.session.commit()
 
