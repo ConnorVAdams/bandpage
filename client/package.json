@@ -1,22 +1,25 @@
 {
+  "proxy": "http://127.0.0.1:5555/",
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5555",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "formik": "^2.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^5.2.1",
+    "react-scripts": "4.0.3",
+    "styled-components": "^5.3.5",
+    "web-vitals": "^1.1.2",
+    "yup": "^0.32.11"
   },
-  "devDependencies": {"@babel/plugin-proposal-private-property-in-object":"^7.21.11"},
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "PORT=4000 react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
