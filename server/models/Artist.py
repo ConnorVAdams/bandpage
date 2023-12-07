@@ -23,7 +23,8 @@ class Artist(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    # Other artists that this artist follows
+    # band_members = db.Relationship('BandMember', back_populates='bands')
+
     followed_artists_rel = db.relationship(
         'Artist',
         secondary=artist_to_artist,
@@ -33,7 +34,6 @@ class Artist(db.Model):
         lazy='dynamic'
     )
 
-    # Followers of this artist
     following_artists_rel = db.relationship(
         'Artist',
         secondary=artist_to_artist,
@@ -43,19 +43,19 @@ class Artist(db.Model):
         lazy='dynamic'
     )
 
-    # followed_artists = association_proxy('followed_artists_rel', 'artist')
-    # following_artists = association_proxy('following_artists_rel', 'artist')
-
+    # Other artists that this artist follows
     def followed(self):
         return self.followed_artists_rel.all()
     
+    # Followers of this artist
     def followers(self):
         return self.following_artists_rel.all()
 
     # Relationships for an artist's own content
-    # own_events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
-    # own_tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')
+    # events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
+    # tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')
     # fans = db.relationship('Fan', back_populates='artists')
+
 
     # Relationships for content that an artist likes
     # following = db.relationship(

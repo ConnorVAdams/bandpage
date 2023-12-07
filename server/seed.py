@@ -3,7 +3,7 @@
 # Standard library imports
 from random import randint, choice as rc
 from datetime import datetime
-from random import choice, sample
+from random import choice, randint
 
 # Remote library imports
 from faker import Faker
@@ -34,19 +34,22 @@ def create_artists():
     return artists
 
 def create_artist_follows():
+    follows = []
+
     # Fetch all artist IDs from the database
     all_artist_ids = [artist.id for artist in Artist.query.all()]
 
-    # Generate 25 random pairs of followed and following artist IDs
-    pairs_of_artist_ids = sample(all_artist_ids, k=10)  # k=50 since each row contains two IDs
-
     # Create rows for the artist_to_artist table
-    artist_follows = [
-        {'followed_artist_id': pairs_of_artist_ids[i], 'following_artist_id': pairs_of_artist_ids[i + 1]}
-        for i in range(0, len(pairs_of_artist_ids), 2)
-    ]
+    for i in range(31):
+        id_one = choice(all_artist_ids)
+        id_two = choice(all_artist_ids)
 
-    return artist_follows
+        # If the pair doesn't exist in follows or in the database, add it to follows
+        if not (id_one, id_two) in follows:
+            follow = (id_one, id_two)
+            follows.append(follow)
+
+    return follows
 
 if __name__ == '__main__':
     fake = Faker()
