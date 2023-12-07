@@ -7,7 +7,7 @@ from flask import request
 from flask_restful import Resource
 
 # Local imports
-from config import app, db, api
+from app_setup import app, db, api
 # Add your model imports
 
 
