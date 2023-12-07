@@ -38,7 +38,7 @@ def create_artist_follows():
     all_artist_ids = [artist.id for artist in Artist.query.all()]
 
     # Generate 25 random pairs of followed and following artist IDs
-    pairs_of_artist_ids = sample(all_artist_ids, k=50)  # k=50 since each row contains two IDs
+    pairs_of_artist_ids = sample(all_artist_ids, k=10)  # k=50 since each row contains two IDs
 
     # Create rows for the artist_to_artist table
     artist_follows = [

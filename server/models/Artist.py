@@ -24,24 +24,27 @@ class Artist(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # Other artists that this artist follows
-    followed_artists = db.relationship(
+    followed_artists_rel = db.relationship(
         'Artist',
         secondary=artist_to_artist,
         primaryjoin=id == artist_to_artist.c.following_artist_id,
         secondaryjoin=id == artist_to_artist.c.followed_artist_id,
-        backref=db.backref('following_artists', lazy='dynamic'),
+        backref=db.backref('following', lazy='dynamic'),
         lazy='dynamic'
     )
 
     # Followers of this artist
-    following_artists = db.relationship(
+    following_artists_rel = db.relationship(
         'Artist',
         secondary=artist_to_artist,
         primaryjoin=id == artist_to_artist.c.followed_artist_id,
         secondaryjoin=id == artist_to_artist.c.following_artist_id,
-        backref=db.backref('followed_artists', lazy='dynamic'),
+        backref=db.backref('followed', lazy='dynamic'),
         lazy='dynamic'
     )
+
+    followed = association_proxy('followed_artists_rel', 'artist')
+    following = association_proxy('following_artists_rel', 'artists')
 
     # Relationships for an artist's own content
     # own_events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
