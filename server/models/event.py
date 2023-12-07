@@ -10,3 +10,18 @@ class Event(db.Model):
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    fans_rsvped = db.relationship(
+        'Fan',
+        secondary='likes',
+        primaryjoin=(
+            "and_(Event.id==Like.likeable_id, "
+            "Like.likeable_type=='event')"
+        ),
+        secondaryjoin=(
+            "and_(Fan.id==Like.fan_id, "
+            "Like.likeable_type=='event')"
+        ),
+        # backref=db.backref('events_rsvped', lazy='dynamic'),
+        lazy='dynamic'
+    )

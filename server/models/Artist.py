@@ -50,6 +50,21 @@ class Artist(db.Model):
     def followers(self):
         return self.following_artists_rel.all()
 
+    fans_followed = db.relationship(
+        'Fan',
+        secondary='likes',
+        primaryjoin=(
+            "and_(Artist.id==Like.likeable_id, "
+            "Like.likeable_type=='artist')"
+        ),
+        secondaryjoin=(
+            "and_(Fan.id==Like.fan_id, "
+            "Like.likeable_type=='artist')"
+        ),
+        # backref=db.backref('artists_followed', lazy='dynamic'),
+        lazy='dynamic'
+    )
+
     # Relationships for an artist's own content
     # events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
     # tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')

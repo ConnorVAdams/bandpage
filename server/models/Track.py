@@ -12,3 +12,18 @@ class Track(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
+
+    fans_liked = db.relationship(
+        'Fan',
+        secondary='likes',
+        primaryjoin=(
+            "and_(Track.id==Like.likeable_id, "
+            "Like.likeable_type=='track')"
+        ),
+        secondaryjoin=(
+            "and_(Fan.id==Like.fan_id, "
+            "Like.likeable_type=='track')"
+        ),
+        backref=db.backref('liked_tracks', lazy='dynamic'),
+        lazy='dynamic'
+    )

@@ -140,11 +140,44 @@ def create_tracks():
     
     return tracks
 
+def create_likes():
+    # Fetch all fan IDs from the database
+    all_fan_ids = [fan.id for fan in Fan.query.all()]
+    all_artist_ids = [artist.id for artist in Artist.query.all()]
+    all_event_ids = [event.id for event in Event.query.all()]
+    all_track_ids = [track.id for track in Track.query.all()]
+
+    # Create placeholder relationships
+    likes = []
+    for i in range(50):  # Adjust the number of placeholder likes as needed
+        fan_id = choice(all_fan_ids)
+        likeable_type = choice(['artist', 'event', 'track'])
+        
+        if likeable_type == 'artist':
+            likeable_id = choice(all_artist_ids)
+        elif likeable_type == 'event':
+            likeable_id = choice(all_event_ids)
+        else:  # likeable_type == 'track'
+            likeable_id = choice(all_track_ids)
+        
+        like = Like(
+            fan_id=fan_id,
+            likeable_id=likeable_id,
+            likeable_type=likeable_type
+        )
+        likes.append(like)
+    
+    return likes
+
 if __name__ == '__main__':
     with app.app_context():
         print('Clearing db...')
         Artist.query.delete()
         Fan.query.delete()
+        Event.query.delete()
+        BandMember.query.delete()
+        Track.query.delete()
+        Like.query.delete()
         db.session.query(artist_to_artist).delete()
         db.session.commit()
 
@@ -163,6 +196,9 @@ if __name__ == '__main__':
 
         tracks = create_tracks()
         db.session.add_all(tracks)
+
+        likes = create_likes()
+        db.session.add_all(likes)
 
         db.session.commit()
 
