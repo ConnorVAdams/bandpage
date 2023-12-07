@@ -14,7 +14,7 @@ class Event(db.Model):
 
     artist = db.relationship('Artist', back_populates='events')
 
-    fans_rsvped = db.relationship(
+    fans_rsvped_rel = db.relationship(
         'Fan',
         secondary='likes',
         primaryjoin=(
@@ -28,3 +28,7 @@ class Event(db.Model):
         # backref=db.backref('events_rsvped', lazy='dynamic'),
         lazy='dynamic'
     )
+
+    def attending(self):
+        fans_attending = self.fans_rsvped_rel.all()
+        return fans_attending

@@ -12,7 +12,7 @@ class Fan(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    tracks_liked = db.relationship(
+    tracks_liked_rel = db.relationship(
         'Track',
         secondary='likes',
         primaryjoin="foreign(Like.fan_id)==Fan.id",
@@ -21,7 +21,7 @@ class Fan(db.Model):
         lazy="dynamic"
     )
     
-    events_rsvped = db.relationship(
+    events_rsvped_rel = db.relationship(
         'Event',
         secondary='likes',
         primaryjoin="foreign(Like.fan_id)==Fan.id",
@@ -30,7 +30,7 @@ class Fan(db.Model):
         lazy="dynamic"
     )
 
-    artists_followed = db.relationship(
+    artists_followed_rel = db.relationship(
         'Artist',
         secondary='likes',
         primaryjoin="foreign(Like.fan_id)==Fan.id",
@@ -38,3 +38,15 @@ class Fan(db.Model):
         # backref=db.backref("fans_followed", lazy="dynamic"),
         lazy="dynamic"
     )
+
+    def tracks(self):
+        tracks = self.tracks_liked_rel.all()
+        return tracks
+    
+    def events(self):
+        events = self.events_rsvped_rel.all()
+        return events
+    
+    def artists(self):
+        artists = self.artists_followed_rel.all()
+        return artists
