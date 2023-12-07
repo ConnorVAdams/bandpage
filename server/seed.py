@@ -105,6 +105,25 @@ def create_events():
     
     return events
 
+def create_band_members():
+    band_members = []
+
+    available_instruments = ['Guitar', 'Bass', 'Keys', 'Vocals', 'Drums', 'Brass', 'Percussion']
+
+    for i in range(35):
+        num_instruments = randint(1, 3)
+        instruments = [choice(available_instruments) for _ in range(num_instruments)]
+        
+        member = BandMember(
+            name=fake.name(),
+            instruments=', '.join(instruments),
+            bio=fake.text(max_nb_chars=200),
+            img='https://via.placeholder.com/150',  # Replace with an actual image link
+        )
+        band_members.append(member)
+    
+    return band_members
+
 if __name__ == '__main__':
     with app.app_context():
         print('Clearing db...')
@@ -122,6 +141,9 @@ if __name__ == '__main__':
 
         events = create_events()
         db.session.add_all(events)
+
+        band_members = create_band_members()
+        db.session.add_all(band_members)
 
         db.session.commit()
 
