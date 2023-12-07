@@ -42,17 +42,7 @@ class Artist(db.Model):
         lazy='dynamic'
     )
 
-    # Other artists that this artist follows
-    def following(self):
-        followed_artists = self.followed_artists_rel.all()
-        return followed_artists if followed_artists else 'no artists'
-    
-    # Followers of this artist
-    def followers(self):
-        following_artists = self.following_artists_rel.all()
-        return following_artists if following_artists else 'no artists'
-
-    fans_followed = db.relationship(
+    following_fans_rel = db.relationship(
         'Fan',
         secondary='likes',
         primaryjoin=(
@@ -66,6 +56,22 @@ class Artist(db.Model):
         # backref=db.backref('artists_followed', lazy='dynamic'),
         lazy='dynamic'
     )
+
+    # Other artists that this artist follows
+    def following(self):
+        followed_artists = self.followed_artists_rel.all()
+        return followed_artists
+    
+    # Followers of this artist
+    def artist_followers(self):
+        following_artists = self.following_artists_rel.all()
+        return following_artists
+    
+    def fan_followers(self):
+        following_fans_rel = self.following_fans_rel.all()
+        return following_fans_rel
+
+
 
 
 
