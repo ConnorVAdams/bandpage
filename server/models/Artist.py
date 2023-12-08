@@ -1,5 +1,6 @@
 from app_setup import db
 from sqlalchemy import and_
+from sqlalchemy.ext.associationproxy import association_proxy
 
 from models.like import Like
 
@@ -35,59 +36,31 @@ class Artist(db.Model):
                                 Like.artist_id == Artist.id
                                 )
                             )
-
     
+    followed_artists = association_proxy(
+        'likes', 'likeable', 
+        creator=lambda artist: Like(likeable=artist, liker_type='artist')
+    )
 
-    # followed_artists_rel = db.relationship(
-    #     'Artist',
-    #     secondary=artist_to_artist,
-    #     primaryjoin=id == artist_to_artist.c.following_artist_id,
-    #     secondaryjoin=id == artist_to_artist.c.followed_artist_id,
-    #     back_populates = 'following_artists_rel',
-    #     lazy='dynamic'
-    # )
-
-    # following_artists_rel = db.relationship(
-    #     'Artist',
-    #     secondary=artist_to_artist,
-    #     primaryjoin=id == artist_to_artist.c.followed_artist_id,
-    #     secondaryjoin=id == artist_to_artist.c.following_artist_id,
-    #     back_populates= 'followed_artists_rel',
-    #     lazy='dynamic'
-    # )
-
-    # following_fans_rel = db.relationship(
-    #     'Fan',
-    #     secondary='likes',
-    #     primaryjoin=(
-    #         "and_(Artist.id==Like.likeable_id, "
-    #         "Like.likeable_type=='artist')"
-    #     ),
-    #     secondaryjoin=(
-    #         "and_(Fan.id==Like.fan_id, "
-    #         "Like.likeable_type=='artist')"
-    #     ),
-    #     # backref=db.backref('artists_followed', lazy='dynamic'),
-    #     lazy='dynamic'
-    # )
-
-    # # Other artists that this artist follows
-    # @property
-    # def following(self):
-    #     followed_artists = self.followed_artists_rel.all()
-    #     return followed_artists
+    favorited_tracks = association_proxy(
+        'likes', 'likeable',
+        creator=lambda track: Like(likeable=track, liker_type='artist')
+    )
     
-    # # Followers of this artist
-    # @property
-    # def artist_followers(self):
-    #     following_artists = self.following_artists_rel.all()
-    #     return following_artists
-    
-    # @property
-    # def fan_followers(self):
-    #     following_fans_rel = self.following_fans_rel.all()
-    #     return following_fans_rel
+    rsvped_events = association_proxy(
+        'likes', 'likeable',
+        creator=lambda event: Like(likeable=event, liker_type='artist')
+    )
 
+    @property
+    def fans(self):
+        from models.fan import Fan
+        fans = Fan.query.join(Like, (Like.fan_id == Fan.id)).filter(
+            Like.likeable_id == self.id,
+            Like.likeable_type == 'artist'
+        ).all()
+
+        return fans
 
 
 

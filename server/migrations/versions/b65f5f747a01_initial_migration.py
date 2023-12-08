@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 797baccac30d
+Revision ID: b65f5f747a01
 Revises: 
-Create Date: 2023-12-08 14:11:17.193330
+Create Date: 2023-12-08 14:46:01.428130
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '797baccac30d'
+revision = 'b65f5f747a01'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -61,8 +61,8 @@ def upgrade():
     op.create_table('likes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('likeable_type', sa.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False),
-    sa.Column('liker_type', sa.Enum('artist', 'fan', name='liker_types'), nullable=False),
     sa.Column('likeable_id', sa.Integer(), nullable=False),
+    sa.Column('liker_type', sa.Enum('artist', 'fan', name='liker_types'), nullable=False),
     sa.Column('artist_id', sa.Integer(), nullable=True),
     sa.Column('fan_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
