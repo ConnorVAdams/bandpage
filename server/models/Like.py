@@ -1,4 +1,5 @@
 from app_setup import db
+from sqlalchemy.schema import UniqueConstraint
 
 
 class Like(db.Model):
@@ -15,6 +16,10 @@ class Like(db.Model):
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    __table_args__ = (
+        UniqueConstraint('likeable_type', 'likeable_id', 'liker_type', 'artist_id', 'fan_id', name='unique_likes'),
+    )
 
     @property
     def likeable(self):

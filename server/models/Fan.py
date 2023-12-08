@@ -1,4 +1,6 @@
 from app_setup import db
+from models.like import Like
+from sqlalchemy.ext.associationproxy import association_proxy
 
 class Fan(db.Model):
     __tablename__ = 'fans'
@@ -11,6 +13,23 @@ class Fan(db.Model):
     location = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    likes = db.relationship('Like')
+
+    rsvped_events = association_proxy(
+        'likes', 'likeable',
+        creator=lambda event: Like(likeable=event, liker_type='fan')
+    )
+
+    # favorited_tracks = association_proxy(
+    #     'likes', 'likeable',
+    #     creator=lambda track: Like(likeable=track, liker_type='fan')
+    # )
+
+    # followed_artists = association_proxy(
+    #     'likes', 'likeable', 
+    #     creator=lambda artist: Like(likeable=artist, liker_type='fan')
+    # )
 
     # tracks_liked_rel = db.relationship(
     #     'Track',
@@ -39,17 +58,17 @@ class Fan(db.Model):
     #     lazy="dynamic"
     # )
 
-    @property
-    def tracks(self):
-        tracks = self.tracks_liked_rel.all()
-        return tracks
+    # @property
+    # def tracks(self):
+    #     tracks = self.tracks_liked_rel.all()
+    #     return tracks
     
-    @property
-    def events(self):
-        events = self.events_rsvped_rel.all()
-        return events
+    # @property
+    # def events(self):
+    #     events = self.events_rsvped_rel.all()
+    #     return events
     
-    @property
-    def artists(self):
-        artists = self.artists_followed_rel.all()
-        return artists
+    # @property
+    # def artists(self):
+    #     artists = self.artists_followed_rel.all()
+    #     return artists

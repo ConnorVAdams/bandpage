@@ -30,16 +30,17 @@ class Artist(db.Model):
     events = db.relationship('Event', back_populates='artist')
 
     likes = db.relationship(
-                            'Like',
-                            primaryjoin=lambda: and_(
-                                Like.liker_type == 'artist',
-                                Like.artist_id == Artist.id
-                                )
-                            )
+        'Like',
+        primaryjoin=lambda: and_(
+            Like.liker_type == 'artist',
+            Like.artist_id == Artist.id
+            )
+    )
     
     followed_artists = association_proxy(
-        'likes', 'likeable', 
-        creator=lambda artist: Like(likeable=artist, liker_type='artist')
+        'likes', 
+        'liker', 
+        creator=lambda artist: Like(liker=artist, likeable_type='artist')
     )
 
     favorited_tracks = association_proxy(
@@ -56,11 +57,22 @@ class Artist(db.Model):
     def fans(self):
         from models.fan import Fan
         fans = Fan.query.join(Like, (Like.fan_id == Fan.id)).filter(
-            Like.likeable_id == self.id,
-            Like.likeable_type == 'artist'
+            Like.likeable_type == 'artist',
+            Like.likeable_id == self.id
+
         ).all()
 
         return fans
+    
+    @property
+    def artist_fans(self):
+        from models.artist import Artist
+        artist_fans = Artist.query.join(Like, (Like.artist_id == Artist.id)).filter(
+            Like.likeable_type == 'artist',
+            Like.likeable_id == self.id
+        ).all()
+
+        return artist_fans
 
 
 
