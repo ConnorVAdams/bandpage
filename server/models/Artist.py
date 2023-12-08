@@ -3,6 +3,8 @@ from sqlalchemy import and_
 from sqlalchemy.ext.associationproxy import association_proxy
 
 from models.like import Like
+from models.track import Track
+from models.event import Event
 
 # artist_to_artist = db.Table(
 #     'artist_to_artist',
@@ -36,44 +38,20 @@ class Artist(db.Model):
             Like.artist_id == Artist.id
             )
     )
-    
-    followed_artists = association_proxy(
+
+    likeables = association_proxy(
         'likes', 
-        'liker', 
-        creator=lambda artist: Like(liker=artist, likeable_type='artist')
-    )
-
-    favorited_tracks = association_proxy(
-        'likes', 'likeable',
-        creator=lambda track: Like(likeable=track, liker_type='artist')
-    )
-    
-    rsvped_events = association_proxy(
-        'likes', 'likeable',
-        creator=lambda event: Like(likeable=event, liker_type='artist')
+        'likeable',
     )
 
     @property
-    def fans(self):
-        from models.fan import Fan
-        fans = Fan.query.join(Like, (Like.fan_id == Fan.id)).filter(
-            Like.likeable_type == 'artist',
-            Like.likeable_id == self.id
-
-        ).all()
-
-        return fans
+    def followed_artists(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
     
     @property
-    def artist_fans(self):
-        from models.artist import Artist
-        artist_fans = Artist.query.join(Like, (Like.artist_id == Artist.id)).filter(
-            Like.likeable_type == 'artist',
-            Like.likeable_id == self.id
-        ).all()
-
-        return artist_fans
-
-
-
-
+    def favorited_tracks(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Track)]
+    
+    @property
+    def rsvped_events(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Event)]

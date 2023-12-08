@@ -46,4 +46,4 @@ class Like(db.Model):
         elif self.liker_type == 'fan':
             return Fan.query.get(self.fan_id)
         else:
-            return None 
+            return None
