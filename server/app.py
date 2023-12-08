@@ -8,8 +8,8 @@ from models.track import Track
 from models.like import Like
 from models.band_member import BandMember
 from models.event import Event
-# from routes.crew_member_by_id import CrewMemberById
-# from routes.crew_members import CrewMembers
+from routes.artists import Artists
+from routes.artist_by_id import ArtistById
 # from routes.production_by_id import ProductionById
 # from routes.productions import Productions
 # from routes.welcome import Welcome
@@ -23,9 +23,9 @@ from flask import render_template
 # #! Routes
 # # api.add_resource(Welcome, "/")
 # #! GET/POST Productions routes
-# api.add_resource(Productions, "/productions")
+api.add_resource(Artists, "/artists")
 # #! GET/PATCH/DELETE Production routes
-# api.add_resource(ProductionById, "/productions/<int:id>")
+api.add_resource(ArtistById, "/artists/<int:id>")
 # #! GET/POST CrewMembers routes
 # api.add_resource(CrewMembers, "/crew_members")
 # #! GET/PATCH/DELETE CrewMembers routes

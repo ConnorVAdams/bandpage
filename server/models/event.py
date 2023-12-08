@@ -19,11 +19,11 @@ class Event(db.Model):
         secondary='likes',
         primaryjoin=(
             "and_(Event.id==Like.likeable_id, "
-            "Like.likeable_type=='Event')"
+            "Like.likeable_type=='event')"
         ),
         secondaryjoin=(
             "and_(Fan.id==Like.fan_id, "
-            "Like.likeable_type=='Event')"
+            "Like.likeable_type=='event')"
         ),
         # backref=db.backref('events_rsvped', lazy='dynamic'),
         lazy='dynamic'

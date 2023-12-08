@@ -10,5 +10,6 @@ class LikeSchema(ma.SQLAlchemySchema):
                     'id', 
                     'artist_id',
                     'fan_id',
-                    
+                    'likeable_id',
+                    'likeable_type'
                     ]

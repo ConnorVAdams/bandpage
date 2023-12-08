@@ -20,11 +20,11 @@ class Track(db.Model):
         secondary='likes',
         primaryjoin=(
             "and_(Track.id==Like.likeable_id, "
-            "Like.likeable_type=='Track')"
+            "Like.likeable_type=='track')"
         ),
         secondaryjoin=(
             "and_(Fan.id==Like.fan_id, "
-            "Like.likeable_type=='Track')"
+            "Like.likeable_type=='track')"
         ),
         # backref=db.backref('liked_tracks', lazy='dynamic'),
         lazy='dynamic'
