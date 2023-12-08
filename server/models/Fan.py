@@ -16,7 +16,7 @@ class Fan(db.Model):
         'Track',
         secondary='likes',
         primaryjoin="foreign(Like.fan_id)==Fan.id",
-        secondaryjoin="and_(Like.likeable_type=='track', foreign(Like.likeable_id)==Track.id)",
+        secondaryjoin="and_(Like.likeable_type=='Track', foreign(Like.likeable_id)==Track.id)",
         # backref=db.backref("fans_liked", lazy="dynamic"),
         lazy="dynamic"
     )
@@ -25,7 +25,7 @@ class Fan(db.Model):
         'Event',
         secondary='likes',
         primaryjoin="foreign(Like.fan_id)==Fan.id",
-        secondaryjoin="and_(Like.likeable_type=='event', foreign(Like.likeable_id)==Event.id)",
+        secondaryjoin="and_(Like.likeable_type=='Event', foreign(Like.likeable_id)==Event.id)",
         # backref=db.backref("fans_rsvped", lazy="dynamic"),
         lazy="dynamic"
     )
@@ -34,19 +34,22 @@ class Fan(db.Model):
         'Artist',
         secondary='likes',
         primaryjoin="foreign(Like.fan_id)==Fan.id",
-        secondaryjoin="and_(Like.likeable_type=='artist', foreign(Like.likeable_id)==Artist.id)",
+        secondaryjoin="and_(Like.likeable_type=='Artist', foreign(Like.likeable_id)==Artist.id)",
         # backref=db.backref("fans_followed", lazy="dynamic"),
         lazy="dynamic"
     )
 
+    @property
     def tracks(self):
         tracks = self.tracks_liked_rel.all()
         return tracks
     
+    @property
     def events(self):
         events = self.events_rsvped_rel.all()
         return events
     
+    @property
     def artists(self):
         artists = self.artists_followed_rel.all()
         return artists

@@ -50,26 +50,29 @@ class Artist(db.Model):
         secondary='likes',
         primaryjoin=(
             "and_(Artist.id==Like.likeable_id, "
-            "Like.likeable_type=='artist')"
+            "Like.likeable_type=='Artist')"
         ),
         secondaryjoin=(
             "and_(Fan.id==Like.fan_id, "
-            "Like.likeable_type=='artist')"
+            "Like.likeable_type=='Artist')"
         ),
         # backref=db.backref('artists_followed', lazy='dynamic'),
         lazy='dynamic'
     )
 
     # Other artists that this artist follows
+    @property
     def following(self):
         followed_artists = self.followed_artists_rel.all()
         return followed_artists
     
     # Followers of this artist
+    @property
     def artist_followers(self):
         following_artists = self.following_artists_rel.all()
         return following_artists
     
+    @property
     def fan_followers(self):
         following_fans_rel = self.following_fans_rel.all()
         return following_fans_rel

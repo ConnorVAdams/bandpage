@@ -154,6 +154,8 @@ def create_likes():
     likes = []
     for i in range(50):  # Adjust the number of placeholder likes as needed
         fan_id = choice(all_fan_ids)
+        artist_id = choice(all_artist_ids)
+
         likeable_type = choice(['artist', 'event', 'track'])
         
         if likeable_type == 'artist':
@@ -163,11 +165,18 @@ def create_likes():
         else:  # likeable_type == 'track'
             likeable_id = choice(all_track_ids)
         
-        like = Like(
-            fan_id=fan_id,
-            likeable_id=likeable_id,
-            likeable_type=likeable_type
-        )
+        if randint(0, 1):
+            like = Like(
+                fan_id=fan_id,
+                likeable_id=likeable_id,
+                likeable_type=likeable_type
+            )
+        else: 
+            like = Like(
+                artist_id=artist_id,
+                likeable_id=likeable_id,
+                likeable_type=likeable_type
+            )
         likes.append(like)
     
     return likes

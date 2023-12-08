@@ -19,16 +19,17 @@ class Event(db.Model):
         secondary='likes',
         primaryjoin=(
             "and_(Event.id==Like.likeable_id, "
-            "Like.likeable_type=='event')"
+            "Like.likeable_type=='Event')"
         ),
         secondaryjoin=(
             "and_(Fan.id==Like.fan_id, "
-            "Like.likeable_type=='event')"
+            "Like.likeable_type=='Event')"
         ),
         # backref=db.backref('events_rsvped', lazy='dynamic'),
         lazy='dynamic'
     )
 
+    @property
     def attending(self):
         fans_attending = self.fans_rsvped_rel.all()
         return fans_attending
