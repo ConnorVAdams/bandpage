@@ -6,6 +6,8 @@ from schemas.event_schema import EventSchema
 from app_setup import ma
 
 class ArtistSchema(ma.SQLAlchemySchema):
+    tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
+    events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
     
     class Meta():
         model: Artist
@@ -17,7 +19,7 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'bio',
                     'location',
                     'tracks',
-                    # 'events'
+                    'events'
                     # 'fan_followers'
                     ]
         
@@ -26,7 +28,7 @@ class ArtistSchema(ma.SQLAlchemySchema):
         # artist_followers = ma.Nested(ArtistSchema, many=True)
         # fan_followers = ma.Nested(FanSchema, many=True)
 
-        tracks = fields.List(fields.Nested(lambda: TrackSchema(only=('id', 'name'))))
+        # tracks = fields.List(fields.Nested("TrackSchema", only=("id", "name", "audio")))
         # events = fields.List(fields.Nested(EventSchema))
 
 
