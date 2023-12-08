@@ -12,3 +12,5 @@ class TrackSchema(ma.SQLAlchemySchema):
                     'audio',
                     'artist_id'
                     ]
+        
+        
