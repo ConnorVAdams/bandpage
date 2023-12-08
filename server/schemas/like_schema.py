@@ -8,8 +8,9 @@ class LikeSchema(ma.SQLAlchemySchema):
         load_instance = True
         fields = [
                     'id', 
-                    'artist_id',
-                    'fan_id',
                     'likeable_id',
-                    'likeable_type'
+                    'likeable_type',
+                    'fan_id',
+                    'artist_id',
+                    'liker_type'
                     ]

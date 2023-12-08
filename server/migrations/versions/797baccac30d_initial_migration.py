@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: baf1f409e573
+Revision ID: 797baccac30d
 Revises: 
-Create Date: 2023-12-08 13:32:13.828024
+Create Date: 2023-12-08 14:11:17.193330
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'baf1f409e573'
+revision = '797baccac30d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,10 +60,11 @@ def upgrade():
     )
     op.create_table('likes',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('likeable_type', sa.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False),
+    sa.Column('liker_type', sa.Enum('artist', 'fan', name='liker_types'), nullable=False),
+    sa.Column('likeable_id', sa.Integer(), nullable=False),
     sa.Column('artist_id', sa.Integer(), nullable=True),
     sa.Column('fan_id', sa.Integer(), nullable=True),
-    sa.Column('likeable_id', sa.Integer(), nullable=False),
-    sa.Column('likeable_type', sa.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['artist_id'], ['artists.id'], ),

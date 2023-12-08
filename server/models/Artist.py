@@ -1,4 +1,5 @@
 from app_setup import db
+from sqlalchemy import and_
 
 from models.like import Like
 
@@ -26,6 +27,16 @@ class Artist(db.Model):
 
     tracks = db.relationship('Track', back_populates='artist')
     events = db.relationship('Event', back_populates='artist')
+
+    likes = db.relationship(
+                            'Like',
+                            primaryjoin=lambda: and_(
+                                Like.liker_type == 'artist',
+                                Like.artist_id == Artist.id
+                                )
+                            )
+
+    
 
     # followed_artists_rel = db.relationship(
     #     'Artist',
@@ -60,22 +71,22 @@ class Artist(db.Model):
     #     lazy='dynamic'
     # )
 
-    # Other artists that this artist follows
-    @property
-    def following(self):
-        followed_artists = self.followed_artists_rel.all()
-        return followed_artists
+    # # Other artists that this artist follows
+    # @property
+    # def following(self):
+    #     followed_artists = self.followed_artists_rel.all()
+    #     return followed_artists
     
-    # Followers of this artist
-    @property
-    def artist_followers(self):
-        following_artists = self.following_artists_rel.all()
-        return following_artists
+    # # Followers of this artist
+    # @property
+    # def artist_followers(self):
+    #     following_artists = self.following_artists_rel.all()
+    #     return following_artists
     
-    @property
-    def fan_followers(self):
-        following_fans_rel = self.following_fans_rel.all()
-        return following_fans_rel
+    # @property
+    # def fan_followers(self):
+    #     following_fans_rel = self.following_fans_rel.all()
+    #     return following_fans_rel
 
 
 

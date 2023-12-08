@@ -15,20 +15,20 @@ class Track(db.Model):
 
     artist = db.relationship('Artist', back_populates='tracks')
 
-    fans_liked = db.relationship(
-        'Fan',
-        secondary='likes',
-        primaryjoin=(
-            "and_(Track.id==Like.likeable_id, "
-            "Like.likeable_type=='track')"
-        ),
-        secondaryjoin=(
-            "and_(Fan.id==Like.fan_id, "
-            "Like.likeable_type=='track')"
-        ),
-        # backref=db.backref('liked_tracks', lazy='dynamic'),
-        lazy='dynamic'
-    )
+    # fans_liked = db.relationship(
+    #     'Fan',
+    #     secondary='likes',
+    #     primaryjoin=(
+    #         "and_(Track.id==Like.likeable_id, "
+    #         "Like.likeable_type=='track')"
+    #     ),
+    #     secondaryjoin=(
+    #         "and_(Fan.id==Like.fan_id, "
+    #         "Like.likeable_type=='track')"
+    #     ),
+    #     # backref=db.backref('liked_tracks', lazy='dynamic'),
+    #     lazy='dynamic'
+    # )
 
     @property
     def fans(self):

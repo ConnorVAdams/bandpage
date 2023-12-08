@@ -18,6 +18,7 @@ from models.track import Track
 from models.band_member import BandMember
 from models.event import Event
 
+
 fake = Faker()
 # *****************************
 # * RANDOM DATETIME FUNCTIONS *
@@ -153,10 +154,14 @@ def create_likes():
     # Create placeholder relationships
     likes = []
     for i in range(50):  # Adjust the number of placeholder likes as needed
-        fan_id = choice(all_fan_ids)
-        artist_id = choice(all_artist_ids)
-
         likeable_type = choice(['artist', 'event', 'track'])
+        liker_type = choice(['artist', 'fan'])
+        artist_id = None
+        fan_id = None
+        if liker_type == 'artist':
+            artist_id = choice(all_artist_ids)
+        else: # if liker_type == 'fan'
+            fan_id = choice(all_fan_ids)
         
         if likeable_type == 'artist':
             likeable_id = choice(all_artist_ids)
@@ -165,7 +170,7 @@ def create_likes():
         else:  # likeable_type == 'track'
             likeable_id = choice(all_track_ids)
         
-        like = Like(artist_id=artist_id, fan_id=fan_id, likeable_type=likeable_type, likeable_id=likeable_id)
+        like = Like(likeable_type=likeable_type, liker_type=liker_type, likeable_id=likeable_id, artist_id=artist_id, fan_id=fan_id )
         likes.append(like)
     
     return likes

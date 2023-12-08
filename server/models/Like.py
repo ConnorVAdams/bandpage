@@ -4,13 +4,14 @@ class Like(db.Model):
     __tablename__ = 'likes'
 
     id = db.Column(db.Integer, primary_key=True)
-    # TODO How to make one but not both of the below IDs nullable
+
+    likeable_type = db.Column(db.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False)
+    liker_type = db.Column(db.Enum('artist', 'fan', name='liker_types'), nullable=False)
+
+    likeable_id = db.Column(db.Integer, nullable=False)
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
     fan_id = db.Column(db.Integer, db.ForeignKey('fans.id'))
-    likeable_id = db.Column(db.Integer, nullable=False)
-    # Restrict possible value of likeable_type to allowed strings
-    likeable_type = db.Column(db.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False)
+
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    
-    
+        

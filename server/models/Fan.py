@@ -12,32 +12,32 @@ class Fan(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    tracks_liked_rel = db.relationship(
-        'Track',
-        secondary='likes',
-        primaryjoin="foreign(Like.fan_id)==Fan.id",
-        secondaryjoin="and_(Like.likeable_type=='Track', foreign(Like.likeable_id)==Track.id)",
-        # backref=db.backref("fans_liked", lazy="dynamic"),
-        lazy="dynamic"
-    )
+    # tracks_liked_rel = db.relationship(
+    #     'Track',
+    #     secondary='likes',
+    #     primaryjoin="foreign(Like.fan_id)==Fan.id",
+    #     secondaryjoin="and_(Like.likeable_type=='Track', foreign(Like.likeable_id)==Track.id)",
+    #     # backref=db.backref("fans_liked", lazy="dynamic"),
+    #     lazy="dynamic"
+    # )
     
-    events_rsvped_rel = db.relationship(
-        'Event',
-        secondary='likes',
-        primaryjoin="foreign(Like.fan_id)==Fan.id",
-        secondaryjoin="and_(Like.likeable_type=='Event', foreign(Like.likeable_id)==Event.id)",
-        # backref=db.backref("fans_rsvped", lazy="dynamic"),
-        lazy="dynamic"
-    )
+    # events_rsvped_rel = db.relationship(
+    #     'Event',
+    #     secondary='likes',
+    #     primaryjoin="foreign(Like.fan_id)==Fan.id",
+    #     secondaryjoin="and_(Like.likeable_type=='Event', foreign(Like.likeable_id)==Event.id)",
+    #     # backref=db.backref("fans_rsvped", lazy="dynamic"),
+    #     lazy="dynamic"
+    # )
 
-    artists_followed_rel = db.relationship(
-        'Artist',
-        secondary='likes',
-        primaryjoin="foreign(Like.fan_id)==Fan.id",
-        secondaryjoin="and_(Like.likeable_type=='Artist', foreign(Like.likeable_id)==Artist.id)",
-        # backref=db.backref("fans_followed", lazy="dynamic"),
-        lazy="dynamic"
-    )
+    # artists_followed_rel = db.relationship(
+    #     'Artist',
+    #     secondary='likes',
+    #     primaryjoin="foreign(Like.fan_id)==Fan.id",
+    #     secondaryjoin="and_(Like.likeable_type=='Artist', foreign(Like.likeable_id)==Artist.id)",
+    #     # backref=db.backref("fans_followed", lazy="dynamic"),
+    #     lazy="dynamic"
+    # )
 
     @property
     def tracks(self):
