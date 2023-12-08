@@ -10,29 +10,34 @@ from models.band_member import BandMember
 from models.event import Event
 from routes.artists import Artists
 from routes.artist_by_id import ArtistById
-# from routes.production_by_id import ProductionById
-# from routes.productions import Productions
-# from routes.welcome import Welcome
-# from routes.auth.signup import Signup
-# from routes.auth.login import Login
-# from routes.auth.me import Me
+from routes.events import Events
+from routes.event_by_id import EventById
+from routes.fans import Fans
+from routes.fan_by_id import FanById
+from routes.tracks import Tracks
+from routes.track_by_id import TrackById
 # from routes.auth.refresh import Refresh
 # from routes.auth.check_token import CheckToken
 from flask import render_template
 
-# #! Routes
+
 # # api.add_resource(Welcome, "/")
-# #! GET/POST Productions routes
+
 api.add_resource(Artists, "/artists")
-# #! GET/PATCH/DELETE Production routes
+
 api.add_resource(ArtistById, "/artists/<int:id>")
-# #! GET/POST CrewMembers routes
-# api.add_resource(CrewMembers, "/crew_members")
-# #! GET/PATCH/DELETE CrewMembers routes
-# api.add_resource(CrewMemberById, "/crew_members/<int:id>")
-# #! POST Signup
-# api.add_resource(Signup, "/signup")
-# #! POST Login
+
+api.add_resource(Events, "/events")
+
+api.add_resource(EventById, "/events/<int:id>")
+
+api.add_resource(Fans, "/fans")
+
+api.add_resource(FanById, "/fans/<int:id>")
+
+api.add_resource(Tracks, "/tracks")
+
+api.add_resource(TrackById, "/tracks/<int:id>")
 # api.add_resource(Login, "/login")
 # #! GET Me
 # api.add_resource(Me, "/me")

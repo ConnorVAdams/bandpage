@@ -10,6 +10,5 @@ class EventSchema(ma.SQLAlchemySchema):
                     'id', 
                     'date_time',
                     'venue',
-                    'artist',
-                    'attending'
+                    'artist_id'
                     ]
