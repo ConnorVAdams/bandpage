@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 84f34f1ab684
+Revision ID: baf1f409e573
 Revises: 
-Create Date: 2023-12-07 17:33:47.196703
+Create Date: 2023-12-08 13:32:13.828024
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '84f34f1ab684'
+revision = 'baf1f409e573'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -48,13 +48,6 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('artist_to_artist',
-    sa.Column('followed_artist_id', sa.Integer(), nullable=False),
-    sa.Column('following_artist_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['followed_artist_id'], ['artists.id'], ),
-    sa.ForeignKeyConstraint(['following_artist_id'], ['artists.id'], ),
-    sa.PrimaryKeyConstraint('followed_artist_id', 'following_artist_id')
-    )
     op.create_table('events',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('date_time', sa.DateTime(), nullable=False),
@@ -70,7 +63,7 @@ def upgrade():
     sa.Column('artist_id', sa.Integer(), nullable=True),
     sa.Column('fan_id', sa.Integer(), nullable=True),
     sa.Column('likeable_id', sa.Integer(), nullable=False),
-    sa.Column('likeable_type', sa.Enum('Artist', 'Event', 'Track', name='likeable_types'), nullable=False),
+    sa.Column('likeable_type', sa.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['artist_id'], ['artists.id'], ),
@@ -95,7 +88,6 @@ def downgrade():
     op.drop_table('tracks')
     op.drop_table('likes')
     op.drop_table('events')
-    op.drop_table('artist_to_artist')
     op.drop_table('fans')
     op.drop_table('band_members')
     op.drop_table('artists')

@@ -8,7 +8,8 @@ from app_setup import ma
 class ArtistSchema(ma.SQLAlchemySchema):
     tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
     events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
-    
+    fan_followers = fields.List(ma.Nested(FanSchema(only=('id', 'name', 'location'))))
+
     class Meta():
         model: Artist
         load_instance = True
@@ -20,15 +21,12 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'location',
                     'tracks',
                     'events'
-                    # 'fan_followers'
+                    'fan_followers'
                     ]
         
         # TODO are these circular serializations necessary or beneficial?
         # following = ma.Nested(ArtistSchema, many=True)
         # artist_followers = ma.Nested(ArtistSchema, many=True)
-        # fan_followers = ma.Nested(FanSchema, many=True)
-
-        # tracks = fields.List(fields.Nested("TrackSchema", only=("id", "name", "audio")))
-        # events = fields.List(fields.Nested(EventSchema))
+        
 
 
