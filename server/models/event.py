@@ -1,6 +1,8 @@
 from app_setup import db
 from sqlalchemy import and_
+from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
+from datetime import datetime
 
 from models.like import Like
 
@@ -25,3 +27,22 @@ class Event(db.Model):
             ).all()
         return [like.liker for like in likes]
 
+    @validates('date_time')
+    def validate_date_time(self, _, date_time):
+        if not isinstance(date_time, datetime):
+            raise TypeError(
+                'Date_time must be a valid datetime object.'
+            )
+        return date_time
+    
+    @validates('venue')
+    def validate_venue(self, _, venue):
+        if not isinstance(venue, str):
+            raise TypeError(
+                'Venue must be a string.'
+            )
+        elif len(venue) not in range(40):
+            raise ValueError(
+                'Venue must be between 1 and 40 characters.'
+            )
+        return venue

@@ -24,6 +24,7 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'genres',
                     'bio',
                     'location',
+                    'img',
                     'tracks',
                     'events',
                     'fan_followers',

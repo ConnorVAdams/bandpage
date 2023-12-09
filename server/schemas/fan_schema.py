@@ -18,6 +18,7 @@ class FanSchema(ma.SQLAlchemySchema):
                     'name',
                     'bio',
                     'location',
+                    'img',
                     'followed_artists',
                     'favorited_tracks',
                     'rsvped_events'

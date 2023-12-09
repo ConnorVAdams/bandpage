@@ -1,5 +1,6 @@
 from app_setup import db
 from sqlalchemy.schema import UniqueConstraint
+from sqlalchemy.orm import validates
 
 
 class Like(db.Model):
@@ -7,7 +8,7 @@ class Like(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    likeable_type = db.Column(db.String, nullable=False)
+    likeable_type = db.Column(db.Enum('artist', 'track', 'event', name='likeable_types'), nullable=False)
     likeable_id = db.Column(db.Integer, nullable=False)
     
     liker_type = db.Column(db.Enum('artist', 'fan', name='liker_types'), nullable=False)
@@ -47,3 +48,16 @@ class Like(db.Model):
             return Fan.query.get(self.fan_id)
         else:
             return None
+
+    # TODO Why does this validation break on the seed file?
+    # @validates('likeable_type')
+    # def validate_likeable_type(self, _, likeable_type):
+    #     if likeable_type not in ['artist', 'fan']:
+    #         raise ValueError('Invalid likeable_type')
+    #     return likeable_type
+    
+    # @validates('liker_type')
+    # def validate_liker_type(self, _, liker_type):
+    #     if liker_type not in ['artist', 'track', 'event']:
+    #         raise ValueError('Invalid liker_type')
+    #     return liker_type

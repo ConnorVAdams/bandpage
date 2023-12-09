@@ -1,3 +1,5 @@
+from sqlalchemy.orm import validates
+
 from app_setup import db
 from models.like import Like
 
@@ -23,3 +25,27 @@ class Track(db.Model):
             Like.likeable_id == self.id
         ).all()
         return [like.liker for like in likes]
+    
+    @validates('name')
+    def validate_name(self, _, name):
+        if not isinstance(name, str):
+            raise TypeError(
+                'Name must be a string.'
+            )
+        elif len(name) not in range(40):
+            raise ValueError(
+                'Name must be between 1 and 40 characters.'
+            )
+        return name
+    
+    @validates('audio')
+    def validate_audio(self, _, audio):
+        if not isinstance(audio, str):
+            raise TypeError(
+                'Audio must be a string.'
+            )
+        elif len(audio) not in range(100):
+            raise ValueError(
+                'Audio must be between 1 and 40 characters.'
+            )
+        return audio

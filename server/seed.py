@@ -48,35 +48,16 @@ def create_artists():
     for i in range(11):
         artist = Artist(
             name=fake.word().title(),
-            genres=choice(['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Electronic', 'Country', 'R&B', 'Classical']),
+            genres='Rock',
+            # choice(['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Electronic', 'Country', 'R&B', 'Classical']),
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
+            img='https://picsum.photos/id/334/200',
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
         artists.append(artist)
     return artists
-
-# def create_artist_follows():
-#     follows = []
-
-#     # Fetch all artist IDs from the database
-#     all_artist_ids = [artist.id for artist in Artist.query.all()]
-
-#     # Create rows for the artist_to_artist table
-#     for i in range(31):
-#         id_one = choice(all_artist_ids)
-#         id_two = choice(all_artist_ids)
-
-#         while id_one == id_two:
-#             id_two = choice(all_artist_ids)
-
-#         # If the pair doesn't exist in follows or in the database, add it to follows
-#         if not (id_one, id_two) in follows:
-#             follow = (id_one, id_two)
-#             follows.append(follow)
-
-#     return follows
 
 def create_fans():
     fans = []
@@ -86,6 +67,7 @@ def create_fans():
             name=fake.name().title(),
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
+            img='https://picsum.photos/id/342/200',
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
@@ -109,24 +91,24 @@ def create_events():
     
     return events
 
-def create_band_members():
-    band_members = []
+# def create_band_members():
+#     band_members = []
 
-    available_instruments = ['Guitar', 'Bass', 'Keys', 'Vocals', 'Drums', 'Brass', 'Percussion']
+#     available_instruments = ['Guitar', 'Bass', 'Keys', 'Vocals', 'Drums', 'Brass', 'Percussion']
 
-    for i in range(35):
-        num_instruments = randint(1, 3)
-        instruments = [choice(available_instruments) for _ in range(num_instruments)]
+#     for i in range(35):
+#         num_instruments = randint(1, 3)
+#         instruments = [choice(available_instruments) for _ in range(num_instruments)]
         
-        member = BandMember(
-            name=fake.name(),
-            instruments=', '.join(instruments),
-            bio=fake.text(max_nb_chars=200),
-            img='https://via.placeholder.com/150',  # Replace with an actual image link
-        )
-        band_members.append(member)
+#         member = BandMember(
+#             name=fake.name(),
+#             instruments=', '.join(instruments),
+#             bio=fake.text(max_nb_chars=200),
+#             img='https://via.placeholder.com/150',  # Replace with an actual image link
+#         )
+#         band_members.append(member)
     
-    return band_members
+#     return band_members
 
 def create_tracks():
     all_artist_ids = [artist.id for artist in Artist.query.all()]
@@ -181,10 +163,9 @@ if __name__ == '__main__':
         Artist.query.delete()
         Fan.query.delete()
         Event.query.delete()
-        BandMember.query.delete()
+        # BandMember.query.delete()
         Track.query.delete()
         Like.query.delete()
-        # db.session.query(artist_to_artist).delete()
         db.session.commit()
 
         print("Starting seed...")
@@ -197,8 +178,8 @@ if __name__ == '__main__':
         events = create_events()
         db.session.add_all(events)
 
-        band_members = create_band_members()
-        db.session.add_all(band_members)
+        # band_members = create_band_members()
+        # db.session.add_all(band_members)
 
         tracks = create_tracks()
         db.session.add_all(tracks)
@@ -208,9 +189,5 @@ if __name__ == '__main__':
 
         db.session.commit()
 
-        # artist_follows = create_artist_follows()
-        # for row_data in artist_follows:
-        #     association_row = artist_to_artist.insert().values(row_data)
-        #     db.session.execute(association_row)
         db.session.commit()
         
