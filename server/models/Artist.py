@@ -37,17 +37,22 @@ class Artist(db.Model):
     )
 
     @property
-    def followers(self):
-        likes = Like.query.filter(
+    def fan_followers(self):
+        follows = Like.query.filter(
             Like.likeable_type == 'artist',
-            Like.likeable_id == self.id
+            Like.likeable_id == self.id,
+            Like.fan_id,
             ).all()
-        followers = {
-            'likes': likes,
-            'fans': [like.liker for like in likes if isinstance(like.liker, Fan)],
-            'artists': [like.liker for like in likes if isinstance(like.liker, Artist)]
-        }
-        return [like.liker for like in likes]
+        return [like.liker for like in follows]
+    
+    @property
+    def artist_followers(self):
+        follows = Like.query.filter(
+            Like.likeable_type == 'artist',
+            Like.likeable_id == self.id,
+            Like.artist_id,
+            ).all()
+        return [like.liker for like in follows]
     
     @property
     def followed_artists(self):
