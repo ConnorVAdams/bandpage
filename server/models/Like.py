@@ -7,7 +7,7 @@ class Like(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    likeable_type = db.Column(db.Enum('artist', 'event', 'track', name='likeable_types'), nullable=False)
+    likeable_type = db.Column(db.String, nullable=False)
     likeable_id = db.Column(db.Integer, nullable=False)
     
     liker_type = db.Column(db.Enum('artist', 'fan', name='liker_types'), nullable=False)
@@ -46,4 +46,4 @@ class Like(db.Model):
         elif self.liker_type == 'fan':
             return Fan.query.get(self.fan_id)
         else:
-            return None 
+            return None

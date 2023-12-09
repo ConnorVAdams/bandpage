@@ -6,9 +6,13 @@ from schemas.event_schema import EventSchema
 from app_setup import ma
 
 class ArtistSchema(ma.SQLAlchemySchema):
-    tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
+    tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio'))))
     events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
-    fan_followers = fields.List(ma.Nested(FanSchema(only=('id', 'name', 'location'))))
+    followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
+    followed_artists = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
+    favorited_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
+    rsvped_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+    
 
     class Meta():
         model: Artist
@@ -20,13 +24,11 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'bio',
                     'location',
                     'tracks',
-                    'events'
-                    'fan_followers'
+                    'events',
+                    'followers',
+                    'followed_artists',
+                    'favorited_tracks',
+                    'rsvped_events'
                     ]
-        
-        # TODO are these circular serializations necessary or beneficial?
-        # following = ma.Nested(ArtistSchema, many=True)
-        # artist_followers = ma.Nested(ArtistSchema, many=True)
-        
 
 

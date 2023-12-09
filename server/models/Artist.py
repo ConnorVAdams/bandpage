@@ -1,14 +1,11 @@
 from app_setup import db
-from sqlalchemy import and_
+from sqlalchemy import and_, or_
 from sqlalchemy.ext.associationproxy import association_proxy
 
 from models.like import Like
-
-# artist_to_artist = db.Table(
-#     'artist_to_artist',
-#     db.Column('followed_artist_id', db.Integer, db.ForeignKey('artists.id'), primary_key=True, viewonly=True),
-#     db.Column('following_artist_id', db.Integer, db.ForeignKey('artists.id'), primary_key=True, viewonly=True),
-# )
+from models.track import Track
+from models.event import Event
+from models.fan import Fan
 
 class Artist(db.Model):
     __tablename__ = 'artists'
@@ -31,49 +28,36 @@ class Artist(db.Model):
 
     likes = db.relationship(
         'Like',
-        primaryjoin=lambda: and_(
-            Like.liker_type == 'artist',
-            Like.artist_id == Artist.id
-            )
+        primaryjoin=lambda: Like.artist_id == Artist.id
     )
-    
-    followed_artists = association_proxy(
+
+    likeables = association_proxy(
         'likes', 
-        'liker', 
-        creator=lambda artist: Like(liker=artist, likeable_type='artist')
-    )
-
-    favorited_tracks = association_proxy(
-        'likes', 'likeable',
-        creator=lambda track: Like(likeable=track, liker_type='artist')
-    )
-    
-    rsvped_events = association_proxy(
-        'likes', 'likeable',
-        creator=lambda event: Like(likeable=event, liker_type='artist')
+        'likeable'
     )
 
     @property
-    def fans(self):
-        from models.fan import Fan
-        fans = Fan.query.join(Like, (Like.fan_id == Fan.id)).filter(
+    def followers(self):
+        likes = Like.query.filter(
             Like.likeable_type == 'artist',
             Like.likeable_id == self.id
-
-        ).all()
-
-        return fans
+            ).all()
+        followers = {
+            'likes': likes,
+            'fans': [like.liker for like in likes if isinstance(like.liker, Fan)],
+            'artists': [like.liker for like in likes if isinstance(like.liker, Artist)]
+        }
+        return [like.liker for like in likes]
     
     @property
-    def artist_fans(self):
-        from models.artist import Artist
-        artist_fans = Artist.query.join(Like, (Like.artist_id == Artist.id)).filter(
-            Like.likeable_type == 'artist',
-            Like.likeable_id == self.id
-        ).all()
-
-        return artist_fans
-
-
-
-
+    def followed_artists(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
+    
+    @property
+    def favorited_tracks(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Track)]
+    
+    @property
+    def rsvped_events(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
+    
