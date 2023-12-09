@@ -2,6 +2,8 @@ from app_setup import db
 from sqlalchemy import and_
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
+from datetime import datetime
+import random
 import re
 
 from models.like import Like
@@ -36,18 +38,38 @@ class Fan(db.Model):
         'likeable',
     )
 
+        # * FOLLOWED *
+    
     @property
     def followed_artists(self):
-        from models.artist import Artist
         return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
+    
+    @property
+    def top_five_artists(self):
+        return sorted(self.followed_artists, key=lambda artist: len(artist.followers), reverse=True)[:5]
+
+    # * TRACKS *
 
     @property
     def favorited_tracks(self):
         return [likeable for likeable in self.likeables if isinstance(likeable, Track)]
+    
+    @property
+    def top_five_tracks(self):
+        return sorted(self.favorited_tracks, key=lambda track: len(track.fans), reverse=True)[:5]
+
+    # * EVENTS *
 
     @property
     def rsvped_events(self):
         return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
+    
+    @property
+    def upcoming_events(self):
+        current_time = datetime.now()
+        future_events = [event for event in self.rsvped_events if event.event_date_time > current_time]
+        sorted_events = sorted(future_events, key=lambda event: event.event_date_time)
+        return sorted_events[:5]
     
     @validates('name')
     def validate_name(self, _, name):

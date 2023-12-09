@@ -68,13 +68,16 @@ function App() {
         {/* <Navigation /> */}
         <Toaster />
         <Switch>
-            <Route path='/landing'>
+            <Route exact path='/'>
+                {/* <LoginForm /> */}
+            </Route>
+            <Route exact path='/landing'>
                 <ArtistCard />
                 <FanCard />
                 <EventCard />
                 <TrackCard />
             </Route>
-            <Route path='/artists'>
+            <Route exact path='/artists'>
                 <ArtistCard/>
             </Route>
             <Route  path='/artists/:artist_id'>
@@ -90,11 +93,8 @@ function App() {
             <Route  path='/artists/:artist_id/events'>
                 <EventCard />
             </Route>
-            <Route exact path='/'>
-            {/* <Home /> */}
-            </Route>
             <Route>
-            {/* <NotFound /> */}
+                {/* <NotFound /> */}
             </Route>
         </Switch>
         </>
