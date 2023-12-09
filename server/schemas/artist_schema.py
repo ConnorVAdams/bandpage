@@ -1,9 +1,10 @@
 from marshmallow import fields, validate
 from models.artist import Artist
+from app_setup import ma
+
+from schemas.event_schema import EventSchema
 from schemas.fan_schema import FanSchema
 from schemas.track_schema import TrackSchema
-from schemas.event_schema import EventSchema
-from app_setup import ma
 
 class ArtistSchema(ma.SQLAlchemySchema):
     tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio'))))

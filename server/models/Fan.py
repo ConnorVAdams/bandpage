@@ -35,6 +35,7 @@ class Fan(db.Model):
 
     @property
     def followed_artists(self):
+        from models.artist import Artist
         return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
 
     @property
