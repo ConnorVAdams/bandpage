@@ -131,8 +131,8 @@ class Artist(db.Model):
     @property
     def upcoming_events(self):
         current_time = datetime.now()
-        future_events = [event for event in self.rsvped_events if event.event_date_time > current_time]
-        sorted_events = sorted(future_events, key=lambda event: event.event_date_time)
+        future_events = [event for event in self.rsvped_events if event.date_time > current_time]
+        sorted_events = sorted(future_events, key=lambda event: event.date_time)
         return sorted_events[:5]
 
     # ***************

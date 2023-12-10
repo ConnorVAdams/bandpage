@@ -1,11 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit"
-// import userReducer from "../features/user/userSlice"
+import artistReducer from "../features/artist/artistSlice"
 // import productionReducer from "../features/production/productionSlice"
 
 export const store = configureStore({
     reducer: {
-        // production: productionReducer,
+        artist: artistReducer
         // user: userReducer,
     },
     devTools: {trace: true}
 })
+

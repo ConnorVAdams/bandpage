@@ -19,48 +19,48 @@ import ArtistDetail from './features/artist/ArtistDetail'
 
 
 function App() {
-    const user = useSelector(state => state.user.data)
-    const userErrors = useSelector(state => state.user.errors)
-    const productionErrors = useSelector(state => state.production.errors)
-    const dispatch = useDispatch()
-    const errors = [...userErrors, ...productionErrors]
-    const clearErrorsAction = useCallback(() => {
-        dispatch(clearUserErrors(""))
-        dispatch(clearProductionErrors(""))
-    }, [dispatch, clearUserErrors, clearProductionErrors]);
+    // const user = useSelector(state => state.user.data)
+    // const userErrors = useSelector(state => state.user.errors)
+    // const productionErrors = useSelector(state => state.production.errors)
+    // const dispatch = useDispatch()
+    // const errors = [...userErrors, ...productionErrors]
+    // const clearErrorsAction = useCallback(() => {
+    //     dispatch(clearUserErrors(""))
+    //     dispatch(clearProductionErrors(""))
+    // }, [dispatch, clearUserErrors, clearProductionErrors]);
 
-    useEffect(() => {
-        (async () => {
-        if (!user) {
-            const action = await dispatch(fetchCurrentUser())
-            if (typeof action.payload !== "string") {
-            if (action.payload.flag === "refresh") {
-                setToken(action.payload.jwt_token)
-            }
-            dispatch(fetchAllProductions())
-            }
-        }
-        })()
-    }, [user])
+    // useEffect(() => {
+    //     (async () => {
+    //     if (!user) {
+    //         const action = await dispatch(fetchCurrentUser())
+    //         if (typeof action.payload !== "string") {
+    //         if (action.payload.flag === "refresh") {
+    //             setToken(action.payload.jwt_token)
+    //         }
+    //         dispatch(fetchAllProductions())
+    //         }
+    //     }
+    //     })()
+    // }, [user])
 
-    useEffect(() => {
-        if (errors.length) {
-        clearErrorsAction()
-        // const timeout = setTimeout(clearErrorsAction, 3000)
-        // return () => {
-        //   clearTimeout(timeout)
-        // };
-        }
-    }, [errors, clearErrorsAction]);
+    // useEffect(() => {
+    //     if (errors.length) {
+    //     clearErrorsAction()
+    //     // const timeout = setTimeout(clearErrorsAction, 3000)
+    //     // return () => {
+    //     //   clearTimeout(timeout)
+    //     // };
+    //     }
+    // }, [errors, clearErrorsAction]);
 
-    if(!user) return (
-        <>
-        {/* <GlobalStyle />
-        <Navigation/> */}
-        <Toaster />
-        <Authentication />
-        </>
-    )
+    // if(!user) return (
+    //     <>
+    //     {/* <GlobalStyle />
+    //     <Navigation/> */}
+    //     <Toaster />
+    //     {/* <Authentication /> */}
+    //     </>
+    // )
     return (
         <>
         {/* <GlobalStyle /> */}
@@ -68,7 +68,7 @@ function App() {
         <Toaster />
         <Switch>
             <Route exact path='/'>
-                <ArtistForm />
+                <WizardForm />
             </Route>
             <Route exact path='/landing'>
                 <ArtistCard />

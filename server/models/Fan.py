@@ -10,7 +10,6 @@ import re
 from models.like import Like
 from models.track import Track
 from models.event import Event
-from app_setup import bcrypt
 
 
 class Fan(db.Model):

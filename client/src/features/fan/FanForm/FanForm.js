@@ -4,7 +4,7 @@ import concertFormSchema from './concertFormSchema'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import FormSubmissionComponent from '../formSubmissionModal/formSubmissionModal'
 
-const ArtistForm = () => {
+const FanForm = () => {
     const [venues, setVenues] = useState([])
     const [artists, setArtists] = useState([])
     const [newArtist, setNewArtist] = useState(false)
@@ -303,4 +303,4 @@ const ArtistForm = () => {
     )
 }
 
-export default ArtistForm
+export default FanForm

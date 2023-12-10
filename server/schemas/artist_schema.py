@@ -11,11 +11,10 @@ class ArtistSchema(ma.SQLAlchemySchema):
     # name = fields.Str(required=True, validate=validate.Length(min=1, max=40))
     tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio'))))
     events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
-    fan_followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
-    artist_followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
-    followed_artists = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
-    favorited_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
-    rsvped_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+    rand_five_followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
+    top_five_artists = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
+    top_five_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
+    upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
     
     class Meta():
         model: Artist
@@ -29,11 +28,10 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'img',
                     'tracks',
                     'events',
-                    'fan_followers',
-                    'artist_followers',
-                    'followed_artists',
-                    'favorited_tracks',
-                    'rsvped_events'
+                    'rand_five_followers',
+                    'top_five_artists',
+                    'top_five_tracks',
+                    'upcoming_events'
                     ]
 
 
