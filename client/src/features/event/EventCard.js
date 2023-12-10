@@ -1,7 +1,21 @@
-const EventCard = ({ event }) => {
-    return(
-        <h1>EventCard</h1>
-    )
-}
+import { Link } from 'react-router-dom'
 
-export default EventCard
+function EventCard({ event }) {
+    const {id, name, genres, bio, location, img } = event
+    return (
+        <div id={id}>
+            <div>
+            <Link to={`/artists/${id}`}> 
+                <h2>{name}</h2>
+                <img src={img} alt={name}/>
+            </Link>
+                <p>{genres}</p>
+                <p>{bio}</p>
+                <p>{location}</p>
+            </div>
+
+        </div>
+        )
+    }
+    
+    export default EventCard

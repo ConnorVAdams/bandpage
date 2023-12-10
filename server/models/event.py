@@ -20,6 +20,10 @@ class Event(db.Model):
     artist = db.relationship('Artist', back_populates='events')
 
     @property
+    def artist_name(self):
+        return self.artist.name
+
+    @property
     def attendees(self):
         likes = Like.query.filter(
             Like.likeable_type == 'event',
