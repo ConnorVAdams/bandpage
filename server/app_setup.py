@@ -54,6 +54,6 @@ ma = Marshmallow(app)
 #! flask-bcrypt
 bcrypt = Bcrypt(app)
 #! flask-restful setup
-api = Api(app)  # , prefix="/api/v1")
+api = Api(app, prefix="/api/v1")
 #! Flask-jwt-extended setup
 jwt = JWTManager(app)
