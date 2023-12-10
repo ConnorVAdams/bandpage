@@ -19,6 +19,10 @@ class Track(db.Model):
     artist = db.relationship('Artist', back_populates='tracks')
 
     @property
+    def artist_name(self):
+        return self.artist.name
+
+    @property
     def fans(self):
         likes = Like.query.filter(
             Like.likeable_type == 'track',

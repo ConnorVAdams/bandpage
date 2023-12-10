@@ -1,17 +1,19 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function ArtistCard({ artist }) {
-    const {title, budget, genre, image, id} = artist
+    const {id, name, genres, bio, location, img } = artist
     return (
         <div id={id}>
-            <Link to={`/artists/${id}`}> 
             <div>
-                <h2>{title}</h2>
-                <p>{genre}</p>
-                <p>$ {budget}</p>
-            </div>
-            <img src={image} alt={title}/>
+            <Link to={`/artists/${id}`}> 
+                <h2>{name}</h2>
+                <img src={img} alt={name}/>
             </Link>
+                <p>{genres}</p>
+                <p>{bio}</p>
+                <p>{location}</p>
+            </div>
+
         </div>
         )
     }

@@ -16,14 +16,13 @@ import FanCard from './features/fan/FanCard'
 import TrackCard from './features/track/TrackCard'
 import ArtistDetail from './features/artist/ArtistDetail'
 import ArtistWrapper from './features/artist/ArtistWrapper'
-import { fetchAllArtists } from './features/artist/artistSlice'
+import TrackWrapper from './features/track/TrackWrapper'
 
 
 function App() {
     // const user = useSelector(state => state.user.data)
     // const userErrors = useSelector(state => state.user.errors)
     // const productionErrors = useSelector(state => state.production.errors)
-    const dispatch = useDispatch()
     // const errors = [...userErrors, ...productionErrors]
     // const clearErrorsAction = useCallback(() => {
     //     dispatch(clearUserErrors(""))
@@ -44,9 +43,7 @@ function App() {
     //     })()
     // }, [user])
 
-    useEffect(() => {
-        dispatch(fetchAllArtists())
-    })
+
 
     // useEffect(() => {
     //     if (errors.length) {
@@ -68,7 +65,26 @@ function App() {
     // )
     return (
         <>
-            <ArtistWrapper />
+            <Switch>
+                <Route path='/artists'>
+                    <ArtistWrapper />
+                </Route>
+                <Route path='/tracks'>
+                    <TrackWrapper />
+                </Route>
+                {/* <Route  path='/productions/edit/:id'>
+
+                </Route>
+                <Route path='/productions/:prod_id'>
+
+                </Route> */}
+                <Route exact path='/'>
+                    <Home />
+                </Route>
+                <Route>
+                    <NotFound />
+                </Route>
+            </Switch>
         </>
     )
     }

@@ -4,7 +4,6 @@ from app_setup import ma
 
 class TrackSchema(ma.SQLAlchemySchema):
     # fans = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
-
     class Meta():
         model: Track
         load_instance = True
@@ -12,7 +11,8 @@ class TrackSchema(ma.SQLAlchemySchema):
                     'id', 
                     'name',
                     'audio',
-                    'artist_id'
+                    'artist_id',
+                    'artist_name'
                     ]
         
         
