@@ -11,8 +11,8 @@ class ArtistSchema(ma.SQLAlchemySchema):
     # name = fields.Str(required=True, validate=validate.Length(min=1, max=40))
     tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio'))))
     events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
-    rand_five_followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
-    top_five_artists = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location'))))
+    rand_five_followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location', 'img'))))
+    top_five_artists = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location', 'img'))))
     top_five_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
     upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
     

@@ -25,19 +25,19 @@ const fetchAll = async (asyncThunk) => {
     }
 }
 
-// const fetchOne = async (prod_id, asyncThunk) => {
-//     try {
-//         const resp = await fetch(`/productions/${prod_id}`)
-//         const data = await resp.json()
-//         if (resp.ok) {
-//             return data
-//         } else {
-//             throw data.message || data.msg
-//         }
-//     } catch (error) {
-//         return error
-//     }
-// }
+const fetchOne = async (artist_id, asyncThunk) => {
+    try {
+        const resp = await fetch(`/artists/${artist_id}`)
+        const data = await resp.json()
+        if (resp.ok) {
+            return data
+        } else {
+            throw data.message || data.msg
+        }
+    } catch (error) {
+        return error
+    }
+}
 
 // const postProduction = async (values, asyncThunk) => {
 //     try {
@@ -163,27 +163,27 @@ const artistSlice = createSlice({
                 },
             }
         ),
-        // fetchOneProduction: create.asyncThunk(
-        //     fetchOne,
-        //     {
-        //         pending: (state) => {
-        //             state.errors = []
-        //             state.loading = true
-        //         },
-        //         rejected: (state, action) => {
-        //             state.loading = false
-        //             state.errors.push(action.payload)
-        //         },
-        //         fulfilled: (state, action) => {
-        //             state.loading = false
-        //             if (!action.payload.id) {
-        //                 state.errors.push(action.payload)
-        //             } else {
-        //                 state.spotlight = action.payload
-        //             }
-        //         },
-        //     }
-        // ),
+        fetchOneArtist: create.asyncThunk(
+            fetchOne,
+            {
+                pending: (state) => {
+                    state.errors = []
+                    state.loading = true
+                },
+                rejected: (state, action) => {
+                    state.loading = false
+                    state.errors.push(action.payload)
+                },
+                fulfilled: (state, action) => {
+                    state.loading = false
+                    if (!action.payload.id) {
+                        state.errors.push(action.payload)
+                    } else {
+                        state.spotlight = action.payload
+                    }
+                },
+            }
+        ),
         // fetchPostProduction: create.asyncThunk(
         //     postProduction,
         //     {
@@ -257,6 +257,9 @@ const artistSlice = createSlice({
         selectArtists(state){
             return state.data
         },
+        selectArtistById: (state, artist_id) => {
+            return state.data.find(artist => artist.id === artist_id)
+        }
     }
 })
 
@@ -266,7 +269,7 @@ export const {
     // addError, 
     // clearErrors, 
     fetchAllArtists, 
-    // fetchOneProduction, 
+    fetchOneArtist, 
     // fetchPostProduction, 
     // fetchPatchProduction, 
     // fetchDeleteProduction

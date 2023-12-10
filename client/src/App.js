@@ -67,6 +67,9 @@ function App() {
     return (
         <>
             <Switch>
+                <Route path='/artists/:artist_id'>
+                    <ArtistDetail />
+                </Route>
                 <Route path='/artists'>
                     <ArtistWrapper />
                 </Route>
@@ -76,6 +79,7 @@ function App() {
                 <Route path='/events'>
                     <EventWrapper />
                 </Route>
+
                 {/* <Route  path='/productions/edit/:id'>
 
                 </Route>
