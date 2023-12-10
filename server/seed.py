@@ -18,8 +18,21 @@ from models.track import Track
 from models.band_member import BandMember
 from models.event import Event
 
+# *******************
+# * FAKER FUNCTIONS *
+# *******************
 
 fake = Faker()
+
+username_set = set()
+
+while len(username_set) < 100:
+    username = fake.user_name()
+    username_set.add(username)
+
+unique_usernames = list(username_set)
+print(unique_usernames)
+
 # *****************************
 # * RANDOM DATETIME FUNCTIONS *
 # *****************************
@@ -46,24 +59,33 @@ def create_artists():
     artists = []
 
     for i in range(11):
+        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
+
         artist = Artist(
+            username=username,
             name=fake.word().title(),
-            genres='Rock',
-            # choice(['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Electronic', 'Country', 'R&B', 'Classical']),
+            genres=choice(['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Electronic', 'Country', 'R&B', 'Classical']),
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
             img='https://picsum.photos/id/334/200',
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
+
+        artist.password_hash = fake.word()
         artists.append(artist)
+
     return artists
 
 def create_fans():
     fans = []
 
     for i in range(50):
+        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
+        password = fake.word()
+
         fan = Fan(
+            username=username,
             name=fake.name().title(),
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
@@ -71,6 +93,8 @@ def create_fans():
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
+        
+        fan.password_hash = fake.word()
         fans.append(fan)
 
     return fans

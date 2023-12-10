@@ -2,6 +2,7 @@ from app_setup import db
 from sqlalchemy import and_
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
 import random
 import re
@@ -9,13 +10,15 @@ import re
 from models.like import Like
 from models.track import Track
 from models.event import Event
+from app_setup import bcrypt
+
 
 class Fan(db.Model):
     __tablename__ = 'fans'
 
     id = db.Column(db.Integer, primary_key=True)
-    # username = db.Column(db.String, unique=True)
-    # _password_hash = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, unique=True)
+    _password_hash = db.Column(db.String, nullable=False)
     name = db.Column(db.String)
     bio = db.Column(db.String)
     location = db.Column(db.String)
@@ -38,7 +41,23 @@ class Fan(db.Model):
         'likeable',
     )
 
-        # * FOLLOWED *
+# *******************
+    # * SECURITY & AUTH *
+    # *******************
+
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError('Passwords cannot be revealed.')
+
+    @password_hash.setter
+    def password_hash(self, new_password):
+        hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        self._password_hash = hashed_password
+
+    def authenticate(self, password_to_check):
+        return bcrypt.check_password_hash(self._password_hash, password_to_check)
+
+    # * FOLLOWED *
     
     @property
     def followed_artists(self):
