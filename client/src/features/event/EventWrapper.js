@@ -1,27 +1,27 @@
-import ArtistCard from './ArtistCard'
+import EventCard from './EventCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { fetchAllArtists } from './artistSlice'
+import { fetchAllEvents } from './eventSlice'
 
-const ArtistWrapper = () => {
-    const artists = useSelector(state => state.artist.data)
+const EventWrapper = () => {
+    const events = useSelector(state => state.event.data)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchAllArtists())
+        dispatch(fetchAllEvents())
     }, [])
-    console.log(artists)
+    console.log(events)
 
     return (
         <div>
-            <h1>All Artists</h1>
-            {artists && artists.map(
-                artist => <ArtistCard 
-                    key={artist.id} 
-                    artist={artist} />
+            <h1>All Events</h1>
+            {events && events.map(
+                event => <EventCard 
+                    key={event.id} 
+                    event={event} />
             )}
         </div>
     )
 }
 
-export default ArtistWrapper
+export default EventWrapper

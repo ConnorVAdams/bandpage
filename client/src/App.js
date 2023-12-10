@@ -16,6 +16,7 @@ import FanCard from './features/fan/FanCard'
 import TrackCard from './features/track/TrackCard'
 import ArtistDetail from './features/artist/ArtistDetail'
 import ArtistWrapper from './features/artist/ArtistWrapper'
+import EventWrapper from './features/event/EventWrapper'
 import TrackWrapper from './features/track/TrackWrapper'
 
 
@@ -71,6 +72,9 @@ function App() {
                 </Route>
                 <Route path='/tracks'>
                     <TrackWrapper />
+                </Route>
+                <Route path='/events'>
+                    <EventWrapper />
                 </Route>
                 {/* <Route  path='/productions/edit/:id'>
 
