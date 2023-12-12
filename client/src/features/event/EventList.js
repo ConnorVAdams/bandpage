@@ -5,14 +5,13 @@ import { useEffect } from 'react'
 
 const EventList = () => {
     const events = useSelector(state => state.artist.spotlight.events)
-    
-    return (
-        <div>
-            {events && events.map(event => event && (
-                <EventCard key={event.id} event={event} />
-            ))}
-        </div>
-    )
+        return (
+            <div>
+                {events && events.map(event => event && (
+                    <EventCard key={event.id} event={event} />
+                ))}
+            </div>
+        )
 }
 
 export default EventList

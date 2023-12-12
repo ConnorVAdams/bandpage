@@ -33,18 +33,6 @@ const ArtistDetail = () => {
         const {id, name, genres, bio, location, img, tracks, events, rand_five_followers, top_five_artists, top_five_tracks, upcoming_events } = artist 
         return (
                 <div id={id} className='wrapper'>
-                    <h2>TracksFeature</h2>
-                    <div>
-                        {tracks && tracks.map(track => track && (
-                            <TrackCard key={track.id} track={track} />
-                        ))}
-                    </div>
-                    <h2>EventsFeature</h2>
-                    <div>
-                        {events && events.map(event => event && (
-                            <EventCard key={event.id} event={event} />
-                        ))}
-                    </div>
                     <h2>Followers:</h2>
                     <div>
                         {rand_five_followers && rand_five_followers.map(fan => fan && (

@@ -30,6 +30,10 @@ class Event(db.Model):
             Like.likeable_id == self.id
             ).all()
         return [like.liker for like in likes]
+    
+    @property
+    def attending(self):
+        return len(self.attendees)
 
     @validates('date_time')
     def validate_date_time(self, _, date_time):

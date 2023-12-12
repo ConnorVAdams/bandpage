@@ -52,7 +52,7 @@ const ArtistWrapper = () => {
     //     history.push(`/productions/edit/${production.id}`)
     // }
 
-    const {id, name, location, img, tracks, events } = artist 
+    const {id, name, location, img } = artist 
     return (
         <div id={id}>
             <Link to={`/artists/${id}`}>

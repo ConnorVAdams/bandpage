@@ -30,6 +30,10 @@ class Track(db.Model):
         ).all()
         return [like.liker for like in likes]
     
+    @property
+    def likes(self):
+        return len(self.fans)
+    
     @validates('name')
     def validate_name(self, _, name):
         if not isinstance(name, str):

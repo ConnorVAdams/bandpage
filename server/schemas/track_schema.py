@@ -12,7 +12,9 @@ class TrackSchema(ma.SQLAlchemySchema):
                     'name',
                     'audio',
                     'artist_id',
-                    'artist_name'
+                    'artist_name',
+                    'likes'
+                    # 'fans'
                     ]
         
         

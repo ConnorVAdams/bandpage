@@ -140,7 +140,7 @@ def create_tracks():
 
     tracks = []
     
-    for i in range(100):
+    for i in range(60):
         track = Track(
             name=fake.text(max_nb_chars=20),
             audio=url,
@@ -159,7 +159,7 @@ def create_likes():
 
     # Create placeholder relationships
     likes = []
-    for i in range(50):  # Adjust the number of placeholder likes as needed
+    for i in range(150):  # Adjust the number of placeholder likes as needed
         likeable_type = choice(['artist', 'event', 'track'])
         liker_type = choice(['artist', 'fan'])
         artist_id = None
