@@ -18,10 +18,16 @@ class FanSchema(ma.SQLAlchemySchema):
                     'bio',
                     'location',
                     'img',
-                    'followed_artists',
+                    # TODO Why don't these serialize properly here like they do in artistSchema?
+                    'top_five_artists',
                     'favorited_tracks',
                     'rsvped_events',
-                    'top_five_artists',
-                    'top_five_tracks',
-                    'upcoming_events'
                     ]
+
+    # TODO Throws 'map is not a function' error
+    # def dump(self, obj, *args, **kwargs):
+    #     serialized_data = super().dump(obj, *args, **kwargs)
+
+    #     serialized_data['_metadata'] = {'user_type': 'Fan'}
+
+    #     return serialized_data

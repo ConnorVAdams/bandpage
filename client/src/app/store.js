@@ -6,8 +6,8 @@ import eventReducer from '../features/event/eventSlice'
 export const store = configureStore({
     reducer: {
         artist: artistReducer,
-        track: trackReducer,
-        event: eventReducer
+        tracks: trackReducer,
+        events: eventReducer
     },
     devTools: {trace: true}
 })

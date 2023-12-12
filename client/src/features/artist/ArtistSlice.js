@@ -6,11 +6,14 @@ export const createSlice = buildCreateSlice({
 
 const initialState = {
     data: null,
+    tracks: null,
+    events: null,
     errors: [],
     editMode: false,
     spotlight: null,
     loading: true
 }
+
 const fetchAll = async (asyncThunk) => {
     try {
         const resp = await fetch('/artists')
@@ -180,6 +183,8 @@ const artistSlice = createSlice({
                         state.errors.push(action.payload)
                     } else {
                         state.spotlight = action.payload
+                        state.tracks = action.payload.tracks
+                        // state.events = state.spotlight.events
                     }
                 },
             }
@@ -241,7 +246,7 @@ const artistSlice = createSlice({
         //         },
         //         fulfilled: (state, action) => {
         //             state.loading = false
-                    
+
         //             if (typeof action.payload === "string") {
         //                 state.errors.push(action.payload)
         //             } else {

@@ -6,6 +6,7 @@ import { fetchOneArtist } from './artistSlice'
 // import styled from 'styled-components'
 import NotFound from '../../components/NotFound'
 import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom'
 import TrackCard from '../track/TrackCard'
 import EventCard from '../event/EventCard'
 import ArtistCard from './ArtistCard'
@@ -13,24 +14,6 @@ import FanCard from '../fan/FanCard'
 
 const ArtistDetail = () => {
     const artist = useSelector(state => state.artist.spotlight)
-    const { artist_id } = useParams()
-    const history = useHistory()
-    const dispatch = useDispatch()
-
-    useEffect(()=>{
-        (async () => {
-        if (!artist) {
-            const {payload} = await dispatch(fetchOneArtist(artist_id))
-            if (typeof payload !== "string") {
-            toast.success(`Artist ${payload.title} loaded!`)
-            } else {
-            toast.error(payload)
-            history.push("/")
-            }
-        }
-        
-        })()
-    },[artist, artist_id])
 
     // const handleDelete = async () => {
     //     const {type, meta, payload} = await dispatch(fetchDeleteProduction(prod_id))
@@ -46,63 +29,51 @@ const ArtistDetail = () => {
     //     dispatch(setEditMode(true))
     //     history.push(`/productions/edit/${production.id}`)
     // }
-
-    if (!artist) {
-        return <NotFound />
-    }
-
-    const {id, name, genres, bio, location, img, tracks, events, rand_five_followers, top_five_artists, top_five_tracks, upcoming_events } = artist 
-    return (
-        <div id={id}>
-            <h1>{name}</h1>
-            <div className='wrapper'>
-                <img src={img} alt={name} />
-                <p>Genres: {genres}</p>
-                <p>Bio: {bio}</p>
-                <p>Location: {location}</p>
-                <h2>Tracks:</h2>
-                <div>
-                    {tracks && tracks.map(track => track && (
-                        <TrackCard key={track.id} track={track} />
-                    ))}
+    if (artist) {
+        const {id, name, genres, bio, location, img, tracks, events, rand_five_followers, top_five_artists, top_five_tracks, upcoming_events } = artist 
+        return (
+                <div id={id} className='wrapper'>
+                    <h2>TracksFeature</h2>
+                    <div>
+                        {tracks && tracks.map(track => track && (
+                            <TrackCard key={track.id} track={track} />
+                        ))}
+                    </div>
+                    <h2>EventsFeature</h2>
+                    <div>
+                        {events && events.map(event => event && (
+                            <EventCard key={event.id} event={event} />
+                        ))}
+                    </div>
+                    <h2>Followers:</h2>
+                    <div>
+                        {rand_five_followers && rand_five_followers.map(fan => fan && (
+                            <FanCard key={fan.id} fan={fan} />
+                        ))}
+                    </div>
+                    <h2>Followed Artists:</h2>
+                    <div>
+                        {top_five_artists && top_five_artists.map(artist => artist && (
+                            <ArtistCard key={artist.id} artist={artist} />
+                        ))}
+                    </div>
+                    <h2>Top Five Tracks:</h2>
+                    <div>
+                        {top_five_tracks && top_five_tracks.map(track => track && (
+                            <TrackCard key={track.id} track={track} />
+                        ))}
+                    </div>
+                    <h2>Upcoming Events:</h2>
+                    <div>
+                        {upcoming_events && upcoming_events.map(event => event && (
+                            <EventCard key={event.id} event={event} />
+                        ))}
+                    </div>
                 </div>
-                <h2>Events:</h2>
-                <div>
-                    {events && events.map(event => event && (
-                        <EventCard key={event.id} event={event} />
-                    ))}
-                </div>
-                <h2>Followers:</h2>
-                <div>
-                    {rand_five_followers && rand_five_followers.map(fan => fan && (
-                        <FanCard key={fan.id} fan={fan} />
-                    ))}
-                </div>
-                <h2>Followed Artists:</h2>
-                <div>
-                    {top_five_artists && top_five_artists.map(artist => artist && (
-                        <ArtistCard key={artist.id} artist={artist} />
-                    ))}
-                </div>
-                <h2>Top Five Tracks:</h2>
-                <div>
-                    {top_five_tracks && top_five_tracks.map(track => track && (
-                        <TrackCard key={track.id} track={track} />
-                    ))}
-                </div>
-                <h2>Upcoming Events:</h2>
-                <div>
-                    {upcoming_events && upcoming_events.map(event => event && (
-                        <EventCard key={event.id} event={event} />
-                    ))}
-                </div>
-                
-            </div>
-        {/* <button onClick={handleEdit} >Edit Production</button>
-        <button onClick={handleDelete} >Delete Production</button> */}
-
-        </div>
-        )
+            // {/* <button onClick={handleEdit} >Edit Production</button>
+            // <button onClick={handleDelete} >Delete Production</button> */}
+            )
+        }
     }
     
     export default ArtistDetail

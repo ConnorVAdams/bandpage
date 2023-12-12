@@ -16,8 +16,10 @@ import FanCard from './features/fan/FanCard'
 import TrackCard from './features/track/TrackCard'
 import ArtistDetail from './features/artist/ArtistDetail'
 import ArtistWrapper from './features/artist/ArtistWrapper'
-import EventWrapper from './features/event/EventWrapper'
-import TrackWrapper from './features/track/TrackWrapper'
+import ArtistList from './features/artist/ArtistList'
+import EventList from './features/event/EventList'
+import TrackList from './features/track/TrackList'
+import NavBar from './components/NavBar'
 
 
 function App() {
@@ -66,42 +68,42 @@ function App() {
     // )
     return (
         <>
-            <Switch>
-                <Route path='/artists/:artist_id'>
-                    <ArtistDetail />
-                </Route>
-                <Route path='/artists'>
-                    <ArtistWrapper />
-                </Route>
-                <Route path='/tracks'>
-                    <TrackWrapper />
-                </Route>
-                <Route path='/events'>
-                    <EventWrapper />
-                </Route>
+            <NavBar/>
+                <Switch>
+                    {/* <Route path='/artists/:artist_id/about'>
+                        <ArtistDetail />
+                        <h1>About</h1>
+                    </Route> */}
+                    <Route path='/artists/:artist_id/events'>
+                        <ArtistWrapper/>
+                            <EventList />
+                    </Route>
+                    <Route path='/artists/:artist_id/tracks'>
+                        <ArtistWrapper/>
+                            <TrackList />
+                    </Route>
+                    <Route path='/artists/:artist_id/'>
+                        <ArtistWrapper/>
+                            <ArtistDetail />
+                    </Route>
+                    <Route path='/artists'>
+                        <ArtistList />
+                    </Route>
+                    <Route path='/landing'>
 
-                {/* <Route  path='/productions/edit/:id'>
+                    </Route>
+                    <Route path='/login'>
+                        
+                    </Route>
+                    <Route path='/'>
 
-                </Route>
-                <Route path='/productions/:prod_id'>
-
-                </Route> */}
-                <Route exact path='/'>
-                    <Home />
-                </Route>
-                <Route>
-                    <NotFound />
-                </Route>
-            </Switch>
+                    </Route>
+                    <Route>
+                        <NotFound />
+                    </Route>
+                </Switch>
         </>
     )
     }
 
     export default App
-
-    // const GlobalStyle = createGlobalStyle`
-    //     body{
-    //     background-color: black; 
-    //     color:white;
-    //     }
-    //     `

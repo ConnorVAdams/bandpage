@@ -34,4 +34,10 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'upcoming_events'
                     ]
 
+# TODO Throws 'map is not a function' error
+    # def dump(self, obj, *args, **kwargs):
+    #     serialized_data = super().dump(obj, *args, **kwargs)
 
+    #     serialized_data['_metadata'] = {'user_type': 'Artist'}
+
+    #     return serialized_data

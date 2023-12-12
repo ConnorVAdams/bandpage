@@ -2,7 +2,6 @@
 
 function FanCard({ fan }) {
     const {id, name, bio, location, img } = fan
-    console.log(fan)
     return (
         <div id={id}>
             <div>

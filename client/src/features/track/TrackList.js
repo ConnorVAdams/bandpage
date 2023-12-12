@@ -1,17 +1,11 @@
 import TrackCard from './TrackCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { fetchAllTracks } from './trackSlice'
 
 
-const TrackWrapper = () => {
-    const tracks = useSelector(state => state.track.data)
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchAllTracks())
-    }, [])
-
+const TrackList = () => {
+    const tracks = useSelector(state => state.artist.spotlight.tracks)
+    
     return (
         <div>
             {tracks && tracks.map(track => track && (
@@ -21,4 +15,4 @@ const TrackWrapper = () => {
     )
 }
 
-export default TrackWrapper
+export default TrackList
