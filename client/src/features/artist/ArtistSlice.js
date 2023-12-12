@@ -9,8 +9,8 @@ const initialState = {
     tracks: null,
     events: null,
     errors: [],
-    editMode: false,
-    spotlight: null,
+    admin: false,
+    current: null,
     loading: true
 }
 
@@ -182,7 +182,7 @@ const artistSlice = createSlice({
                     if (!action.payload.id) {
                         state.errors.push(action.payload)
                     } else {
-                        state.spotlight = action.payload
+                        state.current = action.payload
                         state.tracks = action.payload.tracks
                         // state.events = state.spotlight.events
                     }

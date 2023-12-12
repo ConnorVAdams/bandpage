@@ -8,7 +8,7 @@ const initialState = {
     data: null,
     errors: [],
     editMode: false,
-    spotlight: null,
+    current: null,
     loading: true
 }
 const fetchAll = async (asyncThunk) => {
@@ -179,7 +179,7 @@ const artistSlice = createSlice({
                     if (!action.payload.id) {
                         state.errors.push(action.payload)
                     } else {
-                        state.spotlight = action.payload
+                        state.current = action.payload
                     }
                 },
             }

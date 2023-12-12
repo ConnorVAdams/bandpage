@@ -13,7 +13,7 @@ import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
 
 const ArtistDetail = () => {
-    const artist = useSelector(state => state.artist.spotlight)
+    const artist = useSelector(state => state.artist.display)
 
     // const handleDelete = async () => {
     //     const {type, meta, payload} = await dispatch(fetchDeleteProduction(prod_id))

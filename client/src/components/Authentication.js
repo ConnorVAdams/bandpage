@@ -9,6 +9,27 @@ import { setToken, setRefreshToken } from '../../utils/main';
 import toast from 'react-hot-toast';
 
 function Authentication() {
+    // Conditionally render either signup or login option 
+
+    // If signup:
+        // Offer artist or fan signup:
+            // If artist:
+                // Step through form to input artist info
+                // POST new artist to db
+                // Load new artist to client as current user
+                // Navigate user to /landing
+
+            // If fan:
+                // Step through form to input artist info
+                // POST new fan to db
+                // Load new fan to client as current user
+                // Navigate user to /landing
+    
+        // If login:
+            // POST new artist or fan obj to db
+            // Load new artist or fan to client as current user
+            // Navigate user to /landing
+
     const [signUp, setSignUp] = useState(false)
     const dispatch = useDispatch()
 
@@ -77,23 +98,3 @@ function Authentication() {
         </>
     )
 }
-
-export default Authentication
-
-// export const Form = styled.form`
-// display:flex;
-// flex-direction:column;
-// width: 400px;
-// margin:auto;
-// font-family:Arial;
-// font-size:30px;
-// input[type=submit]{
-//     background-color:#42ddf5;
-//     color: white;
-//     height:40px;
-//     font-family:Arial;
-//     font-size:30px;
-//     margin-top:10px;
-//     margin-bottom:10px;
-// }
-// `

@@ -1,5 +1,5 @@
 import  { useParams, useHistory } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
 // import { setEditMode, fetchOneProduction, fetchDeleteProduction } from './productionSlice'
@@ -13,10 +13,14 @@ import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
 
 const ArtistWrapper = () => {
-    const artist = useSelector(state => state.artist.spotlight)
+    const artist = useSelector(state => state.artist.current)
+
     const { artist_id } = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
+
+    // Ask store if current user is artist AND current user id is also equal to artist.id
+    // If so, set admin to true
 
     useEffect(()=>{
         (async () => {
@@ -68,6 +72,7 @@ const ArtistWrapper = () => {
             <Link to={`/artists/${id}/events`}>
                     <h2>EventsNavLink</h2>
             </Link>
+            {/* Conditionally render admin CRUD buttons in wrapper */}
         {/* <button onClick={handleEdit} >Edit Production</button>
         <button onClick={handleDelete} >Delete Production</button> */}
 

@@ -8,7 +8,7 @@ const initialState = {
     data: null,
     errors: [],
     editMode: false,
-    spotlight: null,
+    current: null,
     loading: true
 }
 const fetchAll = async (asyncThunk) => {

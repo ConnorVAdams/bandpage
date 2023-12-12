@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 
 const TrackList = () => {
-    const tracks = useSelector(state => state.artist.spotlight.tracks)
+    const tracks = useSelector(state => state.artist.current.tracks)
     
     return (
         <div>
