@@ -27,7 +27,7 @@ class Fan(db.Model):
     # * RELATIONSHIPS *
     # *****************
 
-    # account = db.relationship('User', back_populates='fan')
+    account = db.relationship('User', back_populates='fan')
 
     likes = db.relationship('Like')
 

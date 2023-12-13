@@ -36,7 +36,7 @@ class Artist(db.Model):
     # * RELATIONSHIPS *
     # *****************
 
-    # account = db.relationship('User', back_populates='artist')
+    account = db.relationship('User', back_populates='artist')
 
     tracks = db.relationship('Track', back_populates='artist')
     events = db.relationship('Event', back_populates='artist')

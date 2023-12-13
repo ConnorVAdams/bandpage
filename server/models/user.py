@@ -23,8 +23,8 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    artist = db.relationship('Artist')
-    fan = db.relationship('Fan')
+    artist = db.relationship('Artist', back_populates='account')
+    fan = db.relationship('Fan', back_populates='account')
 
     # *******************
     # * SECURITY & AUTH *
