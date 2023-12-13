@@ -4,6 +4,7 @@ from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
 from models.artist import Artist
 from models.fan import Fan
+from models.user import User
 from models.track import Track
 from models.like import Like
 from models.band_member import BandMember
