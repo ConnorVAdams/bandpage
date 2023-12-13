@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import artistReducer from '../features/artist/artistSlice'
+import userReducer from '../features/user/userSlice'
 // import trackReducer from '../features/track/trackSlice'
 // import eventReducer from '../features/event/eventSlice'
 

@@ -14,6 +14,4 @@ user_schema = UserSchema(session=db.session)
 
 class Signup(Resource):
     def post(self):
-
-
-    # Join artists and users tables
+        pass

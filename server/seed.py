@@ -17,6 +17,7 @@ from models.like import Like
 from models.track import Track
 from models.band_member import BandMember
 from models.event import Event
+from models.user import User
 
 # *******************
 # * FAKER FUNCTIONS *
@@ -31,7 +32,6 @@ while len(username_set) < 100:
     username_set.add(username)
 
 unique_usernames = list(username_set)
-print(unique_usernames)
 
 # *****************************
 # * RANDOM DATETIME FUNCTIONS *
@@ -58,11 +58,9 @@ def rand_date():
 def create_artists():
     artists = []
 
-    for i in range(11):
-        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
+    for i in range(10):
 
         artist = Artist(
-            username=username,
             name=fake.word().title(),
             genres=choice(['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Electronic', 'Country', 'R&B', 'Classical']),
             bio=fake.text(max_nb_chars=200),
@@ -72,7 +70,6 @@ def create_artists():
             updated_at=datetime.now()
         )
 
-        artist.password_hash = fake.word()
         artists.append(artist)
 
     return artists
@@ -81,11 +78,8 @@ def create_fans():
     fans = []
 
     for i in range(50):
-        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
-        password = fake.word()
 
         fan = Fan(
-            username=username,
             name=fake.name().title(),
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
@@ -94,10 +88,41 @@ def create_fans():
             updated_at=datetime.now()
         )
         
-        fan.password_hash = fake.word()
         fans.append(fan)
 
     return fans
+
+def create_users(artists, fans):
+    
+    for artist in artists:
+        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
+
+        user = User(
+            username = username
+            )
+        
+        user.password_hash = fake.word()        
+        db.session.add(user)
+        db.session.commit()
+
+        artist.user_id = user.id
+
+    db.session.add_all(artists)
+
+    for fan in fans:
+        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
+
+        user = User(
+            username = username
+            )
+        
+        user.password_hash = fake.word()        
+        db.session.add(user)
+        db.session.commit()
+
+        fan.user_id = user.id
+    
+    db.session.add_all(fans)
 
 def create_events():
     events = []
@@ -184,20 +209,18 @@ def create_likes():
 if __name__ == '__main__':
     with app.app_context():
         print('Clearing db...')
+        User.query.delete()
         Artist.query.delete()
         Fan.query.delete()
         Event.query.delete()
         # BandMember.query.delete()
         Track.query.delete()
         Like.query.delete()
-        db.session.commit()
 
         print("Starting seed...")
         artists = create_artists()
-        db.session.add_all(artists)
-
         fans = create_fans()
-        db.session.add_all(fans)
+        create_users(artists, fans)
 
         events = create_events()
         db.session.add_all(events)
@@ -210,8 +233,6 @@ if __name__ == '__main__':
 
         likes = create_likes()
         db.session.add_all(likes)
-
-        db.session.commit()
 
         db.session.commit()
         

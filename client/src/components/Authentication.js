@@ -10,6 +10,10 @@ import toast from 'react-hot-toast';
 
 function Authentication() {
     // Conditionally render either signup or login option 
+    const [signUp, setSignUp] = useState(false)
+    // Conditionally render either artist or fan user
+    const [userType, setUserType ] = useState('fan')
+    const dispatch = useDispatch() 
 
     // If signup:
         // Offer artist or fan signup:
@@ -30,33 +34,29 @@ function Authentication() {
             // Load new artist or fan to client as current user
             // Navigate user to /landing
 
-    const [signUp, setSignUp] = useState(false)
-    const dispatch = useDispatch()
-
-    const signupSchema = yup.object().shape({
-        username: yup.string()
-        .required("Please enter a user name"),
-        password: yup.string()
-        .required('Please enter a user password') 
-        .min(8, 'Password is too short - should be 8 chars minimum.')
-        .matches(/[a-zA-Z0-9]/, 'Password can only contain Latin letters and numbers.')
-    })
-    const loginSchema = yup.object().shape({
-        username: yup.string()
-        .email("Must be a valid email")
-        .required("Please enter a user email"),
-        password: yup.string()
-        .required('Please enter a user password') 
-    })
+    // const signupSchema = yup.object().shape({
+    //     username: yup.string()
+    //     .required("Please enter a user name"),
+    //     password: yup.string()
+    //     .required('Please enter a user password') 
+    //     .min(8, 'Password is too short - should be 8 chars minimum.')
+    //     .matches(/[a-zA-Z0-9]/, 'Password can only contain Latin letters and numbers.')
+    // })
+    // const loginSchema = yup.object().shape({
+    //     username: yup.string()
+    //     .email("Must be a valid email")
+    //     .required("Please enter a user email"),
+    //     password: yup.string()
+    //     .required('Please enter a user password') 
+    // })
     const url = signUp ? "/signup" : "/login"
     
     const formik = useFormik({
         initialValues: {
             username:'',
-            email:'',
             password:''
         },
-        validationSchema: signUp ? signupSchema : loginSchema,
+        // validationSchema: signUp ? signupSchema : loginSchema,
         onSubmit: async (values) => {
             const action = await dispatch(fetchRegister({url, values}))
             if (typeof action.payload !== "string") {
@@ -83,13 +83,6 @@ function Authentication() {
                 <label htmlFor='email'>Email</label>
                 <input type='text' name='email' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.errors.email && formik.touched.email ? <div className="error-message show">{formik.errors.email}</div> : null}
-                {signUp &&(
-                    <>
-                        <label htmlFor='username'>Username</label>
-                        <input type='text' name='username' value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                        {formik.errors.username && formik.touched.username ? <div className="error-message show">{formik.errors.username}</div> : null}
-                    </>
-                )}
                 <label htmlFor='password'>Password</label>
                 <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.errors.password && formik.touched.password ? <div className="error-message show">{formik.errors.password}</div> : null}

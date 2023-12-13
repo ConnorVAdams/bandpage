@@ -11,15 +11,11 @@ from models.like import Like
 from models.track import Track
 from models.event import Event
 
-from app_setup import bcrypt
-
-
 class Fan(db.Model):
     __tablename__ = 'fans'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
-    _password_hash = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     name = db.Column(db.String)
     bio = db.Column(db.String)
     location = db.Column(db.String)
@@ -42,21 +38,9 @@ class Fan(db.Model):
         'likeable',
     )
 
-# *******************
-    # * SECURITY & AUTH *
-    # *******************
-
-    @hybrid_property
-    def password_hash(self):
-        raise AttributeError('Passwords cannot be revealed.')
-
-    @password_hash.setter
-    def password_hash(self, new_password):
-        hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
-        self._password_hash = hashed_password
-
-    def authenticate(self, password_to_check):
-        return bcrypt.check_password_hash(self._password_hash, password_to_check)
+    # **************
+    # * PROPERTIES *
+    # **************
 
     # * FOLLOWED *
     
