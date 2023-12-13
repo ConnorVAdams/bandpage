@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 
 const EventList = () => {
-    const events = useSelector(state => state.artist.current.events)
+    const events = useSelector(state => state.artist.current.upcoming_events)
         return (
             <div>
                 {events && events.map(event => event && (

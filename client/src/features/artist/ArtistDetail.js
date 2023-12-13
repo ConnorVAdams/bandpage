@@ -30,7 +30,7 @@ const ArtistDetail = () => {
     //     history.push(`/productions/edit/${production.id}`)
     // }
     if (artist) {
-        const {id, name, genres, bio, location, img, tracks, events, rand_five_followers, top_five_artists, top_five_tracks, upcoming_events } = artist 
+        const {id, name, genres, bio, location, img, tracks, upcoming_events, rand_five_followers, top_five_artists, top_five_tracks, events_attending } = artist 
         return (
                 <div id={id} className='wrapper'>
                     <h2>Followers:</h2>
