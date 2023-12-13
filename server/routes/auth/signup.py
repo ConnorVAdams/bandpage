@@ -25,18 +25,19 @@ class Signup(Resource):
             user = User(
                 username = username
             )
-            user.password_hash = request.get_json().get("password")
+            user.password_hash = request.get_json().get('password')
 
             db.session.add(user)
             db.session.commit()
-            # #! new code for JWT
-            # jwt = create_access_token(identity=user.id)
-            # #! manually set a refresh token
-            # refresh_token = create_refresh_token(identity=user.id)
-            # #! serialize the user
-            # serialized_user = user_schema.dump(user)
-            # #! ready to send the response!
-            # return make_response({"user": serialized_user, "jwt_token": jwt, "refresh_token": refresh_token}, 201)
+            
+            # new code for JWT
+            jwt = create_access_token(identity=user.id)
+            # manually set a refresh token
+            refresh_token = create_refresh_token(identity=user.id)
+            # serialize the user
+            serialized_user = user_schema.dump(user)
+            # ready to send the response!
+            return make_response({"user": serialized_user, "jwt_token": jwt, "refresh_token": refresh_token}, 201)
         except (Exception, IntegrityError) as e:
             db.session.rollback()
             return {"message": str(e)}, 400
