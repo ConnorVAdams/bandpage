@@ -4,7 +4,7 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import {useDispatch} from 'react-redux'
 import {fetchRegister} from './userSlice'
-import { fetchAllProductions } from '../production/productionSlice';
+import { fetchAllArtists } from '../artist/artistSlice';
 import { setToken, setRefreshToken } from '../../utils/main';
 import toast from 'react-hot-toast';
 
@@ -63,7 +63,7 @@ function Authentication() {
                 toast.success(`Welcome ${action.payload.user.username}!`)
                 setToken(action.payload.jwt_token)
                 setRefreshToken(action.payload.refresh_token)
-                dispatch(fetchAllProductions())
+                dispatch(fetchAllArtists())
             } else {
                 toast.error(action.payload)
             }
@@ -74,20 +74,22 @@ function Authentication() {
 
     return (
         <> 
-            {/* <div id="register-switch">
+            <div id="register-switch">
                 <h2>Please Log in or Sign up!</h2>
-                <h3>{signUp?'Already a member?':'Not a member?'}</h3>
+                <h3>{signUp ? 'Already a member?':'Not a member?'}</h3>
                 <button onClick={handleClick}>{signUp?'Log In!':'Register now!'}</button>
             </div>
-            <Form onSubmit={formik.handleSubmit}>
-                <label htmlFor='email'>Email</label>
-                <input type='text' name='email' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                {formik.errors.email && formik.touched.email ? <div className="error-message show">{formik.errors.email}</div> : null}
+            <form onSubmit={formik.handleSubmit}>
+                <label htmlFor='username'>Username</label>
+                <input type='text' name='username' value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                {formik.errors.username && formik.touched.username ? <div className="error-message show">{formik.errors.email}</div> : null}
                 <label htmlFor='password'>Password</label>
                 <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.errors.password && formik.touched.password ? <div className="error-message show">{formik.errors.password}</div> : null}
                 <input type='submit' value={signUp?'Sign Up!':'Log In!'} />
-            </Form> */}
+            </form>
         </>
     )
 }
+
+export default Authentication

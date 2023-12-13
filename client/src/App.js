@@ -16,14 +16,18 @@ import FanCard from './features/fan/FanCard'
 import TrackCard from './features/track/TrackCard'
 import ArtistDetail from './features/artist/ArtistDetail'
 import ArtistWrapper from './features/artist/ArtistWrapper'
+import ArtistLanding from './features/artist/ArtistLanding'
+import FanLanding from './features/fan/FanLanding'
 import ArtistList from './features/artist/ArtistList'
 import EventList from './features/event/EventList'
 import TrackList from './features/track/TrackList'
 import NavBar from './components/NavBar'
+import Authentication from './features/user/Authentication'
+import Landing from './components/Home'
 
 
 function App() {
-    // const user = useSelector(state => state.user.data)
+    const user = useSelector(state => state.user.data)
     // const userErrors = useSelector(state => state.user.errors)
     // const productionErrors = useSelector(state => state.production.errors)
     // const errors = [...userErrors, ...productionErrors]
@@ -58,14 +62,12 @@ function App() {
     //     }
     // }, [errors, clearErrorsAction]);
 
-    // if(!user) return (
-    //     <>
-    //     {/* <GlobalStyle />
-    //     <Navigation/> */}
-    //     <Toaster />
-    //     {/* <Authentication /> */}
-    //     </>
-    // )
+    if(!user) return (
+        <>
+            <Toaster />
+            <Authentication />
+        </>
+    )
     return (
         <>
             <NavBar/>
@@ -90,7 +92,7 @@ function App() {
                         <ArtistList />
                     </Route>
                     <Route path='/landing'>
-
+                        {user.artist ? <ArtistLanding /> : <FanLanding />}                 
                     </Route>
                     <Route path='/login'>
                         

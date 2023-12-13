@@ -6,8 +6,8 @@ from schemas.event_schema import EventSchema
 from schemas.track_schema import TrackSchema
 
 class FanSchema(ma.SQLAlchemySchema):
-    top_five_artists = fields.List(fields.Nested('FanSchema', only=('id', 'name', 'location')))
-    top_five_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
+    followed_artists = fields.List(fields.Nested('FanSchema', only=('id', 'name', 'location')))
+    favorited_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
     events_attending = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
     events_attended = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
 
@@ -21,10 +21,11 @@ class FanSchema(ma.SQLAlchemySchema):
                     'location',
                     'img',
                     # TODO Why don't these serialize properly here like they do in artistSchema?
-                    'top_five_artists',
+                    'followed_artists',
                     'favorited_tracks',
                     'events_attended',
                     'events_attending',
-                    'username'
+                    'username',
+                    'user_id'
                     ]
 

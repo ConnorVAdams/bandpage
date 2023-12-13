@@ -72,10 +72,10 @@ class Fan(db.Model):
     
     # * FOLLOWED *
     
-    # TODO How to resolve this error: 'Object of type X is not JSON serializable'
-    # @property
-    # def followed_artists(self):
-    #     return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
+    @property
+    def followed_artists(self):
+        from models.artist import Artist
+        return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
     
     # @property
     # def top_five_artists(self):
@@ -83,9 +83,9 @@ class Fan(db.Model):
 
     # * TRACKS *
 
-    # @property
-    # def favorited_tracks(self):
-    #     return [likeable for likeable in self.likeables if isinstance(likeable, Track)]
+    @property
+    def favorited_tracks(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Track)]
     
     # @property
     # def top_five_tracks(self):
@@ -98,13 +98,13 @@ class Fan(db.Model):
         return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
     
     @property
-    def upcoming_events(self):
+    def events_attending(self):
         current_time = datetime.now()
         events = [event for event in self.rsvped_events if event.date_time > current_time]
         return sorted(events, key=lambda event: event.date_time)
     
     @property
-    def attended_events(self):
+    def events_attended(self):
         current_time = datetime.now()
         events = [event for event in self.rsvped_events if event.date_time < current_time]
         return sorted(events, key=lambda event: event.date_time)

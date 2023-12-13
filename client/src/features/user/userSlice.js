@@ -15,7 +15,6 @@ const initialState = {
     loading: true
 }
 
-
 const register =  async ({ url, values }) => {
     try {
         const resp = await fetch(url, {

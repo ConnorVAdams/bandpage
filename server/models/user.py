@@ -32,8 +32,7 @@ class User(db.Model):
 
     @hybrid_property
     def password_hash(self):
-        return self._password_hash
-        # raise AttributeError('Passwords cannot be revealed.')
+        raise AttributeError('Passwords cannot be revealed.')
 
     @password_hash.setter
     def password_hash(self, new_password):
