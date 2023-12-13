@@ -25,8 +25,9 @@ class Users(Resource):
             db.session.add(user)
             db.session.commit()
             # * Serialize the data and package your JSON response
-            serialized_crew = user_schema.dump(user)
-            return serialized_crew, 201
+            serialized_user = user_schema.dump(user)
+            print(serialized_user)
+            return serialized_user, 201
         except (ValidationError, ValueError) as e:
             db.session.rollback()
             abort(400, str(e))

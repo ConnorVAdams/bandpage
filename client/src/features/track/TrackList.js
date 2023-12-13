@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 const TrackList = () => {
     const tracks = useSelector(state => state.artist.current.tracks)
     
+    // TODO Why does this find events = null on refresh when artist refresh works fine?
     return (
         <div>
             {tracks && tracks.map(track => track && (

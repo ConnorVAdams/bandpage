@@ -19,6 +19,8 @@ from routes.tracks import Tracks
 from routes.track_by_id import TrackById
 from routes.auth.me import Me
 from routes.auth.users import Users
+from routes.auth.login import Login
+from routes.auth.signup import Signup
 # from routes.auth.refresh import Refresh
 # from routes.auth.check_token import CheckToken
 from flask import render_template
@@ -47,8 +49,10 @@ api.add_resource(Me, "/me")
 # Route for testing serialization
 api.add_resource(Users, "/users")
 
-# api.add_resource(Login, "/login")
-# #! POST Refresh
+api.add_resource(Login, "/login")
+
+api.add_resource(Signup, '/signup')
+
 # api.add_resource(Refresh, "/refresh")
 # #! GET Check Token
 # api.add_resource(CheckToken, "/check")
