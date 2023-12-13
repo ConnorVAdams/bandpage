@@ -116,7 +116,7 @@ def create_users(artists, fans):
             username = username
             )
         
-        user.password_hash = fake.word()        
+        user.password_hash = 'password'
         db.session.add(user)
         db.session.commit()
 

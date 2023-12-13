@@ -16,7 +16,8 @@ class Login(Resource):
     def post(self):
         try:
             data = request.get_json()
-            user = User.query.filter_by(username=data.get("username")).first()
+            username = data.get('username')
+            user = User.query.filter_by(username=username).first()
             # if yes: now onto validating password -> if yes: send the serialized user to frontend
             if user and user.authenticate(data.get("password")):
                 # new code for jwt
