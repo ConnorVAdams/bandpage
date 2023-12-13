@@ -11,6 +11,8 @@ from models.like import Like
 from models.track import Track
 from models.event import Event
 from models.fan import Fan
+from models.user import User
+
 
 class Artist(db.Model):
     __tablename__ = 'artists'
@@ -36,7 +38,7 @@ class Artist(db.Model):
     # * RELATIONSHIPS *
     # *****************
 
-    account = db.relationship('User', back_populates='artist')
+    account = db.relationship('User', back_populates='artist', uselist=False)
 
     tracks = db.relationship('Track', back_populates='artist')
     events = db.relationship('Event', back_populates='artist')
@@ -55,6 +57,26 @@ class Artist(db.Model):
     # * PROPERTIES *
     # **************
 
+    # * USER INFO *
+
+    @property
+    def username(self):
+        return self.account.username
+    
+    # TODO How to make this property private? Is it a circular import issue?
+    # @property
+    # def account(self):
+    #     return self._account
+    
+    # @account.setter
+    # def account(self, new_acct):
+    #     if not isinstance(new_acct, User):
+    #         raise TypeError(
+    #             'Account must point to an existing user account.'
+    #         )
+    #     else:
+    #         self._account = new_acct
+    
     # * FOLLOWERS * 
 
     @property

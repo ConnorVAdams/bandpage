@@ -22,6 +22,7 @@ class FanSchema(ma.SQLAlchemySchema):
                     'top_five_artists',
                     'favorited_tracks',
                     'rsvped_events',
+                    'username'
                     ]
 
     # TODO Throws 'map is not a function' error

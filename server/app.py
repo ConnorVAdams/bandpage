@@ -17,6 +17,8 @@ from routes.event_by_id import EventById
 from routes.fan_by_id import FanById
 from routes.tracks import Tracks
 from routes.track_by_id import TrackById
+from routes.auth.me import Me
+from routes.auth.users import Users
 # from routes.auth.refresh import Refresh
 # from routes.auth.check_token import CheckToken
 from flask import render_template
@@ -39,9 +41,13 @@ api.add_resource(FanById, "/fans/<int:id>")
 api.add_resource(Tracks, "/tracks")
 
 api.add_resource(TrackById, "/tracks/<int:id>")
+
+api.add_resource(Me, "/me")
+
+# Route for testing serialization
+api.add_resource(Users, "/users")
+
 # api.add_resource(Login, "/login")
-# #! GET Me
-# api.add_resource(Me, "/me")
 # #! POST Refresh
 # api.add_resource(Refresh, "/refresh")
 # #! GET Check Token

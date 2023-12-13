@@ -31,7 +31,9 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'rand_five_followers',
                     'top_five_artists',
                     'top_five_tracks',
-                    'upcoming_events'
+                    'upcoming_events',
+                    'username',
+                    'user_id'
                     ]
 
 # TODO Throws 'map is not a function' error

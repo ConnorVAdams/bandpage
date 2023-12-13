@@ -10,6 +10,7 @@ import re
 from models.like import Like
 from models.track import Track
 from models.event import Event
+from models.user import User
 
 class Fan(db.Model):
     __tablename__ = 'fans'
@@ -27,7 +28,7 @@ class Fan(db.Model):
     # * RELATIONSHIPS *
     # *****************
 
-    account = db.relationship('User', back_populates='fan')
+    account = db.relationship('User', back_populates='fan', uselist=False)
 
     likes = db.relationship('Like')
 
@@ -48,38 +49,59 @@ class Fan(db.Model):
     # * PROPERTIES *
     # **************
 
+    # * USER INFO *
+
+    @property
+    def username(self):
+        return self.account.username
+    
+    # TODO How to make this property private? Is it a circular import issue?
+    # @property
+    # def account(self):
+    #     return self._account
+    
+    # @account.setter
+    # def account(self, new_acct):
+    #     if not isinstance(new_acct, User):
+    #         raise TypeError(
+    #             'Account must point to an existing user account.'
+    #         )
+    #     else:
+    #         self._account = new_acct
+    
     # * FOLLOWED *
     
-    @property
-    def followed_artists(self):
-        return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
+    # TODO How to resolve this error: 'Object of type X is not JSON serializable'
+    # @property
+    # def followed_artists(self):
+    #     return [likeable for likeable in self.likeables if isinstance(likeable, Artist)]
     
-    @property
-    def top_five_artists(self):
-        return sorted(self.followed_artists, key=lambda artist: len(artist.followers), reverse=True)[:5]
+    # @property
+    # def top_five_artists(self):
+    #     return sorted(self.followed_artists, key=lambda artist: len(artist.followers), reverse=True)[:5]
 
     # * TRACKS *
 
-    @property
-    def favorited_tracks(self):
-        return [likeable for likeable in self.likeables if isinstance(likeable, Track)]
+    # @property
+    # def favorited_tracks(self):
+    #     return [likeable for likeable in self.likeables if isinstance(likeable, Track)]
     
-    @property
-    def top_five_tracks(self):
-        return sorted(self.favorited_tracks, key=lambda track: len(track.fans), reverse=True)[:5]
+    # @property
+    # def top_five_tracks(self):
+    #     return sorted(self.favorited_tracks, key=lambda track: len(track.fans), reverse=True)[:5]
 
-    # * EVENTS *
+    # # * EVENTS *
 
-    @property
-    def rsvped_events(self):
-        return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
+    # @property
+    # def rsvped_events(self):
+    #     return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
     
-    @property
-    def upcoming_events(self):
-        current_time = datetime.now()
-        future_events = [event for event in self.rsvped_events if event.event_date_time > current_time]
-        sorted_events = sorted(future_events, key=lambda event: event.event_date_time)
-        return sorted_events[:5]
+    # @property
+    # def upcoming_events(self):
+    #     current_time = datetime.now()
+    #     future_events = [event for event in self.rsvped_events if event.event_date_time > current_time]
+    #     sorted_events = sorted(future_events, key=lambda event: event.event_date_time)
+    #     return sorted_events[:5]
     
     @validates('name')
     def validate_name(self, _, name):
