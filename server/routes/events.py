@@ -11,7 +11,7 @@ event_schema = EventSchema(session=db.session)
 
 class Events(Resource):
     def get(self):
-        events = events_schema.dump(Event.query)
+        events = events_schema.dump(Event.query.order_by(Event.date_time))
         return events, 200
 
     # @jwt_required()

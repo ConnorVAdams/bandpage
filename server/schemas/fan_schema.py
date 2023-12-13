@@ -8,7 +8,9 @@ from schemas.track_schema import TrackSchema
 class FanSchema(ma.SQLAlchemySchema):
     top_five_artists = fields.List(fields.Nested('FanSchema', only=('id', 'name', 'location')))
     top_five_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
-    upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+    events_attending = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+    events_attended = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+
     class Meta():
         model: Fan
         load_instance = True
@@ -21,14 +23,8 @@ class FanSchema(ma.SQLAlchemySchema):
                     # TODO Why don't these serialize properly here like they do in artistSchema?
                     'top_five_artists',
                     'favorited_tracks',
-                    'rsvped_events',
+                    'events_attended',
+                    'events_attending',
                     'username'
                     ]
 
-    # TODO Throws 'map is not a function' error
-    # def dump(self, obj, *args, **kwargs):
-    #     serialized_data = super().dump(obj, *args, **kwargs)
-
-    #     serialized_data['_metadata'] = {'user_type': 'Fan'}
-
-    #     return serialized_data

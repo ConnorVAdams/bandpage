@@ -28,6 +28,7 @@ class Fan(db.Model):
     # * RELATIONSHIPS *
     # *****************
 
+    # TODO How to make account cascade-delete-able?
     account = db.relationship('User', back_populates='fan', uselist=False)
 
     likes = db.relationship('Like')
@@ -92,17 +93,26 @@ class Fan(db.Model):
 
     # # * EVENTS *
 
-    # @property
-    # def rsvped_events(self):
-    #     return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
+    @property
+    def rsvped_events(self):
+        return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
     
-    # @property
-    # def upcoming_events(self):
-    #     current_time = datetime.now()
-    #     future_events = [event for event in self.rsvped_events if event.event_date_time > current_time]
-    #     sorted_events = sorted(future_events, key=lambda event: event.event_date_time)
-    #     return sorted_events[:5]
+    @property
+    def upcoming_events(self):
+        current_time = datetime.now()
+        events = [event for event in self.rsvped_events if event.date_time > current_time]
+        return sorted(events, key=lambda event: event.date_time)
     
+    @property
+    def attended_events(self):
+        current_time = datetime.now()
+        events = [event for event in self.rsvped_events if event.date_time < current_time]
+        return sorted(events, key=lambda event: event.date_time)
+    
+    # ***************
+    # * VALIDATIONS *
+    # ***************
+
     @validates('name')
     def validate_name(self, _, name):
         if not isinstance(name, str):

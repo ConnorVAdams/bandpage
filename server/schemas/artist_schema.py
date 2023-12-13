@@ -10,12 +10,13 @@ class ArtistSchema(ma.SQLAlchemySchema):
     # TODO schema level validations
     # name = fields.Str(required=True, validate=validate.Length(min=1, max=40))
     tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio'))))
-    events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+    upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
     rand_five_followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location', 'img'))))
     top_five_artists = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location', 'img'))))
     top_five_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio"))))
-    upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
-    
+    events_attending = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+    events_attended = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+
     class Meta():
         model: Artist
         load_instance = True
@@ -27,19 +28,12 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'location',
                     'img',
                     'tracks',
-                    'events',
+                    'upcoming_events',
                     'rand_five_followers',
                     'top_five_artists',
                     'top_five_tracks',
-                    'upcoming_events',
+                    'events_attended',
+                    'events_attending',
                     'username',
                     'user_id'
                     ]
-
-# TODO Throws 'map is not a function' error
-    # def dump(self, obj, *args, **kwargs):
-    #     serialized_data = super().dump(obj, *args, **kwargs)
-
-    #     serialized_data['_metadata'] = {'user_type': 'Artist'}
-
-    #     return serialized_data

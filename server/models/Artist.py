@@ -38,10 +38,11 @@ class Artist(db.Model):
     # * RELATIONSHIPS *
     # *****************
 
+    # TODO How to make account cascade-delete-able?
     account = db.relationship('User', back_populates='artist', uselist=False)
 
-    tracks = db.relationship('Track', back_populates='artist')
-    events = db.relationship('Event', back_populates='artist')
+    tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')
+    events = db.relationship('Event', back_populates='artist', cascade='all, delete-orphan')
 
     likes = db.relationship(
         'Like',
@@ -76,6 +77,20 @@ class Artist(db.Model):
     #         )
     #     else:
     #         self._account = new_acct
+
+    # * PROFILE INFO *
+
+    @property
+    def upcoming_events(self):
+        current_time = datetime.now()
+        events = [event for event in self.events if event.date_time > current_time]
+        return sorted(events, key=lambda event: event.date_time)
+    
+    @property
+    def past_events(self):
+        current_time = datetime.now()
+        events = [event for event in self.events if event.date_time > current_time]
+        return sorted(events, key=lambda event: event.date_time)
     
     # * FOLLOWERS * 
 
@@ -135,11 +150,16 @@ class Artist(db.Model):
         return [likeable for likeable in self.likeables if isinstance(likeable, Event)]
     
     @property
-    def upcoming_events(self):
+    def events_attending(self):
         current_time = datetime.now()
-        future_events = [event for event in self.rsvped_events if event.date_time > current_time]
-        sorted_events = sorted(future_events, key=lambda event: event.date_time)
-        return sorted_events[:5]
+        events = [event for event in self.rsvped_events if event.date_time > current_time]
+        return sorted(events, key=lambda event: event.date_time)
+    
+    @property
+    def events_attended(self):
+        current_time = datetime.now()
+        events = [event for event in self.rsvped_events if event.date_time < current_time]
+        return sorted(events, key=lambda event: event.date_time)
 
     # ***************
     # * VALIDATIONS *
