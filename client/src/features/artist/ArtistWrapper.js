@@ -13,11 +13,9 @@ import FanCard from '../fan/FanCard'
 
 const ArtistWrapper = () => {
     const artist = useSelector(state => state.artist.current)
+    const [ landingRoute, setLandingRoute ] = useState(window.location.pathname.includes('landing'))
 
-    // console.log(artist)
     const { artist_id } = useParams()
-    // console.log(artist, artist_id)
-
     
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -57,15 +55,21 @@ const ArtistWrapper = () => {
     //     history.push(`/productions/edit/${production.id}`)
     // }
 
-    const {id, name, location, img } = artist 
+    const { id, name, location, img, genres, bio } = artist 
     return (
         <div id={id}>
             <Link to={`/artists/${id}/home`}>
                 <h1>{name}</h1>
                 <img src={img} alt={name} />
             </Link>
-
-                <p>Location: {location}</p>
+                {!landingRoute ? 
+                    <>
+                        <p>Location: {location}</p>
+                        <p>Genres: {genres}</p>
+                        <p>Bio: {bio}</p>
+                    </> 
+                    :
+                    null}
                 
             <Link to={`/artists/${id}/tracks`}>
                     <h2>TracksNavLink</h2>

@@ -6,7 +6,7 @@ function ArtistCard({ artist }) {
     const {id, name, genres, bio, location, img } = artist
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    let params = useParams()
+    const params = useParams()
 
     const handleClick = () => {
         dispatch(fetchOneArtist(id))
