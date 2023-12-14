@@ -28,8 +28,10 @@ import Landing from './components/Home'
 
 function App() {
     const user = useSelector(state => state.user.data)
+    const artist = useSelector(state => state.artist.current)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)
     // const errors = [...userErrors, ...artistErrors]
@@ -73,14 +75,8 @@ function App() {
         <>
             <NavBar />
             <Routes>
-                {/* <Route path='/artists/:artist_id/events' element={<ArtistWrapper />}>
-                    <Route index element={<EventList />} />
-                </Route>
-                <Route path='/artists/:artist_id/tracks' element={<ArtistWrapper />}>
-                    <Route index element={<TrackList />} />
-                </Route> */}
                 <Route path='/' element={<Authentication />} />
-                <Route path='/artists/:artist_id/' element={<ArtistWrapper />}>
+                <Route path='/artists/:artist_id/' element={<ArtistWrapper artist={artist}/>}>
                     <Route path='home' element={<ArtistDetail/>} />
                     <Route path='tracks' element={<TrackList/>} />
                     <Route path='events' element={<EventList/>} />

@@ -5,6 +5,7 @@ import { fetchAllArtists } from './artistSlice'
 
 const ArtistList = () => {
     const artists = useSelector(state => state.artist.data)
+    const artist = useSelector(state => state.artist.current)
     const dispatch = useDispatch()
 
     useEffect(() => {

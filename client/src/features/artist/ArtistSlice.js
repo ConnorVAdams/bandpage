@@ -26,11 +26,13 @@ const fetchAll = async (asyncThunk) => {
     }
 }
 
-const fetchOne = async (artist_id, asyncThunk) => {
+const fetchOne = async (artist_id, path, asyncThunk) => {
+    console.log(artist_id)
     try {
         const resp = await fetch(`/artists/${artist_id}`)
         const data = await resp.json()
         if (resp.ok) {
+            // console.log(data)
             return data
         } else {
             throw data.message || data.msg
@@ -181,7 +183,6 @@ const artistSlice = createSlice({
                         state.errors.push(action.payload)
                     } else {
                         state.current = action.payload
-
                     }
                 },
             }
@@ -271,7 +272,8 @@ export const {
     // addError, 
     // clearErrors, 
     fetchAllArtists, 
-    fetchOneArtist, 
+    fetchOneArtist,
+    fetchNewArtist
     // fetchPostProduction, 
     // fetchPatchProduction, 
     // fetchDeleteProduction

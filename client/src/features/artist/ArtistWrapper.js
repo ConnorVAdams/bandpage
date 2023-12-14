@@ -13,10 +13,11 @@ import FanCard from '../fan/FanCard'
 
 const ArtistWrapper = () => {
     const artist = useSelector(state => state.artist.current)
-    const [ newArtist, setNewArtist] = useState(false)
 
+    // console.log(artist)
     const { artist_id } = useParams()
-    console.log(artist_id)
+    // console.log(artist, artist_id)
+
     
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -25,7 +26,7 @@ const ArtistWrapper = () => {
 
     useEffect(()=>{
         (async () => {
-        if (!artist || newArtist) {
+        if (!artist) {
             const {payload} = await dispatch(fetchOneArtist(artist_id))
             if (typeof payload !== "string") {
             toast.success(`Artist ${payload.title} loaded!`)
@@ -33,9 +34,6 @@ const ArtistWrapper = () => {
             toast.error(payload)
             navigate("/")
             }
-        }
-        else {
-            console.log('test')
         }
         })()
     },[artist, artist_id])
