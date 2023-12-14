@@ -39,13 +39,13 @@ const ArtistDetail = () => {
                             <FanCard key={fan.id} fan={fan} />
                         ))}
                         {artist_followers && artist_followers.map(artist => artist && (
-                            <ArtistCard key={artist.id} artist={artist} />
+                            <ArtistCard key={`follower ${artist.id}`} artist={artist} />
                         ))}
                     </div>
                     <h2>Followed Artists:</h2>
                     <div>
                         {followed_artists && followed_artists.map(artist => artist && (
-                            <ArtistCard key={artist.id} artist={artist} />
+                            <ArtistCard key={`followed ${artist.id}`} artist={artist} />
                         ))}
                     </div>
                     <h2>Top Five Tracks:</h2>

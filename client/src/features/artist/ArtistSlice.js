@@ -31,7 +31,6 @@ const fetchOne = async (artist_id, asyncThunk) => {
         const resp = await fetch(`/artists/${artist_id}`)
         const data = await resp.json()
         if (resp.ok) {
-            console.log(data)
             return data
         } else {
             throw data.message || data.msg
@@ -182,6 +181,7 @@ const artistSlice = createSlice({
                         state.errors.push(action.payload)
                     } else {
                         state.current = action.payload
+
                     }
                 },
             }
