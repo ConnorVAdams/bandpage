@@ -11,7 +11,7 @@ function ArtistCard({ artist }) {
     const handleClick = () => {
         dispatch(fetchOneArtist(id))
         if (Object.keys(params).length === 0) {
-            navigate(`${id}/home`)
+            navigate(`/artists/${id}/home`, { replace: true })
         }
     }
 
