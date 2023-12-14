@@ -82,6 +82,9 @@ function App() {
                 </Route>
                 <Route path='/artists' element={<ArtistList />} />
                 <Route path='/landing' element={<UserLanding/>} />
+                    <Route path='home' element={<ArtistDetail/>} />
+                    <Route path='tracks' element={<TrackList/>} />
+                    <Route path='events' element={<EventList/>} />
                 <Route path='/*' element={<NotFound />} />
             </Routes>
         </>

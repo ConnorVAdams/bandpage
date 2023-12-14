@@ -26,7 +26,8 @@ const fetchAll = async (asyncThunk) => {
     }
 }
 
-const fetchOne = async (artist_id, path, asyncThunk) => {
+const fetchOne = async (artist_id, asyncThunk) => {
+    console.log(`/artists/${artist_id}`)
     try {
         const resp = await fetch(`/artists/${artist_id}`)
         const data = await resp.json()

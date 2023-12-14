@@ -8,9 +8,9 @@ import FanCard from '../fan/FanCard'
 import ArtistWrapper from '../artist/ArtistWrapper'
 
 const UserLanding = () => {
-    const userInfo = useSelector(state => state.user.data)
-
-    if (userInfo.artist) {
+    const user = useSelector(state => state.user.data)
+    
+    if (user.artist) {
 
         const { 
             artist: { 
@@ -26,17 +26,20 @@ const UserLanding = () => {
             },
             user_id,
             username 
-        } = userInfo
+        } = user
 
-        const { artist } = userInfo
+        const { artist } = user
 
         return(
         <>
             <div id={user_id}>
                 <div id='profile-info'>
                     <h1>ProfileInfo</h1>
-                    <ArtistWrapper />
+                    <h4>Username: {username}</h4>
                     <Link>Edit Profile</Link>
+                    <br/>
+                    <Link>Delete Account</Link>
+                    <ArtistWrapper />
                 </div>
                 <div id='Landing-info'>
                     <h1>LandingInfo</h1>
@@ -85,7 +88,7 @@ const UserLanding = () => {
         },
         user_id,
         username 
-        } = userInfo
+        } = user
 
     return (
         <>

@@ -4,14 +4,18 @@ import { useEffect } from 'react'
 
 
 const TrackList = () => {
-    const tracks = useSelector(state => state.artist.current.tracks)
+    const artist = useSelector(state => state.artist.current)
+    const user = useSelector(state => state.user.data)
     
-    // TODO Why does this find events = null on refresh when artist refresh works fine?
     return (
         <div>
-            {tracks && tracks.map(track => track && (
+            {artist.tracks && artist.tracks.map(track => track && (
                 <TrackCard key={track.id} track={track} />
             ))}
+            {artist.id === user.artist.id ?
+            <button>Add a New Track</button>
+            :
+            null}
         </div>
     )
 }

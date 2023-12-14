@@ -7,14 +7,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchOneArtist } from '../features/artist/artistSlice';
 
 const NavBar = () => {
-    const currentUser = useSelector(state => state.user.data)
+    const user = useSelector(state => state.user.data)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleClick = () => {
-        dispatch(fetchOneArtist(currentUser.artist.id))
-            navigate(`/artists/${currentUser.artist.id}/home`, { replace: true })
+        dispatch(fetchOneArtist(user.artist.id))
+            navigate(`/artists/${user.artist.id}/home`, { replace: true })
     }
 
     const handleLogout = () => {
@@ -27,7 +27,7 @@ const NavBar = () => {
     return (
         <>
             <span><Link to={'/landing'}>Landing</Link></span>
-            {currentUser.artist ? <span><h4 onClick={handleClick}>My Artist Page</h4></span>: null }
+            {user.artist ? <span><h4 onClick={handleClick}>My Artist Page</h4></span>: null }
             <span><Link to={'/artists'}>All Artists</Link></span>
             <br/>
             <button onClick={handleLogout}>Logout</button>

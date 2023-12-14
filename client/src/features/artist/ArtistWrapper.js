@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link, Outlet } from 'react-router-dom'
+import { useParams, useNavigate, useLocation, Link, Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
@@ -13,9 +13,11 @@ import FanCard from '../fan/FanCard'
 
 const ArtistWrapper = () => {
     const artist = useSelector(state => state.artist.current)
-    const [ landingRoute, setLandingRoute ] = useState(window.location.pathname.includes('landing'))
+    const user = useSelector(state => state.user.data)
+    const loc = useLocation()
 
     const { artist_id } = useParams()
+    const { pathname } = loc
     
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -25,7 +27,7 @@ const ArtistWrapper = () => {
     useEffect(()=>{
         (async () => {
         if (!artist) {
-            const {payload} = await dispatch(fetchOneArtist(artist_id))
+            const {payload} = await dispatch(fetchOneArtist(artist_id || user.artist.id))
             if (typeof payload !== "string") {
             toast.success(`Artist ${payload.title} loaded!`)
             } else {
@@ -62,7 +64,7 @@ const ArtistWrapper = () => {
                 <h1>{name}</h1>
                 <img src={img} alt={name} />
             </Link>
-                {!landingRoute ? 
+                {pathname.includes('artists') ? 
                     <>
                         <p>Location: {location}</p>
                         <p>Genres: {genres}</p>
@@ -72,10 +74,10 @@ const ArtistWrapper = () => {
                     null}
                 
             <Link to={`/artists/${id}/tracks`}>
-                    <h2>TracksNavLink</h2>
+                    <h2>Tracks</h2>
             </Link>
             <Link to={`/artists/${id}/events`}>
-                    <h2>EventsNavLink</h2>
+                    <h2>Events</h2>
             </Link>
             <Outlet />
             {/* Conditionally render admin CRUD buttons in wrapper */}
