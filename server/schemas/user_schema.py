@@ -16,4 +16,4 @@ class UserSchema(ma.SQLAlchemySchema):
     username = fields.String(required=True)
     password_hash = fields.String(validate=validate.Length(min=12, max=24))
     artist = fields.Nested(ArtistSchema(only=('id', 'name', 'genres', 'bio', 'location', 'img')))
-    fan = fields.Nested(FanSchema(only=('id', 'name')))
+    fan = fields.Nested(FanSchema(only=('id', 'name', 'img')))
