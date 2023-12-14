@@ -14,6 +14,7 @@ import FanCard from '../fan/FanCard'
 
 const ArtistDetail = () => {
     const artist = useSelector(state => state.artist.current)
+
     // const handleDelete = async () => {
     //     const {type, meta, payload} = await dispatch(fetchDeleteProduction(prod_id))
     //     if (meta.requestStatus === "fulfilled" && type === "production/fetchDeleteProduction/fulfilled") {

@@ -6,8 +6,6 @@ export const createSlice = buildCreateSlice({
 
 const initialState = {
     data: null,
-    tracks: null,
-    events: null,
     errors: [],
     admin: false,
     current: null,
@@ -33,6 +31,7 @@ const fetchOne = async (artist_id, asyncThunk) => {
         const resp = await fetch(`/artists/${artist_id}`)
         const data = await resp.json()
         if (resp.ok) {
+            console.log(data)
             return data
         } else {
             throw data.message || data.msg
@@ -183,8 +182,6 @@ const artistSlice = createSlice({
                         state.errors.push(action.payload)
                     } else {
                         state.current = action.payload
-                        state.tracks = action.payload.tracks
-                        // state.events = state.spotlight.events
                     }
                 },
             }

@@ -15,6 +15,7 @@ class ArtistById(Resource):
         artist = Artist.query.get_or_404(
             id, description=f'Could not find artist with ID: {id}'
         )
+        print(artist)
         try:
             serialized_data = artist_schema.dump(artist)
             return serialized_data, 200

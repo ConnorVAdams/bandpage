@@ -46,12 +46,11 @@ function App() {
             if (action.payload.flag === "refresh") {
                 setToken(action.payload.jwt_token)
             }
-            navigate('/landing')
+            // navigate('/')
             }
         }
         })()
     }, [user])
-
 
 
     // useEffect(() => {
@@ -63,7 +62,7 @@ function App() {
     //     // };
     //     }
     // }, [errors, clearErrorsAction]);
-
+    
     if(!user) return (
         <>
             <Toaster />
@@ -74,14 +73,17 @@ function App() {
         <>
             <NavBar />
             <Routes>
-                <Route path='/artists/:artist_id/events' element={<ArtistWrapper />}>
+                {/* <Route path='/artists/:artist_id/events' element={<ArtistWrapper />}>
                     <Route index element={<EventList />} />
                 </Route>
                 <Route path='/artists/:artist_id/tracks' element={<ArtistWrapper />}>
                     <Route index element={<TrackList />} />
-                </Route>
+                </Route> */}
+                <Route path='/' element={<Authentication />} />
                 <Route path='/artists/:artist_id/' element={<ArtistWrapper />}>
-                    <Route path='' element={<ArtistDetail/>} />
+                    <Route path='home' element={<ArtistDetail/>} />
+                    <Route path='tracks' element={<TrackList/>} />
+                    <Route path='events' element={<EventList/>} />
                 </Route>
                 <Route path='/artists' element={<ArtistList />} />
                 <Route path='/landing' element={user.artist ? <ArtistLanding /> : <FanLanding />} />

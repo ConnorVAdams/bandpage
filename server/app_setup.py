@@ -43,7 +43,7 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=1)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=3)
 
 # the following restricts JWT to https protocols only
-# app.config["JWT_COOKIE_CSRF_PROTECT"] = True
+app.config["JWT_COOKIE_CSRF_PROTECT"] = True
 
 #! flask-sqlalchemy setup
 db = SQLAlchemy(app)

@@ -15,26 +15,26 @@ const ArtistWrapper = ({ children }) => {
     const artist = useSelector(state => state.artist.current)
 
     const { artist_id } = useParams()
+    
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
     // Ask store if current user is artist AND current user id is also equal to artist.id
     // If so, set admin to true
 
-    useEffect(()=>{
-        (async () => {
-        if (!artist) {
-            const {payload} = await dispatch(fetchOneArtist(artist_id))
-            if (typeof payload !== "string") {
-            toast.success(`Artist ${payload.title} loaded!`)
-            } else {
-            toast.error(payload)
-            navigate("/")
-            }
-        }
-        })()
-    },[artist, artist_id])
-
+    // TODO Why do I have to use an onClick instead of a <Link> to make this work?
+    // useEffect(()=>{
+    //     (async () => {
+    //     if (!artist) {
+    //         const {payload} = await dispatch(fetchOneArtist(artist_id))
+    //         if (typeof payload !== "string") {
+    //         toast.success(`Artist ${payload.title} loaded!`)
+    //         } else {
+    //         toast.error(payload)
+    //         navigate("/")
+    //         }
+    //     }
+    //     })()
+    // },[artist, artist_id])
 
     if (!artist) {
         return <NotFound />
@@ -58,7 +58,7 @@ const ArtistWrapper = ({ children }) => {
     const {id, name, location, img } = artist 
     return (
         <div id={id}>
-            <Link to={`/artists/${id}`}>
+            <Link to={`/artists/${id}/home`}>
                 <h1>{name}</h1>
                 <img src={img} alt={name} />
             </Link>
