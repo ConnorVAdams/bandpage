@@ -21,6 +21,8 @@ from routes.auth.me import Me
 from routes.auth.users import Users
 from routes.auth.login import Login
 from routes.auth.signup import Signup
+from routes.auth.refresh import Refresh
+from routes.auth.check_token import CheckToken
 # from routes.auth.refresh import Refresh
 # from routes.auth.check_token import CheckToken
 from flask import render_template
@@ -53,9 +55,9 @@ api.add_resource(Login, "/login")
 
 api.add_resource(Signup, '/signup')
 
-# api.add_resource(Refresh, "/refresh")
+api.add_resource(Refresh, "/refresh")
 # #! GET Check Token
-# api.add_resource(CheckToken, "/check")
+api.add_resource(CheckToken, "/check")
 # #! No need for a logout route in this configuration!
 
 
@@ -63,17 +65,17 @@ api.add_resource(Signup, '/signup')
 # # a protected route is accessed. This should return any python object on a
 # # successful lookup, or None if the lookup failed for any reason (for example
 # # if the user has been deleted from the database).
-# @jwt.user_lookup_loader
-# def user_lookup_callback(_jwt_header, jwt_data):
-#     identity = jwt_data["sub"]
-#     return db.session.get(User, identity)
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    return db.session.get(User, identity)
 
 
 # #! Global Error Handling
-# @app.errorhandler(NotFound)  #! 404
-# def handle_404(error):
-#     response = {"message": error.description}
-#     return response, error.code
+@app.errorhandler(NotFound)  #! 404
+def handle_404(error):
+    response = {"message": error.description}
+    return response, error.code
 
 @app.route('/')
 def index():

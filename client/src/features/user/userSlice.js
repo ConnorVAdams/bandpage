@@ -1,5 +1,5 @@
 import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
-import { checkToken, getToken } from "../../utils/main";
+import { getToken, getRefreshToken } from "../../utils/main";
 // import { fetchOneArtist } from "../artist/artistSlice";
 // import { fetchOneFan } from "../fan/fanSlice"
 export const createSlice = buildCreateSlice({
@@ -33,9 +33,34 @@ const register =  async ({ url, values }) => {
     }
 }
 
-// const fetchMe = () => {
-    
-// }
+const fetchMe = async () => {
+    try {
+        const resp = await fetch("/me", {
+            headers: {
+                "Authorization": `Bearer ${getToken()}` 
+            }
+        })
+        const data = await resp.json()
+        if (resp.ok) {
+            return {user: data, flag: "me"}
+        } else {
+            const response = await fetch("/refresh", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${getRefreshToken()}`
+                }
+            })
+            const data = await response.json()
+            if (response.ok) {
+                return {...data, flag: "refresh"}
+            } else {
+                throw data.msg
+            }
+        }
+    } catch (error) {
+        return error
+    }
+}
 
 // On successful login or register, set logged in user to current user in store
 
@@ -58,6 +83,27 @@ const userSlice = createSlice({
         clearErrors: create.reducer((state) => {
             state.errors = []
         }),
+        fetchCurrentUser: create.asyncThunk(
+            fetchMe,
+            {
+                pending: (state) => {
+                    state.loading = true
+                    state.errors = []
+                },
+                rejected: (state, action) => {
+                    state.loading = false
+                    state.errors.push(action.payload)
+                },
+                fulfilled: (state, action) => {
+                    state.loading = false
+                    if (typeof action.payload === "string") {
+                        state.errors.push(action.payload)
+                    } else {
+                        state.data = action.payload.user
+                    }
+                },
+            }
+        ),
         fetchRegister: create.asyncThunk(
             register,
             {
@@ -95,7 +141,8 @@ export const {
     logout,
     addError,
     clearErrors,
-    fetchRegister
+    fetchRegister,
+    fetchCurrentUser
 } = userSlice.actions
 
 export const {

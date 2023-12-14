@@ -1,11 +1,10 @@
-import { Route, Routes } from 'react-router-dom'
-// import { clearErrors as clearUserErrors} from './features/user/userSlice'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import { clearErrors as clearUserErrors} from './features/user/userSlice'
 // import { clearErrors as clearProductionErrors} from './features/production/productionSlice'
 import { useDispatch, useSelector } from 'react-redux'
 // import {createGlobalStyle} from 'styled-components'
 import {useEffect, useCallback } from 'react'
 import Home from './components/Home'
-// import Authentication from './features/user/Authentication'
 import NotFound from './components/NotFound'
 import "./App.css"
 import { setToken } from './utils/main'
@@ -23,32 +22,35 @@ import EventList from './features/event/EventList'
 import TrackList from './features/track/TrackList'
 import NavBar from './components/NavBar'
 import Authentication from './features/user/Authentication'
+import { fetchCurrentUser } from './features/user/userSlice'
 import Landing from './components/Home'
 
 
 function App() {
     const user = useSelector(state => state.user.data)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     // const userErrors = useSelector(state => state.user.errors)
-    // const productionErrors = useSelector(state => state.production.errors)
-    // const errors = [...userErrors, ...productionErrors]
+    // const artistErrors = useSelector(state => state.artist.errors)
+    // const errors = [...userErrors, ...artistErrors]
     // const clearErrorsAction = useCallback(() => {
     //     dispatch(clearUserErrors(""))
-    //     dispatch(clearProductionErrors(""))
+    //     dispatch(clearArtistErrors(""))
     // }, [dispatch, clearUserErrors, clearProductionErrors]);
 
-    // useEffect(() => {
-    //     (async () => {
-    //     if (!user) {
-    //         const action = await dispatch(fetchCurrentUser())
-    //         if (typeof action.payload !== "string") {
-    //         if (action.payload.flag === "refresh") {
-    //             setToken(action.payload.jwt_token)
-    //         }
-    //         dispatch(fetchAllProductions())
-    //         }
-    //     }
-    //     })()
-    // }, [user])
+    useEffect(() => {
+        (async () => {
+        if (!user) {
+            const action = await dispatch(fetchCurrentUser())
+            if (typeof action.payload !== "string") {
+            if (action.payload.flag === "refresh") {
+                setToken(action.payload.jwt_token)
+            }
+            navigate('/landing')
+            }
+        }
+        })()
+    }, [user])
 
 
 

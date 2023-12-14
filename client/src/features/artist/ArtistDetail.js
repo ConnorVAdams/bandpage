@@ -30,14 +30,15 @@ const ArtistDetail = () => {
     // }
     if (artist) {
         const {id, name, genres, bio, location, img, tracks, upcoming_events, fan_followers, artist_followers, followed_artists, favorited_tracks, events_attended, events_attending } = artist 
-        const followers = [...fan_followers, ...artist_followers]
         return (
                 <div id={id} className='wrapper'>
                     <h2>Followers:</h2>
                     <div>
-                        {/* Implement logic to separate followers by artist and fan */}
-                        {followers && followers.map(fan => fan && (
+                        {fan_followers && fan_followers.map(fan => fan && (
                             <FanCard key={fan.id} fan={fan} />
+                        ))}
+                        {artist_followers && artist_followers.map(artist => artist && (
+                            <ArtistCard key={artist.id} artist={artist} />
                         ))}
                     </div>
                     <h2>Followed Artists:</h2>

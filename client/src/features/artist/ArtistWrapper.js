@@ -60,11 +60,11 @@ const ArtistWrapper = ({ children }) => {
         <div id={id}>
             <Link to={`/artists/${id}`}>
                 <h1>{name}</h1>
-            </Link>
-            <div className='wrapper'>
                 <img src={img} alt={name} />
+            </Link>
+
                 <p>Location: {location}</p>
-            </div>
+                
             <Link to={`/artists/${id}/tracks`}>
                     <h2>TracksNavLink</h2>
             </Link>
