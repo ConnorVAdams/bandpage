@@ -201,10 +201,12 @@ def create_likes():
         else:  # likeable_type == 'track'
             likeable_id = choice(all_track_ids)
         
-        like = Like(likeable_type=likeable_type, liker_type=liker_type, likeable_id=likeable_id, artist_id=artist_id, fan_id=fan_id )
-        likes.append(like)
-    
-    return set(likes)
+        like_tuple = (likeable_type, likeable_id, liker_type, artist_id, fan_id)
+
+        if like_tuple not in likes:
+            like = Like(likeable_type=likeable_type, likeable_id=likeable_id, liker_type=liker_type, artist_id=artist_id, fan_id=fan_id)
+            likes.append(like)
+    return likes
 
 if __name__ == '__main__':
     with app.app_context():

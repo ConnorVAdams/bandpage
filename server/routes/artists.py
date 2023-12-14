@@ -12,6 +12,7 @@ artist_schema = ArtistSchema(session=db.session)
 class Artists(Resource):
     def get(self):
         artists = artists_schema.dump(Artist.query)
+        print(artists)
         return artists, 200
 
     # @jwt_required()
