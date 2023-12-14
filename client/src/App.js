@@ -70,17 +70,24 @@ function App() {
             <Authentication />
         </>
     )
+
+    if (!user.artist && !user.fan) return (
+        <>
+            <Toaster />
+            <ArtistForm />
+        </>
+    )
     return (
         <>
             <NavBar />
             <Routes>
-                <Route path='/' element={<Authentication />} />
                 <Route path='/artists/:artist_id/' element={<ArtistWrapper artist={artist}/>}>
                     <Route path='home' element={<ArtistDetail/>} />
                     <Route path='tracks' element={<TrackList/>} />
                     <Route path='events' element={<EventList/>} />
                 </Route>
                 <Route path='/artists' element={<ArtistList />} />
+                    <Route path='new' element={<ArtistForm/>} />
                 <Route path='/landing' element={<UserLanding/>} />
                     <Route path='home' element={<ArtistDetail/>} />
                     <Route path='tracks' element={<TrackList/>} />

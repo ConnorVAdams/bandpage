@@ -5,15 +5,14 @@ import * as yup from "yup"
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { fetchRegister } from './userSlice'
-import { fetchAllArtists } from '../artist/artistSlice';
+import { fetchAllArtists, fetchPostArtist } from '../artist/artistSlice';
 import { setToken, setRefreshToken } from '../../utils/main';
 import toast from 'react-hot-toast';
 
 function Authentication() {
     // Conditionally render either signup or login option 
     const [signUp, setSignUp] = useState(false)
-    // Conditionally render either artist or fan user
-    const [userType, setUserType ] = useState('fan')
+    const [userType, setUserType] = useState('')
     const dispatch = useDispatch() 
     const navigate = useNavigate()
 
@@ -52,7 +51,7 @@ function Authentication() {
     //     .required('Please enter a user password') 
     // })
     const url = signUp ? "/signup" : "/login"
-    
+
     const formik = useFormik({
         initialValues: {
             username:'',
@@ -63,9 +62,11 @@ function Authentication() {
             const action = await dispatch(fetchRegister({url, values}))
             if (typeof action.payload !== "string") {
                 toast.success(`Welcome ${action.payload.user.username}!`)
+                const new_user_id = action.payload.user.id
+                navigate('/artists/new')
                 setToken(action.payload.jwt_token)
                 setRefreshToken(action.payload.refresh_token)
-                navigate('/landing')
+                // navigate('/landing')
 
             } else {
                 toast.error(action.payload)
@@ -73,7 +74,13 @@ function Authentication() {
         }
     })
     
-    const handleClick = () => setSignUp((signUp) => !signUp)
+    const handleClick = () => {
+        setSignUp((signUp) => !signUp)
+    }
+
+    const handleRegister = (e) => {
+        setUserType(userType => e.target.id)
+    }
 
     return (
         <> 
@@ -81,6 +88,13 @@ function Authentication() {
                 <h2>Please Log in or Sign up!</h2>
                 <h3>{signUp ? 'Already a member?':'Not a member?'}</h3>
                 <button onClick={handleClick}>{signUp?'Log In!':'Register now!'}</button>
+                <h3>{signUp &&
+                    <>
+                        <button id={'artist'} onClick={handleRegister}>Register as Artist</button>
+                        <button id={'fan'} onClick={handleRegister}>Register as Fan</button>
+                    </>}
+                </h3>
+
             </div>
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor='username'>Username</label>

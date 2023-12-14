@@ -27,7 +27,6 @@ const fetchAll = async (asyncThunk) => {
 }
 
 const fetchOne = async (artist_id, asyncThunk) => {
-    console.log(`/artists/${artist_id}`)
     try {
         const resp = await fetch(`/artists/${artist_id}`)
         const data = await resp.json()
@@ -41,33 +40,33 @@ const fetchOne = async (artist_id, asyncThunk) => {
     }
 }
 
-// const postProduction = async (values, asyncThunk) => {
-//     try {
-//         const respCheckToken = await checkToken()
-//         if (respCheckToken.ok) {
-//             const resp = await fetch('/productions', {
-//                 method: "POST",
-//                 headers: {
-//                     'Authorization': `Bearer ${getToken()}`,
-//                     "Content-Type": "application/json"
-//                 },
-//                 body: JSON.stringify(values)
-//             })
-//             const data = await resp.json()
+const postArtist = async (values, asyncThunk) => {
+    try {
+        const respCheckToken = await checkToken()
+        if (respCheckToken.ok) {
+            const resp = await fetch('/artists', {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${getToken()}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(values)
+            })
+            const data = await resp.json()
             
-//             if (resp.ok) {
-//                 return data
-//             } else {
-//                 throw data.message || data.msg
-//             }
-//         } else {
-//             const data = await respCheckToken.json()
-//             throw data.message || data.msg
-//         }
-//     } catch (error) {
-//         return error
-//     }
-// }
+            if (resp.ok) {
+                return data
+            } else {
+                throw data.message || data.msg
+            }
+        } else {
+            const data = await respCheckToken.json()
+            throw data.message || data.msg
+        }
+    } catch (error) {
+        return error
+    }
+}
 
 // const patchProduction = async ({id, values}, asyncThunk) => {
 //     console.log("🚀 ~ file: productionSlice.js:67 ~ patchFetchProduction ~ asyncThunk:", asyncThunk)
@@ -130,11 +129,11 @@ const artistSlice = createSlice({
     name: 'artist',
     initialState,
     reducers: (create) => ({
-        // setProduction: create.reducer((state, action) => {
-        //     state.spotlight = action.payload
-        //     state.loading = false
-        //     state.errors = []
-        // }),
+        setArtist: create.reducer((state, action) => {
+            state.spotlight = action.payload
+            state.loading = false
+            state.errors = []
+        }),
         // setEditMode: create.reducer((state, action) => {
         //     state.editMode = action.payload
         //     state.loading = false
@@ -186,27 +185,27 @@ const artistSlice = createSlice({
                 },
             }
         ),
-        // fetchPostProduction: create.asyncThunk(
-        //     postProduction,
-        //     {
-        //         pending: (state) => {
-        //             state.errors = []
-        //             state.loading = true
-        //         },
-        //         rejected: (state, action) => {
-        //             state.loading = false
-        //             state.errors.push(action.payload)
-        //         },
-        //         fulfilled: (state, action) => {
-        //             state.loading = false
-        //             if (!action.payload.id) {
-        //                 state.errors.push(action.payload)
-        //             } else {
-        //                 state.data.push(action.payload)
-        //             }
-        //         },
-        //     }
-        // ),
+        fetchPostArtist: create.asyncThunk(
+            postArtist,
+            {
+                pending: (state) => {
+                    state.errors = []
+                    state.loading = true
+                },
+                rejected: (state, action) => {
+                    state.loading = false
+                    state.errors.push(action.payload)
+                },
+                fulfilled: (state, action) => {
+                    state.loading = false
+                    if (!action.payload.id) {
+                        state.errors.push(action.payload)
+                    } else {
+                        state.data.push(action.payload)
+                    }
+                },
+            }
+        ),
         // fetchPatchProduction: create.asyncThunk(
         //     patchProduction,
         //     {
@@ -272,8 +271,8 @@ export const {
     // clearErrors, 
     fetchAllArtists, 
     fetchOneArtist,
-    fetchNewArtist
-    // fetchPostProduction, 
+    fetchNewArtist,
+    fetchPostArtist, 
     // fetchPatchProduction, 
     // fetchDeleteProduction
 } = artistSlice.actions
