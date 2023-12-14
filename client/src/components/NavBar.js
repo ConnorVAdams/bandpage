@@ -14,9 +14,14 @@ const NavBar = () => {
 
     const handleClick = () => {
         dispatch(fetchOneArtist(currentUser.artist.id))
-        // if (Object.keys(params).length === 0) {
             navigate(`/artists/${currentUser.artist.id}/home`, { replace: true })
-        // }
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem('jwt-token')
+        localStorage.removeItem('refresh-token')
+        navigate('/')
+        // TODO How?
     }
 
     return (
@@ -24,6 +29,8 @@ const NavBar = () => {
             <span><Link to={'/landing'}>Landing</Link></span>
             {currentUser.artist ? <span><h4 onClick={handleClick}>My Artist Page</h4></span>: null }
             <span><Link to={'/artists'}>All Artists</Link></span>
+            <br/>
+            <button onClick={handleLogout}>Logout</button>
         </>
     );
     }

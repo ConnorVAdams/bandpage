@@ -2,7 +2,7 @@ from flask import request, abort
 from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError
-# from flask_jwt_extended import jwt_required, get_jwt_identity, current_user
+from flask_jwt_extended import jwt_required, get_jwt_identity, current_user
 from app_setup import db
 from models.artist import Artist
 from schemas.artist_schema import ArtistSchema
@@ -15,14 +15,13 @@ class ArtistById(Resource):
         artist = Artist.query.get_or_404(
             id, description=f'Could not find artist with ID: {id}'
         )
-        print(artist)
         try:
             serialized_data = artist_schema.dump(artist)
             return serialized_data, 200
         except Exception as e:
             abort(400, str(e))
 
-    # @jwt_required()
+    @jwt_required()
     def patch(self, id):
         artist = Artist.query.get_or_404(
             id, description=f"Could not find artist with ID: {id}"

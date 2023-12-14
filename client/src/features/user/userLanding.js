@@ -79,7 +79,6 @@ const UserLanding = () => {
                             <ArtistCard key={`follower ${artist.id}`} artist={artist} />
                         ))}
                     </div>
-
                 </div>
             </div>
         </>
@@ -113,11 +112,25 @@ const UserLanding = () => {
                 <h1>LandingInfo</h1>
 
                 <h5>Events I'm Attending:</h5>
+                        <div id='events-attending-div'>
+                        {events_attending && events_attending.map(event => event && (
+                            <EventCard key={event.id} event={event} />
+                        ))}
+                        </div>
 
-                <h5>My Liked Artists</h5>
+                    <h5>My Liked Artists</h5>
+                    <div id={'liked-artists'}>
+                        {followed_artists && followed_artists.map(artist => artist && (
+                            <ArtistCard key={`followed ${artist.id}`} artist={artist} />
+                        ))}
+                    </div>
 
-                <h5>My Liked Tracks</h5>
-
+                    <h5>My Liked Tracks:</h5>
+                        <div>
+                            {favorite_tracks && favorite_tracks.map(track => track && (
+                                <TrackCard key={track.id} track={track} />
+                            ))}
+                        </div>
             </div>
         </div>
     </>
