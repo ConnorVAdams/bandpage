@@ -14,7 +14,6 @@ import FanCard from '../fan/FanCard'
 
 const ArtistDetail = () => {
     const artist = useSelector(state => state.artist.current)
-
     // const handleDelete = async () => {
     //     const {type, meta, payload} = await dispatch(fetchDeleteProduction(prod_id))
     //     if (meta.requestStatus === "fulfilled" && type === "production/fetchDeleteProduction/fulfilled") {
@@ -30,24 +29,26 @@ const ArtistDetail = () => {
     //     history.push(`/productions/edit/${production.id}`)
     // }
     if (artist) {
-        const {id, name, genres, bio, location, img, tracks, upcoming_events, rand_five_followers, top_five_artists, top_five_tracks, events_attending } = artist 
+        const {id, name, genres, bio, location, img, tracks, upcoming_events, fan_followers, artist_followers, followed_artists, favorited_tracks, events_attended, events_attending } = artist 
+        const followers = [...fan_followers, ...artist_followers]
         return (
                 <div id={id} className='wrapper'>
                     <h2>Followers:</h2>
                     <div>
-                        {rand_five_followers && rand_five_followers.map(fan => fan && (
+                        {/* Implement logic to separate followers by artist and fan */}
+                        {followers && followers.map(fan => fan && (
                             <FanCard key={fan.id} fan={fan} />
                         ))}
                     </div>
                     <h2>Followed Artists:</h2>
                     <div>
-                        {top_five_artists && top_five_artists.map(artist => artist && (
+                        {followed_artists && followed_artists.map(artist => artist && (
                             <ArtistCard key={artist.id} artist={artist} />
                         ))}
                     </div>
                     <h2>Top Five Tracks:</h2>
                     <div>
-                        {top_five_tracks && top_five_tracks.map(track => track && (
+                        {favorited_tracks && favorited_tracks.map(track => track && (
                             <TrackCard key={track.id} track={track} />
                         ))}
                     </div>

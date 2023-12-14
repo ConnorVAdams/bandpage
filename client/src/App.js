@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 // import { clearErrors as clearUserErrors} from './features/user/userSlice'
 // import { clearErrors as clearProductionErrors} from './features/production/productionSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -70,40 +70,21 @@ function App() {
     )
     return (
         <>
-            <NavBar/>
-                <Switch>
-                    {/* <Route path='/artists/:artist_id/about'>
-                        <ArtistDetail />
-                        <h1>About</h1>
-                    </Route> */}
-                    <Route path='/artists/:artist_id/events'>
-                        <ArtistWrapper/>
-                            <EventList />
-                    </Route>
-                    <Route path='/artists/:artist_id/tracks'>
-                        <ArtistWrapper/>
-                            <TrackList />
-                    </Route>
-                    <Route path='/artists/:artist_id/'>
-                        <ArtistWrapper/>
-                            <ArtistDetail />
-                    </Route>
-                    <Route path='/artists'>
-                        <ArtistList />
-                    </Route>
-                    <Route path='/landing'>
-                        {user.artist ? <ArtistLanding /> : <FanLanding />}                 
-                    </Route>
-                    <Route path='/login'>
-                        
-                    </Route>
-                    <Route path='/'>
-
-                    </Route>
-                    <Route>
-                        <NotFound />
-                    </Route>
-                </Switch>
+            <NavBar />
+            <Routes>
+                <Route path='/artists/:artist_id/events' element={<ArtistWrapper />}>
+                    <Route index element={<EventList />} />
+                </Route>
+                <Route path='/artists/:artist_id/tracks' element={<ArtistWrapper />}>
+                    <Route index element={<TrackList />} />
+                </Route>
+                <Route path='/artists/:artist_id/' element={<ArtistWrapper />}>
+                    <Route path='' element={<ArtistDetail/>} />
+                </Route>
+                <Route path='/artists' element={<ArtistList />} />
+                <Route path='/landing' element={user.artist ? <ArtistLanding /> : <FanLanding />} />
+                <Route path='/*' element={<NotFound />} />
+            </Routes>
         </>
     )
     }

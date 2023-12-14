@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 const ArtistLanding = () => {
-    const artistUser = useSelector(state => state.user.artist)
-    console.log(artistUser)
+    const artistUser = useSelector(state => state.user.data.artist)
+    // { }
     return(
-        <h1>ArtistLanding</h1>
+        <h1>ArtistLanding</h1> 
     )
 }
 

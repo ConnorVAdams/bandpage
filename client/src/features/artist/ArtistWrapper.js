@@ -1,4 +1,4 @@
-import  { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate, Link, Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
@@ -6,17 +6,16 @@ import { fetchOneArtist } from './artistSlice'
 // import styled from 'styled-components'
 import NotFound from '../../components/NotFound'
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom'
 import TrackCard from '../track/TrackCard'
 import EventCard from '../event/EventCard'
 import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
 
-const ArtistWrapper = () => {
+const ArtistWrapper = ({ children }) => {
     const artist = useSelector(state => state.artist.current)
 
     const { artist_id } = useParams()
-    const history = useHistory()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     // Ask store if current user is artist AND current user id is also equal to artist.id
@@ -30,7 +29,7 @@ const ArtistWrapper = () => {
             toast.success(`Artist ${payload.title} loaded!`)
             } else {
             toast.error(payload)
-            history.push("/")
+            navigate("/")
             }
         }
         })()
@@ -72,6 +71,7 @@ const ArtistWrapper = () => {
             <Link to={`/artists/${id}/events`}>
                     <h2>EventsNavLink</h2>
             </Link>
+            <Outlet />
             {/* Conditionally render admin CRUD buttons in wrapper */}
         {/* <button onClick={handleEdit} >Edit Production</button>
         <button onClick={handleDelete} >Delete Production</button> */}

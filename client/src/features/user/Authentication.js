@@ -2,8 +2,9 @@ import React, {useState} from 'react'
 import styled from "styled-components";
 import { useFormik } from "formik"
 import * as yup from "yup"
-import {useDispatch} from 'react-redux'
-import {fetchRegister} from './userSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { fetchRegister } from './userSlice'
 import { fetchAllArtists } from '../artist/artistSlice';
 import { setToken, setRefreshToken } from '../../utils/main';
 import toast from 'react-hot-toast';
@@ -14,6 +15,7 @@ function Authentication() {
     // Conditionally render either artist or fan user
     const [userType, setUserType ] = useState('fan')
     const dispatch = useDispatch() 
+    const navigate = useNavigate()
 
     // If signup:
         // Offer artist or fan signup:
@@ -63,7 +65,8 @@ function Authentication() {
                 toast.success(`Welcome ${action.payload.user.username}!`)
                 setToken(action.payload.jwt_token)
                 setRefreshToken(action.payload.refresh_token)
-                dispatch(fetchAllArtists())
+                navigate('/landing')
+
             } else {
                 toast.error(action.payload)
             }
