@@ -55,7 +55,12 @@ function Authentication() {
     const formik = useFormik({
         initialValues: {
             username:'',
-            password:''
+            password:'',
+            name:'',
+            genres:'',
+            bio:'',
+            location: '',
+            img:''
         },
         // validationSchema: signUp ? signupSchema : loginSchema,
         onSubmit: async (values) => {
@@ -76,6 +81,7 @@ function Authentication() {
     
     const handleClick = () => {
         setSignUp((signUp) => !signUp)
+        setUserType('')
     }
 
     const handleRegister = (e) => {
@@ -104,6 +110,38 @@ function Authentication() {
                 <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.errors.password && formik.touched.password ? <div className="error-message show">{formik.errors.password}</div> : null}
                 <input type='submit' value={signUp?'Sign Up!':'Log In!'} />
+                <br/>
+                {userType === 'artist' ? 
+                    <>
+                        <label htmlFor='genres'>Genres</label>
+                        <input type='genres' name='genres' value={formik.values.genres} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        {formik.errors.genres && formik.touched.genres ? <div className="error-message show">{formik.errors.genres}</div> : null}
+                        <br/>
+                    </> : 
+                    null}
+
+                {userType !== '' ? 
+                    <>
+                        {userType !== 'artist' ? <label htmlFor='name'>Name</label> : <label htmlFor='name'>Artist Name</label>}
+                        <input type='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        {formik.errors.name && formik.touched.name ? <div className="error-message show">{formik.errors.name}</div> : null}    
+                    <br/>
+                    <label htmlFor='bio'>Bio</label>
+                    <input type='bio' name='bio' value={formik.values.bio} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                    {formik.errors.bio && formik.touched.bio ? <div className="error-message show">{formik.errors.bio}</div> : null}
+                    <br/>
+                    <label htmlFor='location'>Location</label>
+                    <input type='location' name='location' value={formik.values.location} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                    {formik.errors.location && formik.touched.location ? <div className="error-message show">{formik.errors.location}</div> : null}
+                    <br/>
+                    <label htmlFor='img'>Image</label>
+                    <input type='img' name='img' value={formik.values.img} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                    {formik.errors.img && formik.touched.img ? <div className="error-message show">{formik.errors.img}</div> : null}
+                    <br/>
+                    
+                    </> :  
+                    null}
+                    
             </form>
         </>
     )
