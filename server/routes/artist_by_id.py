@@ -39,14 +39,14 @@ class ArtistById(Resource):
             abort(400, str(e))
 
     # @jwt_required()
-    def delete(self, id):
-        prod = Artist.query.get_or_404(
-            id, description=f"Could not find production with id: {id}"
-        )
-        try:
-            db.session.delete(prod)
-            db.session.commit()
-            return None, 204
-        except Exception as e:
-            db.session.rollback()
-            abort(400, str(e))
+    # def delete(self, id):
+    #     artist = Artist.query.get_or_404(
+    #         id, description=f"Could not find artist with id: {id}"
+    #     )
+    #     try:
+    #         db.session.delete(artist)
+    #         db.session.commit()
+    #         return None, 204
+    #     except Exception as e:
+    #         db.session.rollback()
+    #         abort(400, str(e))
