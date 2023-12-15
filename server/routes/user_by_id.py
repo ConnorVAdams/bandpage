@@ -19,22 +19,22 @@ class UserById(Resource):
         except Exception as e:
             abort(400, str(e))
 
-    @jwt_required()
-    def patch(self, id):
-        user = User.query.get_or_404(
-            id, description=f"Could not find user with ID: {id}"
-        )
-        try:
-            data = request.get_json()
-            user_schema.validate(data)
-            updated_user = user_schema.load(
-                data, instance=user, partial=True, session=db.session
-            )
-            db.session.commit()
-            return user_schema.dump(updated_user), 200
-        except Exception as e:
-            db.session.rollback()
-            abort(400, str(e))
+    # @jwt_required()
+    # def patch(self, id):
+    #     user = User.query.get_or_404(
+    #         id, description=f"Could not find user with ID: {id}"
+    #     )
+    #     try:
+    #         data = request.get_json()
+    #         user_schema.validate(data)
+    #         updated_user = user_schema.load(
+    #             data, instance=user, partial=True, session=db.session
+    #         )
+    #         db.session.commit()
+    #         return user_schema.dump(updated_user), 200
+    #     except Exception as e:
+    #         db.session.rollback()
+    #         abort(400, str(e))
 
     @jwt_required()
     def delete(self, id):
