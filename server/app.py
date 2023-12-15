@@ -13,7 +13,7 @@ from routes.artists import Artists
 from routes.artist_by_id import ArtistById
 from routes.events import Events
 from routes.event_by_id import EventById
-# from routes.fans import Fans
+from routes.fans import Fans
 from routes.fan_by_id import FanById
 from routes.tracks import Tracks
 from routes.track_by_id import TrackById
@@ -38,7 +38,7 @@ api.add_resource(Events, "/events")
 
 api.add_resource(EventById, "/events/<int:id>")
 
-# api.add_resource(Fans, "/fans")
+api.add_resource(Fans, "/fans")
 
 api.add_resource(FanById, "/fans/<int:id>")
 

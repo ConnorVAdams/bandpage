@@ -7,6 +7,7 @@ import { ErrorMessage, Field, Formik, Form } from 'formik'
 // import artistFormSchema from './artistFormSchema'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { fetchPostArtist } from '../artist/artistSlice'
+import { fetchPostFan } from '../fan/fanSlice'
 import { useDispatch } from 'react-redux'
 
 const ProfileForm = () => {
@@ -26,15 +27,24 @@ const ProfileForm = () => {
         },
         // validationSchema: null,
         onSubmit: async (values, event) => {
-            const action = await dispatch(fetchPostArtist(values))
-            if (typeof action.payload !== "string") {
-                toast.success(`Loaded ${action.payload}!`)
-                
-                navigate('/landing')
-
-
+            if (artist) {
+                const action = await dispatch(fetchPostArtist(values))
+                if (typeof action.payload !== "string") {
+                    toast.success(`Loaded ${action.payload}!`)
+                    
+                    navigate('/landing')
+                } else {
+                    toast.error(action.payload)
+                }
             } else {
-                toast.error(action.payload)
+                const action = await dispatch(fetchPostFan(values))
+                if (typeof action.payload !== "string") {
+                    toast.success(`Loaded ${action.payload}!`)
+                    
+                    // navigate('/landing')
+                } else {
+                    toast.error(action.payload)
+                }
             }
         }
     })
@@ -51,7 +61,7 @@ const ProfileForm = () => {
             null}
 
 
-                {artist ? <label htmlFor='name'>Name</label> : <label htmlFor='name'>Artist Name</label>}
+                {!artist ? <label htmlFor='name'>Name</label> : <label htmlFor='name'>Artist Name</label>}
                 <input type='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.errors.name && formik.touched.name ? <div className="error-message show">{formik.errors.name}</div> : null}    
             <br/>

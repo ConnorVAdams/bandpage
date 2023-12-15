@@ -52,10 +52,7 @@ const postArtist = async (values, asyncThunk) => {
                 },
                 body: JSON.stringify(values)
             })
-            const data = await resp.json()
-            console.log(data)
-            console.log(resp)
-            
+            const data = await resp.json()          
             if (resp.ok) {
                 return data
             } else {

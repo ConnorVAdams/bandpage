@@ -6,14 +6,15 @@ export const createSlice = buildCreateSlice({
 
 const initialState = {
     data: null,
-    errors: [],
-    editMode: false,
+    // errors: [],
+    admin: false,
     current: null,
     loading: true
 }
+
 const fetchAll = async (asyncThunk) => {
     try {
-        const resp = await fetch('/artists')
+        const resp = await fetch('/fans')
         const data = await resp.json()
         if (resp.ok) {
             return data
@@ -27,7 +28,7 @@ const fetchAll = async (asyncThunk) => {
 
 const fetchOne = async (artist_id, asyncThunk) => {
     try {
-        const resp = await fetch(`/artists/${artist_id}`)
+        const resp = await fetch(`/fans/${artist_id}`)
         const data = await resp.json()
         if (resp.ok) {
             return data
@@ -39,33 +40,32 @@ const fetchOne = async (artist_id, asyncThunk) => {
     }
 }
 
-// const postProduction = async (values, asyncThunk) => {
-//     try {
-//         const respCheckToken = await checkToken()
-//         if (respCheckToken.ok) {
-//             const resp = await fetch('/productions', {
-//                 method: "POST",
-//                 headers: {
-//                     'Authorization': `Bearer ${getToken()}`,
-//                     "Content-Type": "application/json"
-//                 },
-//                 body: JSON.stringify(values)
-//             })
-//             const data = await resp.json()
-            
-//             if (resp.ok) {
-//                 return data
-//             } else {
-//                 throw data.message || data.msg
-//             }
-//         } else {
-//             const data = await respCheckToken.json()
-//             throw data.message || data.msg
-//         }
-//     } catch (error) {
-//         return error
-//     }
-// }
+const postFan = async (values, asyncThunk) => {
+    try {
+        const respCheckToken = await checkToken()
+        if (respCheckToken.ok) {
+            const resp = await fetch('/fans', {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${getToken()}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(values)
+            })
+            const data = await resp.json()
+            if (resp.ok) {
+                return data
+            } else {
+                throw data.message || data.msg
+            }
+        } else {
+            // const data = await respCheckToken.json()
+            // throw data.message || data.msg
+        }
+    } catch (error) {
+        return error
+    }
+}
 
 // const patchProduction = async ({id, values}, asyncThunk) => {
 //     console.log("🚀 ~ file: productionSlice.js:67 ~ patchFetchProduction ~ asyncThunk:", asyncThunk)
@@ -124,11 +124,11 @@ const fetchOne = async (artist_id, asyncThunk) => {
 //     }
 // }
 
-const artistSlice = createSlice({
-    name: 'artist',
+const fanSlice = createSlice({
+    name: 'fan',
     initialState,
     reducers: (create) => ({
-        // setProduction: create.reducer((state, action) => {
+        // setArtist: create.reducer((state, action) => {
         //     state.spotlight = action.payload
         //     state.loading = false
         //     state.errors = []
@@ -146,46 +146,25 @@ const artistSlice = createSlice({
         //     state.errors = []
         //     state.loading = false
         // }),
-        fetchAllArtists: create.asyncThunk(
-            fetchAll,
-            {
-                pending: (state) => {
-                    state.loading = true
-                    state.errors = []
-                },
-                rejected: (state, action) => {
-                    state.loading = false
-                    state.errors.push(action.payload)
-                },
-                fulfilled: (state, action) => {
-                    state.loading = false
-                    state.data = action.payload
-                },
-            }
-        ),
-        fetchOneArtist: create.asyncThunk(
-            fetchOne,
-            {
-                pending: (state) => {
-                    state.errors = []
-                    state.loading = true
-                },
-                rejected: (state, action) => {
-                    state.loading = false
-                    state.errors.push(action.payload)
-                },
-                fulfilled: (state, action) => {
-                    state.loading = false
-                    if (!action.payload.id) {
-                        state.errors.push(action.payload)
-                    } else {
-                        state.current = action.payload
-                    }
-                },
-            }
-        ),
-        // fetchPostProduction: create.asyncThunk(
-        //     postProduction,
+        // fetchAllArtists: create.asyncThunk(
+        //     fetchAll,
+        //     {
+        //         pending: (state) => {
+        //             state.loading = true
+        //             state.errors = []
+        //         },
+        //         rejected: (state, action) => {
+        //             state.loading = false
+        //             state.errors.push(action.payload)
+        //         },
+        //         fulfilled: (state, action) => {
+        //             state.loading = false
+        //             state.data = action.payload
+        //         },
+        //     }
+        // ),
+        // fetchOneArtist: create.asyncThunk(
+        //     fetchOne,
         //     {
         //         pending: (state) => {
         //             state.errors = []
@@ -200,11 +179,32 @@ const artistSlice = createSlice({
         //             if (!action.payload.id) {
         //                 state.errors.push(action.payload)
         //             } else {
-        //                 state.data.push(action.payload)
+        //                 state.current = action.payload
         //             }
         //         },
         //     }
         // ),
+        fetchPostFan: create.asyncThunk(
+            postFan,
+            {
+                pending: (state) => {
+                    state.errors = []
+                    state.loading = true
+                },
+                rejected: (state, action) => {
+                    state.loading = false
+                    state.errors.push(action.payload)
+                },
+                fulfilled: (state, action) => {
+                    state.loading = false
+                    if (!action.payload.id) {
+                        state.errors.push(action.payload)
+                    } else {
+                        state.data.push(action.payload)
+                    }
+                },
+            }
+        ),
         // fetchPatchProduction: create.asyncThunk(
         //     patchProduction,
         //     {
@@ -241,7 +241,7 @@ const artistSlice = createSlice({
         //         },
         //         fulfilled: (state, action) => {
         //             state.loading = false
-                    
+
         //             if (typeof action.payload === "string") {
         //                 state.errors.push(action.payload)
         //             } else {
@@ -254,10 +254,10 @@ const artistSlice = createSlice({
         // ),
     }),
     selectors: {
-        selectArtists(state){
+        selectFans(state){
             return state.data
         },
-        selectArtistById: (state, artist_id) => {
+        selectFanById: (state, artist_id) => {
             return state.data.find(artist => artist.id === artist_id)
         }
     }
@@ -268,11 +268,12 @@ export const {
     // setEditMode, 
     // addError, 
     // clearErrors, 
-    fetchAllArtists, 
-    fetchOneArtist, 
-    // fetchPostProduction, 
+    // fetchAllArtists, 
+    // fetchOneArtist,
+    // fetchNewArtist,
+    fetchPostFan, 
     // fetchPatchProduction, 
     // fetchDeleteProduction
-} = artistSlice.actions
-export const { selectArtists, selectErrors } = artistSlice.selectors
-export default artistSlice.reducer
+} = fanSlice.actions
+export const { selectFans, selectErrors } = fanSlice.selectors
+export default fanSlice.reducer
