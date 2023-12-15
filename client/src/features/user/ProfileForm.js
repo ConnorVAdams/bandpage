@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Formik, Form } from 'formik'
 // import artistFormSchema from './artistFormSchema'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 
-const ArtistForm = () => {
+const ProfileForm = () => {
     // const [venues, setVenues] = useState([])
     // const [artists, setArtists] = useState([])
     // const [newArtist, setNewArtist] = useState(false)
@@ -51,8 +51,8 @@ const ArtistForm = () => {
     //     fetchArtists()
     // }, [])
     return (
-        <h1>ArtistForm</h1>
+        <h1>ProfileForm</h1>
     )
 }
 
-export default ArtistForm
+export default ProfileForm

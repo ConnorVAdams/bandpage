@@ -9,7 +9,7 @@ import NotFound from './components/NotFound'
 import "./App.css"
 import { setToken } from './utils/main'
 import { Toaster } from 'react-hot-toast';
-import ArtistForm from './features/artist/ArtistForm/ArtistForm'
+import ProfileForm from './features/user/ProfileForm'
 import EventCard from './features/event/EventCard'
 import FanCard from './features/fan/FanCard'
 import TrackCard from './features/track/TrackCard'
@@ -71,27 +71,30 @@ function App() {
         </>
     )
 
-    if (!user.artist && !user.fan) return (
-        <>
-            <Toaster />
-            <ArtistForm />
-        </>
-    )
     return (
         <>
             <NavBar />
             <Routes>
-                <Route path='/artists/:artist_id/' element={<ArtistWrapper artist={artist}/>}>
-                    <Route path='home' element={<ArtistDetail/>} />
-                    <Route path='tracks' element={<TrackList/>} />
-                    <Route path='events' element={<EventList/>} />
+                <Route path='/artists/'>
+                    <Route index element={<ArtistList />} />
+                    <Route path='new' element={<ProfileForm />} />
+                    <Route path=':artist_id/' element={<ArtistWrapper artist={artist}/>}>
+                        <Route index element={<ArtistDetail />} />
+                        <Route path='tracks' element={<TrackList />} />
+                        <Route path='events' element={<EventList />} />
+                    </Route>
                 </Route>
-                <Route path='/artists' element={<ArtistList />} />
-                    <Route path='new' element={<ArtistForm/>} />
-                <Route path='/landing' element={<UserLanding/>} />
-                    <Route path='home' element={<ArtistDetail/>} />
-                    <Route path='tracks' element={<TrackList/>} />
-                    <Route path='events' element={<EventList/>} />
+
+                <Route path='/fans/'>
+                    <Route path='new' element={<ProfileForm />} />
+                </Route>
+
+                <Route path='/landing/'>
+                    <Route index element={<UserLanding />} />
+                    <Route path='tracks' element={<TrackList />} />
+                    <Route path='events' element={<EventList />} />
+                </Route>
+
                 <Route path='/*' element={<NotFound />} />
             </Routes>
         </>

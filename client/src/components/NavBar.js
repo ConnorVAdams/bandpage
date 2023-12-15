@@ -14,7 +14,7 @@ const NavBar = () => {
 
     const handleClick = () => {
         dispatch(fetchOneArtist(user.artist.id))
-            navigate(`/artists/${user.artist.id}/home`, { replace: true })
+            navigate(`/artists/${user.artist.id}`, { replace: true })
     }
 
     const handleLogout = () => {

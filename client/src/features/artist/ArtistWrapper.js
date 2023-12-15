@@ -60,7 +60,7 @@ const ArtistWrapper = () => {
     const { id, name, location, img, genres, bio } = artist 
     return (
         <div id={id}>
-            <Link to={`/artists/${id}/home`}>
+            <Link to={`/artists/${id}`}>
                 <h1>{name}</h1>
                 <img src={img} alt={name} />
             </Link>

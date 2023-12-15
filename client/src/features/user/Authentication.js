@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from "styled-components";
-import { useFormik } from "formik"
+import { useFormik } from 'formik'
 import * as yup from "yup"
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -12,7 +12,6 @@ import toast from 'react-hot-toast';
 function Authentication() {
     // Conditionally render either signup or login option 
     const [signUp, setSignUp] = useState(false)
-    const [userType, setUserType] = useState('')
     const dispatch = useDispatch() 
     const navigate = useNavigate()
 
@@ -56,22 +55,28 @@ function Authentication() {
         initialValues: {
             username:'',
             password:'',
-            name:'',
-            genres:'',
-            bio:'',
-            location: '',
-            img:''
+            userType:'',
+            // genres:'',
+            // bio:'',
+            // location: '',
+            // img:''
         },
         // validationSchema: signUp ? signupSchema : loginSchema,
-        onSubmit: async (values) => {
+        onSubmit: async (values, event) => {
+            const { username, password, userType } = values
+            const user_vals = { username, password }
             const action = await dispatch(fetchRegister({url, values}))
             if (typeof action.payload !== "string") {
                 toast.success(`Welcome ${action.payload.user.username}!`)
-                const new_user_id = action.payload.user.id
-                navigate('/artists/new')
+                // const new_user_id = action.payload.user.id
+
                 setToken(action.payload.jwt_token)
                 setRefreshToken(action.payload.refresh_token)
-                // navigate('/landing')
+                if (signUp) {
+                    navigate(`${values.userType}s/new`)
+                } else {
+                    navigate('/landing')
+                }
 
             } else {
                 toast.error(action.payload)
@@ -81,11 +86,6 @@ function Authentication() {
     
     const handleClick = () => {
         setSignUp((signUp) => !signUp)
-        setUserType('')
-    }
-
-    const handleRegister = (e) => {
-        setUserType(userType => e.target.id)
     }
 
     return (
@@ -94,12 +94,6 @@ function Authentication() {
                 <h2>Please Log in or Sign up!</h2>
                 <h3>{signUp ? 'Already a member?':'Not a member?'}</h3>
                 <button onClick={handleClick}>{signUp?'Log In!':'Register now!'}</button>
-                <h3>{signUp &&
-                    <>
-                        <button id={'artist'} onClick={handleRegister}>Register as Artist</button>
-                        <button id={'fan'} onClick={handleRegister}>Register as Fan</button>
-                    </>}
-                </h3>
 
             </div>
             <form onSubmit={formik.handleSubmit}>
@@ -109,9 +103,21 @@ function Authentication() {
                 <label htmlFor='password'>Password</label>
                 <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.errors.password && formik.touched.password ? <div className="error-message show">{formik.errors.password}</div> : null}
-                <input type='submit' value={signUp?'Sign Up!':'Log In!'} />
+                {signUp ?
+                <>
+                    <label htmlFor='userType'>User Type:</label>
+                    <select id="userType" name='userType' value={formik.values.userType} onChange={formik.handleChange} onBlur={formik.handleBlur}>
+                        <option value="">Select</option>
+                        <option value="artist">Artist</option>
+                        <option value="fan">Fan</option>
+                    </select>
+                    {formik.errors.userType && formik.touched.userType ? <div className="error-message show">{formik.errors.userType}</div> : null}
+                    <button type='submit' value='Register'>Register</button>
+                </>
+                :
+                <input type='submit' value='Log In!'/>}
                 <br/>
-                {userType === 'artist' ? 
+                {/* {userType === 'artist' ? 
                     <>
                         <label htmlFor='genres'>Genres</label>
                         <input type='genres' name='genres' value={formik.values.genres} onChange={formik.handleChange} onBlur={formik.handleBlur} />
@@ -140,7 +146,7 @@ function Authentication() {
                     <br/>
                     
                     </> :  
-                    null}
+                    null} */}
                     
             </form>
         </>
