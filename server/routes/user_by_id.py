@@ -19,22 +19,22 @@ class UserById(Resource):
         except Exception as e:
             abort(400, str(e))
 
-    # @jwt_required()
-    # def patch(self, id):
-    #     artist = User.query.get_or_404(
-    #         id, description=f"Could not find artist with ID: {id}"
-    #     )
-    #     try:
-    #         data = request.get_json()
-    #         artist_schema.validate(data)
-    #         updated_artist = artist_schema.load(
-    #             data, instance=artist, partial=True, session=db.session
-    #         )
-    #         db.session.commit()
-    #         return artist_schema.dump(updated_artist), 200
-    #     except (ValueError, ValidationError, IntegrityError) as e:
-    #         db.session.rollback()
-    #         abort(400, str(e))
+    @jwt_required()
+    def patch(self, id):
+        user = User.query.get_or_404(
+            id, description=f"Could not find user with ID: {id}"
+        )
+        try:
+            data = request.get_json()
+            user_schema.validate(data)
+            updated_user = user_schema.load(
+                data, instance=user, partial=True, session=db.session
+            )
+            db.session.commit()
+            return user_schema.dump(updated_user), 200
+        except Exception as e:
+            db.session.rollback()
+            abort(400, str(e))
 
     @jwt_required()
     def delete(self, id):
