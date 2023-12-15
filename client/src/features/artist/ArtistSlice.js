@@ -6,7 +6,7 @@ export const createSlice = buildCreateSlice({
 
 const initialState = {
     data: null,
-    errors: [],
+    // errors: [],
     admin: false,
     current: null,
     loading: true
@@ -41,7 +41,6 @@ const fetchOne = async (artist_id, asyncThunk) => {
 }
 
 const postArtist = async (values, asyncThunk) => {
-    console.log(values)
     try {
         const respCheckToken = await checkToken()
         if (respCheckToken.ok) {
@@ -54,6 +53,8 @@ const postArtist = async (values, asyncThunk) => {
                 body: JSON.stringify(values)
             })
             const data = await resp.json()
+            console.log(data)
+            console.log(resp)
             
             if (resp.ok) {
                 return data

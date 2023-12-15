@@ -20,18 +20,19 @@ const NavBar = () => {
     const handleLogout = () => {
         localStorage.removeItem('jwt-token')
         localStorage.removeItem('refresh-token')
+        localStorage.clear()
         navigate('/')
         // TODO How?
     }
 
-    return (
+    if (user) return (
         <>
             <span><Link to={'/landing'}>Landing</Link></span>
             {user.artist ? <span><h4 onClick={handleClick}>My Artist Page</h4></span>: null }
             <span><Link to={'/artists'}>All Artists</Link></span>
             <br/>
             <button onClick={handleLogout}>Logout</button>
-        </>
+        </> 
     );
     }
 

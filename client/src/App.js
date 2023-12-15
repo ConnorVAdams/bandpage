@@ -47,7 +47,7 @@ function App() {
             if (action.payload.flag === "refresh") {
                 setToken(action.payload.jwt_token)
             }
-            // navigate('/')
+            navigate('/')
             }
         }
         })()
@@ -78,7 +78,7 @@ function App() {
                 <Route path='/artists/'>
                     <Route index element={<ArtistList />} />
                     <Route path='new' element={<ProfileForm />} />
-                    <Route path=':artist_id/' element={<ArtistWrapper artist={artist}/>}>
+                    <Route path=':artist_id/' element={<ArtistWrapper/>}>
                         <Route index element={<ArtistDetail />} />
                         <Route path='tracks' element={<TrackList />} />
                         <Route path='events' element={<EventList />} />
