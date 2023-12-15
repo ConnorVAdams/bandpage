@@ -21,8 +21,6 @@ const ArtistWrapper = () => {
     
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // Ask store if current user is artist AND current user id is also equal to artist.id
-    // If so, set admin to true
 
     useEffect(()=>{
         (async () => {

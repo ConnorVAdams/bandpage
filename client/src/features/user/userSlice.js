@@ -1,5 +1,5 @@
 import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
-import { getToken, getRefreshToken } from "../../utils/main";
+import { getToken, getRefreshToken, checkToken } from "../../utils/main";
 // import { fetchOneArtist } from "../artist/artistSlice";
 // import { fetchOneFan } from "../fan/fanSlice"
 export const createSlice = buildCreateSlice({
@@ -62,7 +62,30 @@ const fetchMe = async () => {
     }
 }
 
-// On successful login or register, set logged in user to current user in store
+const deleteUser = async (id, asyncThunk) => {
+    try {
+        const respCheckToken = await checkToken()
+        
+        if (respCheckToken.ok) {
+            const resp = await fetch(`/users/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            })
+            if (resp.ok) { //! 204 NO CONTENT
+            } else {
+                const data = await resp.json()
+                throw data.message || data.msg
+            }
+        } else {
+            const data = await respCheckToken.json()
+            throw data.message || data.msg
+        }
+    } catch (error) {
+        return error
+    }
+}
 
 const userSlice = createSlice({
     name: 'user',
@@ -135,11 +158,34 @@ const userSlice = createSlice({
                     }
                 },
             }
-        )
+        ),
+        fetchDeleteUser: create.asyncThunk(
+            deleteUser,
+            {
+                pending: (state) => {
+                    state.errors = []
+                    state.loading = true
+                },
+                rejected: (state, action) => {
+                    state.loading = false
+                    state.errors.push(action.payload)
+                },
+                fulfilled: (state, action) => {
+                    state.loading = false
+
+                    if (typeof action.payload === "string") {
+                        state.errors.push(action.payload)
+                    } else {
+                        // const idx = state.data.findIndex(user => user.id === parseInt(action.payload.id))
+                        // state.data.splice(idx, 1)
+                        state.data = null
+                    }
+                },
+            }
+        ),
     }),
     selectors: {
         selectUser(state){
-            return state.data
         },
         selectErrors(state){
             return state.errors
@@ -154,7 +200,8 @@ export const {
     addError,
     clearErrors,
     fetchRegister,
-    fetchCurrentUser
+    fetchCurrentUser,
+    fetchDeleteUser
 } = userSlice.actions
 
 export const {

@@ -98,12 +98,12 @@ const postArtist = async (values, asyncThunk) => {
 //     }
 // }
 
-// const deleteProduction = async (prod_id, asyncThunk) => {
+// const deleteArtist = async (prod_id, asyncThunk) => {
 //     try {
 //         const respCheckToken = await checkToken()
         
 //         if (respCheckToken.ok) {
-//             const resp = await fetch(`/productions/${prod_id}`, {
+//             const resp = await fetch(`/artists/${prod_id}`, {
 //                 method: "DELETE",
 //                 headers: {
 //                     'Authorization': `Bearer ${getToken()}`
@@ -229,8 +229,8 @@ const artistSlice = createSlice({
         //         },
         //     }
         // ),
-        // fetchDeleteProduction: create.asyncThunk(
-        //     deleteProduction,
+        // fetchDeleteArtist: create.asyncThunk(
+        //     deleteArtist,
         //     {
         //         pending: (state) => {
         //             state.errors = []
@@ -246,7 +246,7 @@ const artistSlice = createSlice({
         //             if (typeof action.payload === "string") {
         //                 state.errors.push(action.payload)
         //             } else {
-        //                 const idx = state.data.findIndex(production => production.id === parseInt(action.payload.prod_id))
+        //                 const idx = state.data.findIndex(artist => artist.id === parseInt(action.payload.prod_id))
         //                 state.data.splice(idx, 1)
         //                 state.spotlight = null
         //             }
@@ -274,7 +274,7 @@ export const {
     fetchNewArtist,
     fetchPostArtist, 
     // fetchPatchProduction, 
-    // fetchDeleteProduction
+    // fetchDeleteArtist
 } = artistSlice.actions
 export const { selectArtists, selectErrors } = artistSlice.selectors
 export default artistSlice.reducer

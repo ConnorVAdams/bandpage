@@ -15,25 +15,6 @@ function Authentication() {
     const dispatch = useDispatch() 
     const navigate = useNavigate()
 
-    // If signup:
-        // Offer artist or fan signup:
-            // If artist:
-                // Step through form to input artist info
-                // POST new artist to db
-                // Load new artist to client as current user
-                // Navigate user to /landing
-
-            // If fan:
-                // Step through form to input artist info
-                // POST new fan to db
-                // Load new fan to client as current user
-                // Navigate user to /landing
-    
-        // If login:
-            // POST new artist or fan obj to db
-            // Load new artist or fan to client as current user
-            // Navigate user to /landing
-
     // const signupSchema = yup.object().shape({
     //     username: yup.string()
     //     .required("Please enter a user name"),
@@ -56,18 +37,12 @@ function Authentication() {
             username:'',
             password:'',
             userType:'',
-            // genres:'',
-            // bio:'',
-            // location: '',
-            // img:''
         },
         // validationSchema: signUp ? signupSchema : loginSchema,
         onSubmit: async (values, event) => {
             const action = await dispatch(fetchRegister({url, values}))
             if (typeof action.payload !== "string") {
                 toast.success(`Welcome ${action.payload.user.username}!`)
-                // const new_user_id = action.payload.user.id
-
                 setToken(action.payload.jwt_token)
                 setRefreshToken(action.payload.refresh_token)
                 if (signUp) {
