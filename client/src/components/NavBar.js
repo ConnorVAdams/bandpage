@@ -5,6 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOneArtist } from '../features/artist/artistSlice';
+import { setUser } from '../features/user/userSlice';
 
 const NavBar = () => {
     const user = useSelector(state => state.user.data)
@@ -18,9 +19,8 @@ const NavBar = () => {
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('jwt-token')
-        localStorage.removeItem('refresh-token')
         localStorage.clear()
+        dispatch(setUser(null))
         navigate('/')
         // TODO How?
     }

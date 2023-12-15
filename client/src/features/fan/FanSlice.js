@@ -7,9 +7,9 @@ export const createSlice = buildCreateSlice({
 const initialState = {
     data: null,
     // errors: [],
-    admin: false,
-    current: null,
-    loading: true
+    // admin: false,
+    // current: null,
+    // loading: true
 }
 
 const fetchAll = async (asyncThunk) => {

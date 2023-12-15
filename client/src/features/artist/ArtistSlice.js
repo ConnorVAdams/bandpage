@@ -7,9 +7,9 @@ export const createSlice = buildCreateSlice({
 const initialState = {
     data: null,
     // errors: [],
-    admin: false,
+    // admin: false,
     current: null,
-    loading: true
+    // loading: true
 }
 
 const fetchAll = async (asyncThunk) => {
@@ -199,9 +199,10 @@ const artistSlice = createSlice({
                     state.loading = false
                     if (!action.payload.id) {
                         state.errors.push(action.payload)
-                    } else {
-                        state.data.push(action.payload)
-                    }
+                    } 
+                    // else {
+                    //     state.data.push(action.payload)
+                    // }
                 },
             }
         ),

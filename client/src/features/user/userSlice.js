@@ -10,9 +10,9 @@ export const createSlice = buildCreateSlice({
 
 const initialState = {
     data: null,
-    type: null,
-    errors: [],
-    loading: true
+    // type: null,
+    // errors: [],
+    // loading: true
 }
 
 const register =  async ({ url, values }) => {
@@ -68,6 +68,17 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: (create) => ({
+        setUserType: create.reducer((state, action) => {
+            if (action.payload.genres) {
+                state.data.artist = action.payload
+                state.loading = false
+                state.errors = []
+            } else {
+                state.data.fan = action.payload
+                state.loading = false
+                state.errors = []
+            }
+        }),
         setUser: create.reducer((state, action) => {
             state.data = action.payload
             state.loading = false
@@ -137,6 +148,7 @@ const userSlice = createSlice({
 })
 
 export const {
+    setUserType,
     setUser,
     logout,
     addError,

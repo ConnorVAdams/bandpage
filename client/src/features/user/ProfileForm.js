@@ -7,6 +7,7 @@ import { ErrorMessage, Field, Formik, Form } from 'formik'
 // import artistFormSchema from './artistFormSchema'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { fetchPostArtist } from '../artist/artistSlice'
+import { setUserType } from './userSlice'
 import { fetchPostFan } from '../fan/fanSlice'
 import { useDispatch } from 'react-redux'
 
@@ -31,7 +32,7 @@ const ProfileForm = () => {
                 const action = await dispatch(fetchPostArtist(values))
                 if (typeof action.payload !== "string") {
                     toast.success(`Loaded ${action.payload}!`)
-                    
+                    dispatch(setUserType(action.payload))
                     navigate('/landing')
                 } else {
                     toast.error(action.payload)
@@ -40,8 +41,8 @@ const ProfileForm = () => {
                 const action = await dispatch(fetchPostFan(values))
                 if (typeof action.payload !== "string") {
                     toast.success(`Loaded ${action.payload}!`)
-                    
-                    // navigate('/landing')
+                    dispatch(setUserType(action.payload))
+                    navigate('/landing')
                 } else {
                     toast.error(action.payload)
                 }
