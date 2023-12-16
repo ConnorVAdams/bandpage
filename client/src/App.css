@@ -4,3 +4,12 @@
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
 }
+
+/* #user-nav {
+  flex-direction: column;
+} */
+
+#button {
+  height: 50%;
+  margin: auto
+}

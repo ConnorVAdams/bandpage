@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { fetchOneArtist } from '../features/artist/artistSlice';
 import { setUser, fetchDeleteUser } from '../features/user/userSlice';
 import { convertDateFormat } from '../utils/helpers';
+import { Button } from 'react-bootstrap'
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -32,7 +33,7 @@ const NavBar = () => {
     }
 
     return (
-        <Navbar bg="light" expand="lg" id='nav' style={{ flexDirection: 'column'}}>
+        <Navbar bg="light" expand="lg" id='main-nav' style={{ flexDirection: 'column'}}>
             <Navbar.Brand>
                 <img
                 src={process.env.PUBLIC_URL + '/logo.png'}
@@ -43,7 +44,7 @@ const NavBar = () => {
                 style={{ borderRadius: '50%' }}
                 /> BandPage
             </Navbar.Brand>
-            <Container>
+            <Container id='user-nav'>
             {user ? 
             <>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -67,8 +68,8 @@ const NavBar = () => {
                     </NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
-                    <Nav.Link as={Link} to="/artists">Explore Artists</Nav.Link>
                     {user.genres ? <Nav.Link as={Link} to={`/artists/${user.id}`}>My Page</Nav.Link> : null}
+                    <Button style={{height: '50%', margin: 'auto'}} as={Link} to="/artists">Explore Artists</Button>
             </Nav>
             </Navbar.Collapse>
             </>

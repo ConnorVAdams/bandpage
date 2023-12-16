@@ -3,18 +3,18 @@ import toast from 'react-hot-toast'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { ErrorMessage, Field, Formik, Form } from 'formik'
+// import { ErrorMessage, Field, Formik, Form } from 'formik'
 // import artistFormSchema from './artistFormSchema'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import { fetchPostArtist, fetchPatchArtist } from '../artist/artistSlice'
 import { setUserType } from './userSlice'
 import { fetchPostFan } from '../fan/fanSlice'
 import { useDispatch } from 'react-redux'
 
+
 const ProfileForm = () => {
     const acct = useSelector(state => state.user.data)
     const user = acct.artist || acct.fan
-    console.log(user)
 
     const path = useLocation().pathname
 
@@ -42,7 +42,6 @@ const ProfileForm = () => {
             user_id: acct.id
         }
     }
-    // {debugger}
     const formik = useFormik({
         initialValues: initialValues
         ,
@@ -84,35 +83,93 @@ const ProfileForm = () => {
     })
     
     return (
-        <form onSubmit={formik.handleSubmit}>
-            {path.includes('artist') ? 
-            <>
-                <label htmlFor='genres'>Genres</label>
-                <input type='genres' name='genres' value={formik.values.genres} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                {formik.errors.genres && formik.touched.genres ? <div className="error-message show">{formik.errors.genres}</div> : null}
-                <br/>
-            </> : 
-            null}
+        <Container>
+            <Row className="justify-content-md-center">
+                <Col md={6}>
+                    <Form onSubmit={formik.handleSubmit}>
 
+                            <Form.Group controlId="name">
+                                <Form.Label>{path.includes('artist') ? 'Artist Name' : 'Name'}</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="name"
+                                    value={formik.values.name}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                />
+                                {formik.errors.name && formik.touched.name && (
+                                    <Form.Text className="text-danger">{formik.errors.name}</Form.Text>
+                                )}
+                            </Form.Group>
 
-                {!path.includes('artist') ? <label htmlFor='name'>Name</label> : <label htmlFor='name'>Artist Name</label>}
-                <input type='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                {formik.errors.name && formik.touched.name ? <div className="error-message show">{formik.errors.name}</div> : null}    
-            <br/>
-            <label htmlFor='bio'>Bio</label>
-            <input type='bio' name='bio' value={formik.values.bio} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.errors.bio && formik.touched.bio ? <div className="error-message show">{formik.errors.bio}</div> : null}
-            <br/>
-            <label htmlFor='location'>Location</label>
-            <input type='location' name='location' value={formik.values.location} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.errors.location && formik.touched.location ? <div className="error-message show">{formik.errors.location}</div> : null}
-            <br/>
-            <label htmlFor='img'>Image</label>
-            <input type='img' name='img' value={formik.values.img} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.errors.img && formik.touched.img ? <div className="error-message show">{formik.errors.img}</div> : null}
-            <br/>
-            <input type='submit' value='Submit!'/>
-            </form>
+                            {path.includes('artist') && (
+                            <>
+                                <Form.Group controlId="genres">
+                                    <Form.Label>Genres</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="genres"
+                                        value={formik.values.genres}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    {formik.errors.genres && formik.touched.genres && (
+                                        <Form.Text className="text-danger">{formik.errors.genres}</Form.Text>
+                                    )}
+                                </Form.Group>
+                            </>
+                        )}
+
+                        <Form.Group controlId="bio">
+                            <Form.Label>Bio</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                name="bio"
+                                value={formik.values.bio}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.errors.bio && formik.touched.bio && (
+                                <Form.Text className="text-danger">{formik.errors.bio}</Form.Text>
+                            )}
+                        </Form.Group>
+
+                        <Form.Group controlId="location">
+                            <Form.Label>Location</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="location"
+                                value={formik.values.location}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.errors.location && formik.touched.location && (
+                                <Form.Text className="text-danger">{formik.errors.location}</Form.Text>
+                            )}
+                        </Form.Group>
+
+                        <Form.Group controlId="img">
+                            <Form.Label>Image</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="img"
+                                value={formik.values.img}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.errors.img && formik.touched.img && (
+                                <Form.Text className="text-danger">{formik.errors.img}</Form.Text>
+                            )}
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 
