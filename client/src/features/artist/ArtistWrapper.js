@@ -87,7 +87,7 @@ const ArtistWrapper = () => {
                 <Button as={Link} to={`/artists/${id}/events`}>Events</Button>
                 <Button as={Link} to={`/artists/${id}/tracks`}>Music</Button>
             </Container>
-            <AdminProvider value={admin}>
+            <AdminProvider>
                 <Outlet />
             </AdminProvider>
         </>

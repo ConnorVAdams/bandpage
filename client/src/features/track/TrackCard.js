@@ -17,8 +17,6 @@ const TrackCard = ({ track, admin }) => {
 
     }
 
-    console.log(admin)
-
     return (
         
     <Card id={id} className="mb-3">
