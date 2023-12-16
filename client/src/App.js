@@ -13,7 +13,7 @@ import EventCard from './features/event/EventCard'
 import FanCard from './features/fan/FanCard'
 import TrackCard from './features/track/TrackCard'
 import ArtistDetail from './features/artist/ArtistDetail'
-import ArtistCard from './features/artist/ArtistCard'
+import ArtistWrapper from './features/artist/ArtistWrapper'
 import ArtistLanding from './features/user/userLanding'
 import ArtistList from './features/artist/ArtistList'
 import EventList from './features/event/EventList'
@@ -93,7 +93,7 @@ const App = () => {
                     <Route index element={<ListContainer />} />
                     <Route path='new' element={<ProfileForm />} />
                     <Route path='edit/:id' element={<ProfileForm />} />
-                    <Route path=':artist_id/' element={<ArtistCard/>}>
+                    <Route path=':artist_id/' element={<ArtistWrapper />}>
                         <Route index element={<ArtistDetail />} />
                         <Route path='tracks' element={<ListContainer />} />
                         <Route path='events' element={<ListContainer />} />

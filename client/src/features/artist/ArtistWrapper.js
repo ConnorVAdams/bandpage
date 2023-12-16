@@ -57,7 +57,11 @@ const ArtistWrapper = () => {
     
     return (
         <>
-            <Container id='user-nav' style={{flexDirection: 'column'}}>
+            <ArtistCard 
+                key={id}
+                artist={artist}/>
+                
+            {/* <Container id='user-nav' style={{flexDirection: 'column'}}>
                 <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                     <Container style={{width: '200px'}}> 
                         <Image src={img} style={{ border: '3px solid black', width: '150px', height: '150px', padding: '0' }} roundedCircle />
@@ -86,7 +90,7 @@ const ArtistWrapper = () => {
                 <Button as={Link} to={`/artists/${id}`}>About</Button>
                 <Button as={Link} to={`/artists/${id}/events`}>Events</Button>
                 <Button as={Link} to={`/artists/${id}/tracks`}>Music</Button>
-            </Container>
+            </Container> */}
             <AdminProvider>
                 <Outlet />
             </AdminProvider>

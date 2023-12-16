@@ -37,16 +37,18 @@ function ArtistCard({ artist }) {
         <Card id={id} className="mb-3">
             <Card.Body>
             <Container
+                as={Link}
+                to={`/artists/${id}`}
                 style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'row',
+                textDecoration: 'none',
+                color: 'black'
                 }}
             >
                 <Container 
-                    as={Link}
-                    to={`/artists/${id}`}
                     style={{ width: '200px' }}>
                 <Image
                     src={img}
