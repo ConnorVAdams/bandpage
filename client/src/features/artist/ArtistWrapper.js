@@ -13,11 +13,13 @@ import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
 import { Button, Container, Nav, Navbar, Image, Row, Col, Text } from 'react-bootstrap'
 import { FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
+import { AdminProvider } from './adminContext'
 
 
 const ArtistWrapper = () => {
     const artist = useSelector(state => state.artist.current)
     const user = useSelector(state => state.user.data)
+    const admin = useSelector(state => state.user.admin)
     const loc = useLocation()
 
     const { artist_id } = useParams()
@@ -85,7 +87,9 @@ const ArtistWrapper = () => {
                 <Button as={Link} to={`/artists/${id}/events`}>Events</Button>
                 <Button as={Link} to={`/artists/${id}/tracks`}>Music</Button>
             </Container>
+            <AdminProvider value={admin}>
                 <Outlet />
+            </AdminProvider>
         </>
         )
     }

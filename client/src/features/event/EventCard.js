@@ -4,7 +4,7 @@ import { Card, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, admin }) => {
     const {id, date_time, venue, artist_name, artist_id } = event
     const datetime = formatDateTime(date_time)
     

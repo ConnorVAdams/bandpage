@@ -40,12 +40,7 @@ const App = () => {
         } else {
             dispatch(setAdmin(false))
         }
-    }, [artist])
-
-    console.log(admin)
-
-    
-
+    }, [artist])    
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)

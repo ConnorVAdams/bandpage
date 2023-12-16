@@ -5,7 +5,7 @@ import { FaCheck, FaTimes, FaTrash, FaPencilAlt } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
 
-const TrackCard = ({ track }) => {
+const TrackCard = ({ track, admin }) => {
     const { id, name, audio, artist_name } = track
 
     const inUserTracks = useSelector(state => {
@@ -17,7 +17,7 @@ const TrackCard = ({ track }) => {
 
     }
 
-    // console.log(admin)
+    console.log(admin)
 
     return (
         
@@ -38,12 +38,12 @@ const TrackCard = ({ track }) => {
                 >
             {inUserTracks ? <FaCheck /> : <FaTimes />} {inUserTracks ? 'Liked' : 'Like'}
             </Button>
-            {/* {admin ? 
+            {admin ? 
                 <>
                 <FaPencilAlt/> <FaTrash/>
                 </> 
                 : 
-                null} */}
+                null}
             </Col>
             </Row>
         </Card.Body>

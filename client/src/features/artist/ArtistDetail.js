@@ -10,10 +10,12 @@ import EventCard from '../event/EventCard'
 import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { useAdmin } from './adminContext';
 
 
 const ArtistDetail = () => {
     const artist = useSelector(state => state.artist.current)
+    const admin = useAdmin()
 
     if (artist) {
         const {id, bio, tracks, upcoming_events } = artist 
@@ -32,7 +34,10 @@ const ArtistDetail = () => {
                 <Container>
                     <h3>Top Track</h3>
                     {topTrack ?
-                    <TrackCard key={topTrack.id} track={topTrack}/>
+                    <TrackCard 
+                    key={topTrack.id} 
+                    track={topTrack}
+                    admin={admin}/>
                     :
                     'No tracks liked yet!'}
                 </Container>
@@ -40,7 +45,10 @@ const ArtistDetail = () => {
                 <Container>
                     <h3>Next Event</h3>
                     {nextEvent ?
-                        <EventCard key={nextEvent.id} event={nextEvent}/>
+                        <EventCard 
+                        key={nextEvent.id} 
+                        event={nextEvent} 
+                        admin={admin}/>
                         :
                         'No events scheduled yet!'}
                 </Container>

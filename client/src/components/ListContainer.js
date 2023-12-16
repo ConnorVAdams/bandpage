@@ -7,19 +7,22 @@ import EventCard from '../features/event/EventCard';
 import NotFound from './NotFound';
 import { useEffect } from 'react'
 import { fetchAllArtists } from '../features/artist/artistSlice';
+import { useAdmin } from '../features/artist/adminContext';
 
 const ListContainer = () => {
     const acct = useSelector(state => state.user.data)
     const user = useSelector(state => state.user.data.artist)
+
+    const admin = useAdmin()
 
     const artists = useSelector(state => state.artist.data)
     const artist = useSelector(state => state.artist.current)
     const path = useLocation().pathname
     const dispatch = useDispatch()
 
-    const { artist_id } = useParams()
-    const userTracks = user.favorited_tracks
-    const admin = user.id === Number(artist_id)
+    // const { artist_id } = useParams()
+    // const userTracks = user.favorited_tracks
+    // const admin = user.id === Number(artist_id)
     
     useEffect(() => {
         if (path.includes('/artists')) {
@@ -29,13 +32,15 @@ const ListContainer = () => {
 
     const cardComponent = () => {
         if (path.includes('/tracks')) {
+            console.log(admin)
             return (
                 <>
                 <h1>MUSIC</h1>
                 {artist.tracks && artist.tracks.map(
                     track => <TrackCard 
                         key={track.id} 
-                        track={track} />
+                        track={track}
+                        admin={admin} />
                 )}
                 </>
             )
@@ -47,7 +52,8 @@ const ListContainer = () => {
                 {artist.upcoming_events && artist.upcoming_events.map(
                     event => <EventCard 
                         key={event.id} 
-                        event={event} />
+                        event={event}
+                        admin={admin} />
                 )}
                 </>
             )
