@@ -9,7 +9,11 @@
   flex-direction: column;
 } */
 
-#button {
+/* #button {
   height: 50%;
   margin: auto
+} */
+
+h1 {
+  text-align: center;
 }

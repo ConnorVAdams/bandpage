@@ -51,7 +51,6 @@ const ProfileForm = () => {
                 const action = await dispatch(fetchPatchArtist({user, values}))
                 if (typeof action.payload !== "string") {
                     toast.success(`Patched ${action.payload}!`)
-                    console.log(action.payload)
                     dispatch(setUserType(action.payload))
                     navigate('/landing')
                 } else {
@@ -84,6 +83,7 @@ const ProfileForm = () => {
     
     return (
         <Container>
+            <h1>{path.includes('new') ? `NEW ${path.includes('artist') ? 'ARTIST' : 'FAN'}` : 'EDIT PROFILE'}</h1>
             <Row className="justify-content-md-center">
                 <Col md={6}>
                     <Form onSubmit={formik.handleSubmit}>

@@ -22,6 +22,7 @@ import NavBar from './components/NavBar'
 import Authentication from './features/user/Authentication'
 import { fetchCurrentUser } from './features/user/userSlice'
 import UserLanding from './features/user/userLanding'
+import ListContainer from './components/ListContainer'
 
 function App() {
     const user = useSelector(state => state.user.data)
@@ -77,13 +78,13 @@ function App() {
             <Routes>
 
                 <Route path='/artists/'>
-                    <Route index element={<ArtistList />} />
+                    <Route index element={<ListContainer />} />
                     <Route path='new' element={<ProfileForm />} />
                     <Route path='edit/:id' element={<ProfileForm />} />
                     <Route path=':artist_id/' element={<ArtistWrapper/>}>
                         <Route index element={<ArtistDetail />} />
-                        <Route path='tracks' element={<TrackList />} />
-                        <Route path='events' element={<EventList />} />
+                        <Route path='tracks' element={<ListContainer />} />
+                        <Route path='events' element={<ListContainer />} />
                     </Route>
                 </Route>
 

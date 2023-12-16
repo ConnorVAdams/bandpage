@@ -11,6 +11,9 @@ import TrackCard from '../track/TrackCard'
 import EventCard from '../event/EventCard'
 import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
+import { Button, Container, Nav, Navbar, Image, Row, Col } from 'react-bootstrap'
+import { FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
+
 
 const ArtistWrapper = () => {
     const artist = useSelector(state => state.artist.current)
@@ -58,33 +61,65 @@ const ArtistWrapper = () => {
 
     const { id, name, location, img, genres, bio } = artist 
     return (
-        <div id={id}>
-            <Link to={`/artists/${id}`}>
-                <h1>{name}</h1>
-                <img src={img} alt={name} />
-                <h2>Est. {convertDateFormat(artist.created_at)}</h2>
-            </Link>
-                {pathname.includes('artists') ? 
-                    <>
-                        <p>Location: {location}</p>
-                        <p>Genres: {genres}</p>
-                        <p>Bio: {bio}</p>
-                    </> 
-                    :
-                    null}
-                
-            <Link to={`/artists/${id}/tracks`}>
-                    <h2>Tracks</h2>
-            </Link>
-            <Link to={`/artists/${id}/events`}>
-                    <h2>Events</h2>
-            </Link>
-            <Outlet />
-            {/* Conditionally render admin CRUD buttons in wrapper */}
-        {/* <button onClick={handleEdit} >Edit Production</button>
-        <button onClick={handleDelete} >Delete Production</button> */}
+        <>
+            <Container id='user-nav' style={{flexDirection: 'column'}}>
+                <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    <Container style={{width: '200px'}}> 
+                        <Image src={img} style={{ width: '150px', height: '150px', padding: '0' }} roundedCircle />
+                    </Container>    
+                    <Container>
+                    <h2>{name}</h2>
 
-        </div>
+                    <Row style={{ alignItems: 'center', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+                        <Col xs={2} md={4}>
+                        <h6><FaCalendar/> Est. {convertDateFormat(artist.created_at)}</h6>
+                        </Col>
+                        <Col xs={2} md={4}>
+                        <h6><FaMapMarker/> {location}</h6>
+                        </Col>
+                        <Col xs={2} md={4}>
+                        <h6><FaMusic/> {genres}</h6>
+                        </Col>
+                    </Row>
+                    </Container>
+
+                </Container>
+            </Container>
+            <Container style={{ display: 'flex', justifyContent: 'space-evenly'}}>
+                <Button as={Link} to={`/artists/${id}`}>About</Button>
+                <Button as={Link} to={`/artists/${id}/events`}>Events</Button>
+                <Button as={Link} to={`/artists/${id}/tracks`}>Music</Button>
+            </Container>
+                <Outlet />
+        </>
+
+        // <div id={id}>
+        //     <Link to={`/artists/${id}`}>
+        //         <h1>{name}</h1>
+        //         <img src={img} alt={name} />
+        //         <h2>Est. {convertDateFormat(artist.created_at)}</h2>
+        //     </Link>
+        //         {pathname.includes('artists') ? 
+        //             <>
+        //                 <p>Location: {location}</p>
+        //                 <p>Genres: {genres}</p>
+        //                 <p>Bio: {bio}</p>
+        //             </> 
+        //             :
+        //             null}
+                
+        //     <Link to={`/artists/${id}/tracks`}>
+        //             <h2>Tracks</h2>
+        //     </Link>
+        //     <Link to={`/artists/${id}/events`}>
+        //             <h2>Events</h2>
+        //     </Link>
+        //     <Outlet />
+        //     {/* Conditionally render admin CRUD buttons in wrapper */}
+        // {/* <button onClick={handleEdit} >Edit Production</button>
+        // <button onClick={handleDelete} >Delete Production</button> */}
+
+        // </div>
         )
     }
     

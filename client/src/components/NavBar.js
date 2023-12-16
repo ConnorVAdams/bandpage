@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { fetchOneArtist } from '../features/artist/artistSlice';
 import { setUser, fetchDeleteUser } from '../features/user/userSlice';
 import { convertDateFormat } from '../utils/helpers';
-import { Button } from 'react-bootstrap'
+import { Button, Image } from 'react-bootstrap'
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -50,8 +50,7 @@ const NavBar = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav ">
             <Nav className="me-auto">
-                    <FaUser />
-                    <NavDropdown title={<img src={user.img} alt="User" style={{ maxWidth: '50px' }} className="user-image" />}>
+                    <NavDropdown title={<Image roundedCircle src={user.img} alt="User" style={{ width: '100px', height: '100px' }} className="user-image" />}>
                     <NavDropdown.Item>
                         {acct.username}
                     </NavDropdown.Item>
