@@ -27,7 +27,7 @@ const UserLanding = () => {
             fan_followers, 
             artist_followers,
             followed_artists,
-            favorite_tracks,
+            favorited_tracks,
             events_attending,
             user_id,
             username 
@@ -54,7 +54,7 @@ const UserLanding = () => {
 
                     <h5>My Liked Tracks:</h5>
                         <div>
-                            {favorite_tracks && favorite_tracks.map(track => track && (
+                            {favorited_tracks && favorited_tracks.map(track => track && (
                                 <TrackCard key={track.id} track={track} />
                             ))}
                         </div>

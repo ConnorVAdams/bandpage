@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col, InputGroup, FormControl, ListGroup } from 'react-bootstrap';
 import ArtistCard from '../features/artist/ArtistCard';
@@ -10,10 +10,16 @@ import { fetchAllArtists } from '../features/artist/artistSlice';
 
 const ListContainer = () => {
     const acct = useSelector(state => state.user.data)
+    const user = useSelector(state => state.user.data.artist)
+
     const artists = useSelector(state => state.artist.data)
     const artist = useSelector(state => state.artist.current)
     const path = useLocation().pathname
     const dispatch = useDispatch()
+
+    const userTracks = user.favorited_tracks
+    const { artist_id } = useParams()
+    const admin = user.id === Number(artist_id)
     
     useEffect(() => {
         if (path.includes('/artists')) {
@@ -29,7 +35,9 @@ const ListContainer = () => {
                 {artist.tracks && artist.tracks.map(
                     track => <TrackCard 
                         key={track.id} 
-                        track={track} />
+                        track={track}
+                        admin={admin}
+                        userTracks={userTracks} />
                 )}
                 </>
             )
@@ -85,6 +93,7 @@ const ListContainer = () => {
             <Col md={8}>
             <ListGroup>
                 {cardDisplay}
+
             </ListGroup>
             </Col>
         </Row>

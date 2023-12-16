@@ -1,19 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Card, Button, Row, Col } from 'react-bootstrap';
 import { FaPlayCircle } from 'react-icons/fa';
-import { FaCheck, FaTimes } from 'react-icons/fa'
+import { FaCheck, FaTimes, FaTrash, FaPencilAlt } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
-const TrackCard = ({ track }) => {
-    const { id, name, audio, artist_name } = track;
+const TrackCard = ({ track, userTracks, admin }) => {
 
-    let liked
+    const { id, name, audio, artist_name } = track
+
+    const isLiked = userTracks.some((userEvent) => userEvent.id === id)
 
     const handleClick = () => {
 
     }
 
+    console.log(admin)
+
     return (
-<Card id={id} className="mb-3">
+        
+    <Card id={id} className="mb-3">
         <Card.Body>
             <Row className="justify-content-between">
             <Col xs="auto">
@@ -24,12 +29,18 @@ const TrackCard = ({ track }) => {
             </Col>
             <Col className='ml-auto'>
             <Button
-                variant={liked ? 'success' : 'danger'}
+                variant={isLiked ? 'success' : 'danger'}
                 onClick={handleClick}
                 className="mr-2 mb-2"
                 >
-            {liked ? <FaCheck /> : <FaTimes />} {liked ? 'Liked' : 'Like'}
+            {isLiked ? <FaCheck /> : <FaTimes />} {isLiked ? 'Liked' : 'Like'}
             </Button>
+            {admin ? 
+                <>
+                <FaPencilAlt/> <FaTrash/>
+                </> 
+                : 
+                null}
             </Col>
             </Row>
         </Card.Body>
