@@ -2,19 +2,46 @@ import { Link, useParams } from 'react-router-dom';
 import { Card, Button, Row, Col } from 'react-bootstrap';
 import { FaPlayCircle } from 'react-icons/fa';
 import { FaCheck, FaTimes, FaTrash, FaPencilAlt } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react';
+import { fetchPostLike, fetchDeleteLike } from '../like/likeSlice';
 
 const TrackCard = ({ track, admin }) => {
     const { id, name, audio, artist_name } = track
+    const [ likeValues, setLikeValues ] = useState(
+        {
+            likeable_type: 'track',
+            likeable_id: null,
+            liker_type: null,
+            artist_id: null,
+            fan_id: null,
+        }
+    )
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.user) 
 
     const inUserTracks = useSelector(state => {
         const userTracks = state.user.data.artist.favorited_tracks || state.user.data.fan.favorited_tracks
         return userTracks && userTracks.some((userTrack) => userTrack.id === id)
     })
 
-    const handleClick = () => {
+    useEffect(() => {
+        if (track && user) {
+            const newValues = {
+                likeable_type: 'track',
+                likeable_id: id,
+                liker_type: user.type,
+                ...(user.type === 'artist'
+                    ? { artist_id: user.data.artist.id }
+                    : { fan_id: user.data.fan.id }),
+                };
+            setLikeValues(newValues)
+        }
+    }, [])
 
+    const handleClick = () => {
+        dispatch(fetchPostLike(likeValues))
     }
 
     return (

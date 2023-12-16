@@ -60,38 +60,7 @@ const ArtistWrapper = () => {
             <ArtistCard 
                 key={id}
                 artist={artist}/>
-                
-            {/* <Container id='user-nav' style={{flexDirection: 'column'}}>
-                <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                    <Container style={{width: '200px'}}> 
-                        <Image src={img} style={{ border: '3px solid black', width: '150px', height: '150px', padding: '0' }} roundedCircle />
-                        <div className='text-center'>{num_followers} Followers</div>
-                        <div className='text-center'>{num_followed} Followed</div>
-                    </Container>    
-                    <Container style={{ width: '1000%', border: '3px solid black'}}>
-                    <h2>{name}</h2>
-
-                    <Row style={{ alignItems: 'center', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-                        <Col xs={2} md={4}>
-                        <h6><FaCalendar/> Est. {convertDateFormat(artist.created_at)}</h6>
-                        </Col>
-                        <Col xs={2} md={4}>
-                        <h6><FaMapMarker/> {location}</h6>
-                        </Col>
-                        <Col xs={2} md={4}>
-                        <h6><FaMusic/> {genres}</h6>
-                        </Col>
-                    </Row>
-                    </Container>
-
-                </Container>
-            </Container>
-            <Container style={{ display: 'flex', justifyContent: 'space-evenly'}}>
-                <Button as={Link} to={`/artists/${id}`}>About</Button>
-                <Button as={Link} to={`/artists/${id}/events`}>Events</Button>
-                <Button as={Link} to={`/artists/${id}/tracks`}>Music</Button>
-            </Container> */}
-            <AdminProvider>
+            <AdminProvider value={admin}>
                 <Outlet />
             </AdminProvider>
         </>

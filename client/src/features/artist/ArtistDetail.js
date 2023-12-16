@@ -16,6 +16,7 @@ import { useAdmin } from './adminContext';
 const ArtistDetail = () => {
     const artist = useSelector(state => state.artist.current)
     const admin = useAdmin()
+    
 
     if (artist) {
         const {id, bio, tracks, upcoming_events } = artist 

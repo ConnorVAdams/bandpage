@@ -1,12 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
 import { Card, Button, Row, Col, Image, Container } from 'react-bootstrap';
 import { FaPlayCircle, FaCheck, FaTimes, FaPencilAlt, FaTrash, FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
 import { convertDateFormat } from '../../utils/helpers'
+import { useSelector } from 'react-redux';
 
-function ArtistCard({ artist }) {
+const ArtistCard = ({ artist, admin }) => {
     const { 
         id, 
         name, 
@@ -22,9 +23,15 @@ function ArtistCard({ artist }) {
     const num_followers = [...fan_followers, ...artist_followers].length
     const num_followed = followed_artists.length
 
+    const inUserFollows = useSelector(state => {
+        const userFollows = state.user.data.artist.followed_artists || state.user.data.fan.followed_artists
+        return userFollows && userFollows.some((userFollow) => userFollow.id === id)
+    })
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const params = useParams()
+    const path = useLocation().pathname 
 
     const handleClick = () => {
         dispatch(fetchOneArtist(id))
@@ -48,8 +55,7 @@ function ArtistCard({ artist }) {
                 color: 'black'
                 }}
             >
-                <Container 
-                    style={{ width: '200px' }}>
+                <Container style={{ width: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                     src={img}
                     style={{
@@ -62,6 +68,15 @@ function ArtistCard({ artist }) {
                 />
                 <div className='text-center'>{num_followers} Followers</div>
                 <div className='text-center'>{num_followed} Followed</div>
+                {(!admin && path !== '/artists') || inUserFollows ? (
+                    <Button
+                    variant={inUserFollows ? 'success' : 'danger'}
+                    onClick={handleClick}
+                    className="mr-2 mb-2"
+                    >
+                        {inUserFollows ? 'Following' : 'Follow'}
+                    </Button>
+                ) : null}
                 </Container>
                 <Container style={{ width: '1000%' }}>
                 <h2>{name}</h2>

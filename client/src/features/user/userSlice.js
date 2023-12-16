@@ -9,13 +9,18 @@ export const createSlice = buildCreateSlice({
 
 // Send user info and/or credentials from client to server
 
-const initialState = {
-    data: null,
-    admin: false
+const createInitialState = (data) => {
+    return {
+    data: data,
+    admin: false,
+    type: data && data.artist ? 'fan' : 'artist'
     // type: null,
     // errors: [],
     // loading: true
+    }
 }
+
+const initialState = createInitialState(null)
 
 const register =  async ({ url, values }) => {
     console.log(values)

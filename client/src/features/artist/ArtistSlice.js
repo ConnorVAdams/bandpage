@@ -68,7 +68,6 @@ const postArtist = async (values, asyncThunk) => {
 }
 
 const patchArtist = async ({user, values}, asyncThunk) => {
-
     try {
         const respCheckToken = await checkToken()
         
@@ -97,63 +96,6 @@ const patchArtist = async ({user, values}, asyncThunk) => {
         return error
     }
 }
-
-// const patchProduction = async ({id, values}, asyncThunk) => {
-//     console.log("🚀 ~ file: productionSlice.js:67 ~ patchFetchProduction ~ asyncThunk:", asyncThunk)
-//     try {
-//         const respCheckToken = await checkToken()
-        
-//         if (respCheckToken.ok) {
-//             const resp = await fetch(`/productions/${id}`, {
-//                 method: "PATCH",
-//                 headers: {
-//                     'Authorization': `Bearer ${getToken()}`,
-//                     "Content-Type": "application/json"
-//                 },
-//                 body: JSON.stringify(values)
-//             })
-//             const data = await resp.json()
-            
-//             if (resp.ok) {
-//                 return data
-//             } else {
-//                 throw data.message || data.msg
-//             }
-//         } else {
-//             const data = await respCheckToken.json()
-            
-//             throw data.message || data.msg
-//         }
-//     } catch (error) {
-//         return error
-//     }
-// }
-
-// const deleteArtist = async (prod_id, asyncThunk) => {
-//     try {
-//         const respCheckToken = await checkToken()
-        
-//         if (respCheckToken.ok) {
-//             const resp = await fetch(`/artists/${prod_id}`, {
-//                 method: "DELETE",
-//                 headers: {
-//                     'Authorization': `Bearer ${getToken()}`
-//                 }
-//             })
-//             if (resp.ok) { //! 204 NO CONTENT
-//                 return {prod_id}
-//             } else {
-//                 const data = await resp.json()
-//                 throw data.message || data.msg
-//             }
-//         } else {
-//             const data = await respCheckToken.json()
-//             throw data.message || data.msg
-//         }
-//     } catch (error) {
-//         return error
-//     }
-// }
 
 const artistSlice = createSlice({
     name: 'artist',

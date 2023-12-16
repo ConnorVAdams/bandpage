@@ -19,10 +19,6 @@ const ListContainer = () => {
     const artist = useSelector(state => state.artist.current)
     const path = useLocation().pathname
     const dispatch = useDispatch()
-
-    // const { artist_id } = useParams()
-    // const userTracks = user.favorited_tracks
-    // const admin = user.id === Number(artist_id)
     
     useEffect(() => {
         if (path.includes('/artists')) {
@@ -32,7 +28,6 @@ const ListContainer = () => {
 
     const cardComponent = () => {
         if (path.includes('/tracks')) {
-            console.log(admin)
             return (
                 <>
                 <h1>MUSIC</h1>
