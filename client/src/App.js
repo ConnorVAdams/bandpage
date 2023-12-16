@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { clearErrors as clearUserErrors} from './features/user/userSlice'
 // import { clearErrors as clearProductionErrors} from './features/production/productionSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,7 +24,7 @@ import { fetchCurrentUser, setAdmin } from './features/user/userSlice'
 import UserLanding from './features/user/userLanding'
 import ListContainer from './components/ListContainer'
 import { useLocation } from 'react-router-dom'
-import { setArtist } from './features/artist/artistSlice'
+import { fetchOneArtist, setArtist } from './features/artist/artistSlice'
 
 const App = () => {
     const user = useSelector(state => state.user.data)
@@ -33,7 +33,9 @@ const App = () => {
     
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const loc = useLocation()
     const path = useLocation().pathname
+    const params = useParams()
 
     useEffect(() => {
         if ((user && artist) && (user.artist.id === artist.id)) {
