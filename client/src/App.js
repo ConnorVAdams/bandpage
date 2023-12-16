@@ -20,11 +20,11 @@ import EventList from './features/event/EventList'
 import TrackList from './features/track/TrackList'
 import NavBar from './components/NavBar'
 import Authentication from './features/user/Authentication'
-import { fetchCurrentUser } from './features/user/userSlice'
+import { fetchCurrentUser, setAdmin } from './features/user/userSlice'
 import UserLanding from './features/user/userLanding'
 import ListContainer from './components/ListContainer'
 import { useLocation } from 'react-router-dom'
-import { setAdmin } from './features/user/userSlice'
+import { setArtist } from './features/artist/artistSlice'
 
 const App = () => {
     const user = useSelector(state => state.user.data)
@@ -33,14 +33,22 @@ const App = () => {
     
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const path = useLocation().pathname
 
     useEffect(() => {
-        if ((user && artist) && user.artist.id === artist.id) {
+        if ((user && artist) && (user.artist.id === artist.id)) {
             dispatch(setAdmin(true))
         } else {
             dispatch(setAdmin(false))
         }
-    }, [artist])    
+    }, [artist])
+
+    useEffect(() => {
+        if (!/\d/.test(path)) {
+            console.log('y')
+            dispatch(setArtist(null))
+        }
+    }, [path])
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)

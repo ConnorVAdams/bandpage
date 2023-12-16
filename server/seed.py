@@ -177,35 +177,41 @@ def create_tracks():
 
 def create_likes():
     # Fetch all fan IDs from the database
-    all_fan_ids = [fan.id for fan in Fan.query.all()]
-    all_artist_ids = [artist.id for artist in Artist.query.all()]
-    all_event_ids = [event.id for event in Event.query.all()]
-    all_track_ids = [track.id for track in Track.query.all()]
+    all_fan_ids = {fan.id for fan in Fan.query.all()}
+    all_artist_ids = {artist.id for artist in Artist.query.all()}
+    all_event_ids = {event.id for event in Event.query.all()}
+    all_track_ids = {track.id for track in Track.query.all()}
 
     # Create placeholder relationships
-    likes = []
-    for i in range(150):  # Adjust the number of placeholder likes as needed
+    likes = set()
+    while len(likes) < 150:  # Adjust the number of placeholder likes as needed
         likeable_type = choice(['artist', 'event', 'track'])
         liker_type = choice(['artist', 'fan'])
         artist_id = None
         fan_id = None
         if liker_type == 'artist':
-            artist_id = choice(all_artist_ids)
-        else: # if liker_type == 'fan'
-            fan_id = choice(all_fan_ids)
-        
+            artist_id = choice(list(all_artist_ids))
+        else:  # if liker_type == 'fan'
+            fan_id = choice(list(all_fan_ids))
+
         if likeable_type == 'artist':
-            likeable_id = choice(all_artist_ids)
+            likeable_id = choice(list(all_artist_ids))
         elif likeable_type == 'event':
-            likeable_id = choice(all_event_ids)
+            likeable_id = choice(list(all_event_ids))
         else:  # likeable_type == 'track'
-            likeable_id = choice(all_track_ids)
-        
+            likeable_id = choice(list(all_track_ids))
+
         like_tuple = (likeable_type, likeable_id, liker_type, artist_id, fan_id)
 
         if like_tuple not in likes:
-            like = Like(likeable_type=likeable_type, likeable_id=likeable_id, liker_type=liker_type, artist_id=artist_id, fan_id=fan_id)
-            likes.append(like)
+            like = Like(
+                likeable_type=likeable_type,
+                likeable_id=likeable_id,
+                liker_type=liker_type,
+                artist_id=artist_id,
+                fan_id=fan_id,
+            )
+            likes.add(like)
     return likes
 
 if __name__ == '__main__':
@@ -233,8 +239,8 @@ if __name__ == '__main__':
         tracks = create_tracks()
         db.session.add_all(tracks)
 
-        likes = create_likes()
-        db.session.add_all(likes)
+        # likes = create_likes()
+        # db.session.add_all(likes)
 
         db.session.commit()
         

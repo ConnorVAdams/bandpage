@@ -17,10 +17,11 @@ const TrackCard = ({ track, admin }) => {
             fan_id: null,
         }
     )
+
     const dispatch = useDispatch()
-
+    
     const user = useSelector(state => state.user) 
-
+    
     const inUserTracks = useSelector(state => {
         const userTracks = state.user.data.artist.favorited_tracks || state.user.data.fan.favorited_tracks
         return userTracks && userTracks.some((userTrack) => userTrack.id === id)
@@ -32,7 +33,7 @@ const TrackCard = ({ track, admin }) => {
                 likeable_type: 'track',
                 likeable_id: id,
                 liker_type: user.type,
-                ...(user.type === 'artist'
+                ...(user.data.artist
                     ? { artist_id: user.data.artist.id }
                     : { fan_id: user.data.fan.id }),
                 };

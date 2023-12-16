@@ -13,6 +13,7 @@ import { Form, Button, Col, Container, Row } from 'react-bootstrap'
 function Authentication() {
     // Conditionally render either signup or login option 
     const [signUp, setSignUp] = useState(false)
+    const [ userTypeVal, setUserTypeVal ] = useState(null)
     const dispatch = useDispatch() 
     const navigate = useNavigate()
 
@@ -60,6 +61,11 @@ function Authentication() {
     
     const handleClick = () => {
         setSignUp((signUp) => !signUp)
+    }
+
+    const handleUserTypeChange = (e) => {
+        // setUserTypeVal(e.target.value)
+        formik.handleChange(e)
     }
 
     return (
@@ -110,7 +116,7 @@ function Authentication() {
                         as="select"
                         name="userType"
                         value={formik.values.userType}
-                        onChange={formik.handleChange}
+                        onChange={handleUserTypeChange}
                         onBlur={formik.handleBlur}
                         >
                         <option value="">Select</option>

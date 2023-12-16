@@ -8,19 +8,19 @@ class Like(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    likeable_type = db.Column(db.Enum('artist', 'track', 'event', name='likeable_types'), nullable=False)
-    likeable_id = db.Column(db.Integer, nullable=False)
+    likeable_type = db.Column(db.Enum('artist', 'track', 'event', name='likeable_types'), nullable=False, unique=True)
+    likeable_id = db.Column(db.Integer, nullable=False, unique=True)
     
-    liker_type = db.Column(db.Enum('artist', 'fan', name='liker_types'), nullable=False)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
-    fan_id = db.Column(db.Integer, db.ForeignKey('fans.id'))
+    liker_type = db.Column(db.Enum('artist', 'fan', name='liker_types'), nullable=False, unique=True)
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'), unique=True)
+    fan_id = db.Column(db.Integer, db.ForeignKey('fans.id'), unique=True)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    __table_args__ = (
-        UniqueConstraint('likeable_type', 'likeable_id', 'liker_type', 'artist_id', 'fan_id', name='unique_likes'),
-    )
+    # __table_args__ = (
+    #     UniqueConstraint('likeable_type', 'likeable_id', 'liker_type', 'artist_id', 'fan_id', name='unique_likes'),
+    # )
 
     @property
     def likeable(self):

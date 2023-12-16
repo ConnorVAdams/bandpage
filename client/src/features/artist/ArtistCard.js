@@ -6,6 +6,8 @@ import { Card, Button, Row, Col, Image, Container } from 'react-bootstrap';
 import { FaPlayCircle, FaCheck, FaTimes, FaPencilAlt, FaTrash, FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
 import { convertDateFormat } from '../../utils/helpers'
 import { useSelector } from 'react-redux';
+import { setArtist } from './artistSlice';
+import { toast } from 'react-hot-toast';
 
 const ArtistCard = ({ artist, admin }) => {
     const { 
@@ -34,10 +36,20 @@ const ArtistCard = ({ artist, admin }) => {
     const path = useLocation().pathname 
 
     const handleClick = () => {
-        dispatch(fetchOneArtist(id))
-        if (Object.keys(params).length === 0) {
-            navigate(`/artists/${id}`, { replace: true })
-        }
+        // try {
+            const { payload } = dispatch(fetchOneArtist(id))
+            if (typeof payload !== "string") {
+                dispatch(setArtist(payload))
+            } else {
+                toast.error(payload)
+            }
+        // } catch (error) {
+        //     console.error('Error fetching artist:', error);
+        // }
+    };
+
+    const handleFollow = () => {
+
     }
 
     return (
@@ -46,6 +58,7 @@ const ArtistCard = ({ artist, admin }) => {
             <Container
                 as={Link}
                 to={`/artists/${id}`}
+                onClick={handleClick}
                 style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -71,7 +84,7 @@ const ArtistCard = ({ artist, admin }) => {
                 {(!admin && path !== '/artists') || inUserFollows ? (
                     <Button
                     variant={inUserFollows ? 'success' : 'danger'}
-                    onClick={handleClick}
+                    onClick={handleFollow}
                     className="mr-2 mb-2"
                     >
                         {inUserFollows ? 'Following' : 'Follow'}

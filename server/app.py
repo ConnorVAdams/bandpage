@@ -24,6 +24,8 @@ from routes.auth.login import Login
 from routes.auth.signup import Signup
 from routes.auth.refresh import Refresh
 from routes.auth.check_token import CheckToken
+from routes.like_by_id import LikeById
+from routes.likes import Likes
 from flask import render_template
 
 api.add_resource(Artists, "/artists")
@@ -47,6 +49,10 @@ api.add_resource(Me, "/me")
 api.add_resource(Users, "/users")
 
 api.add_resource(UserById, "/users/<int:id>")
+
+api.add_resource(Likes, "/likes")
+
+api.add_resource(LikeById, "/likes/<int:id>")
 
 api.add_resource(Login, "/login")
 

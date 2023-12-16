@@ -102,7 +102,7 @@ const artistSlice = createSlice({
     initialState,
     reducers: (create) => ({
         setArtist: create.reducer((state, action) => {
-            state.spotlight = action.payload
+            state.current = action.payload
             state.loading = false
             state.errors = []
         }),
@@ -238,7 +238,7 @@ const artistSlice = createSlice({
 })
 
 export const {
-    // setProduction,
+    setArtist,
     // setEditMode, 
     // addError, 
     // clearErrors, 

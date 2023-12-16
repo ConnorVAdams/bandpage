@@ -9,6 +9,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser, fetchDeleteUser } from '../features/user/userSlice';
 import { convertDateFormat } from '../utils/helpers';
 import { Button, Image } from 'react-bootstrap'
+import { toast } from 'react-hot-toast'
+import { fetchOneArtist } from '../features/artist/artistSlice'
+import { setArtist } from '../features/artist/artistSlice';
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -18,10 +21,19 @@ const NavBar = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    // const handleClick = () => {
-    //     dispatch(fetchOneArtist(user.artist.id))
-    //         navigate(`/artists/${user.artist.id}`, { replace: true })
-    // }
+    const handleMyPage = async () => {
+        try {
+            const { payload } = await dispatch(fetchOneArtist(user.artist.id))
+            if (typeof payload !== "string") {
+                dispatch(setArtist(payload))
+                navigate(`artists/${user.artist.id}`)
+            } else {
+                toast.error(payload)
+            }
+        } catch (error) {
+            console.error('Error fetching artist:', error);
+        }
+    }
 
     const handleDelete = async () => {
         dispatch(fetchDeleteUser(user.id))
