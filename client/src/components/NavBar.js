@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Button from 'react-bootstrap/Button'
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOneArtist } from '../features/artist/artistSlice';
@@ -24,16 +25,6 @@ const NavBar = () => {
     }
 
     if (user) return (
-        <>
-            {/* <span><Link to={'/landing'}>Landing</Link></span>
-            {user.artist ? <span><h4 onClick={handleClick}>My Artist Page</h4></span>: null }
-            <span><Link to={'/artists'}>All Artists</Link></span>
-            <br/>
-            <button onClick={handleLogout}>Logout</button> */}
-            <h1>Navbar</h1>
-
-
-
         <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
             <Navbar.Brand href="#home">BandPage</Navbar.Brand>
@@ -54,11 +45,13 @@ const NavBar = () => {
                     Separated link
                 </NavDropdown.Item>
                 </NavDropdown> */}
+            <Button variant="outline-danger" onClick={handleLogout}>
+                Logout
+            </Button>
             </Nav>
             </Navbar.Collapse>
         </Container>
         </Navbar>
-        </> 
     );
     }
 
