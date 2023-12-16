@@ -17,8 +17,8 @@ const ListContainer = () => {
     const path = useLocation().pathname
     const dispatch = useDispatch()
 
-    const userTracks = user.favorited_tracks
     const { artist_id } = useParams()
+    const userTracks = user.favorited_tracks
     const admin = user.id === Number(artist_id)
     
     useEffect(() => {
@@ -35,9 +35,7 @@ const ListContainer = () => {
                 {artist.tracks && artist.tracks.map(
                     track => <TrackCard 
                         key={track.id} 
-                        track={track}
-                        admin={admin}
-                        userTracks={userTracks} />
+                        track={track} />
                 )}
                 </>
             )

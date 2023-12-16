@@ -2,6 +2,7 @@ import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
 import { getToken, getRefreshToken, checkToken } from "../../utils/main";
 // import { fetchOneArtist } from "../artist/artistSlice";
 // import { fetchOneFan } from "../fan/fanSlice"
+import { useLocation } from "react-router-dom";
 export const createSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },
 })
@@ -10,6 +11,7 @@ export const createSlice = buildCreateSlice({
 
 const initialState = {
     data: null,
+    admin: false
     // type: null,
     // errors: [],
     // loading: true
@@ -183,6 +185,9 @@ const userSlice = createSlice({
                 },
             }
         ),
+        setAdmin: create.reducer((state, action) => {
+            state.admin = action.payload
+        })
     }),
     selectors: {
         selectUser(state){
@@ -202,7 +207,8 @@ export const {
     fetchRegister,
     fetchCurrentUser,
     fetchPatchUser,
-    fetchDeleteUser
+    fetchDeleteUser,
+    setAdmin
 } = userSlice.actions
 
 export const {

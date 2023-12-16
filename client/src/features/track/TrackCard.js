@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
 
 const TrackCard = ({ track }) => {
-
     const { id, name, audio, artist_name } = track
 
     const inUserTracks = useSelector(state => {

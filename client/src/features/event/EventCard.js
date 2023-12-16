@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 
 const EventCard = ({ event }) => {
-    const acct = useSelector(state => state.user.data)
-    const userEvents = acct.artist.events_attending || acct.fan.events_attending
-
     const {id, date_time, venue, artist_name, artist_id } = event
     const datetime = formatDateTime(date_time)
     
-    const isAttending = userEvents.some((userEvent) => userEvent.id === id)
+    const inUserEvents = useSelector(state => {
+        const userEvents = state.user.data.artist.events_attending || state.user.data.fan.events_attending
+        return userEvents && userEvents.some((userEvent) => userEvent.id === id)
+    })
 
     const handleClick = () => {
 
@@ -27,11 +27,11 @@ const EventCard = ({ event }) => {
             <Card.Text>Date: {datetime.date}</Card.Text>
             <Card.Text>Time: {datetime.time}</Card.Text>
             <Button
-                variant={isAttending ? 'success' : 'danger'}
+                variant={inUserEvents ? 'success' : 'danger'}
                 onClick={handleClick}
                 className="mr-2"
                 >
-                Attending {isAttending ? <FaCheck /> : <FaTimes />}
+                Attending {inUserEvents ? <FaCheck /> : <FaTimes />}
             </Button>
             </Card.Body>
         </Card>

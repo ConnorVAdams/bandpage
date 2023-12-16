@@ -3,7 +3,7 @@ import { clearErrors as clearUserErrors} from './features/user/userSlice'
 // import { clearErrors as clearProductionErrors} from './features/production/productionSlice'
 import { useDispatch, useSelector } from 'react-redux'
 // import {createGlobalStyle} from 'styled-components'
-import {useEffect, useCallback } from 'react'
+import {useEffect, useState } from 'react'
 import NotFound from './components/NotFound'
 import "./App.css"
 import { setToken } from './utils/main'
@@ -23,12 +23,29 @@ import Authentication from './features/user/Authentication'
 import { fetchCurrentUser } from './features/user/userSlice'
 import UserLanding from './features/user/userLanding'
 import ListContainer from './components/ListContainer'
+import { useLocation } from 'react-router-dom'
+import { setAdmin } from './features/user/userSlice'
 
-function App() {
+const App = () => {
     const user = useSelector(state => state.user.data)
     const artist = useSelector(state => state.artist.current)
+    const admin = useSelector(state => state.user.admin)
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if ((user && artist) && user.artist.id === artist.id) {
+            dispatch(setAdmin(true))
+        } else {
+            dispatch(setAdmin(false))
+        }
+    }, [artist])
+
+    console.log(admin)
+
+    
+
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)
