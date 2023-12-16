@@ -10,6 +10,7 @@ import { setUser } from '../features/user/userSlice';
 
 const NavBar = () => {
     const user = useSelector(state => state.user.data)
+    console.log(user)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const NavBar = () => {
         dispatch(setUser(null))
     }
 
-    if (user) return (
+    if (user.artist || user.fan) return (
         <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
             <Navbar.Brand href="#home">BandPage</Navbar.Brand>

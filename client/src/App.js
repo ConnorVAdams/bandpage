@@ -74,8 +74,6 @@ function App() {
             <NavBar />
             <Routes>
 
-
-
                 <Route path='/artists/'>
                     <Route index element={<ArtistList />} />
                     <Route path='new' element={<ProfileForm />} />
