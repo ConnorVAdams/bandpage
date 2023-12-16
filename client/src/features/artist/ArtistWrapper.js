@@ -1,11 +1,17 @@
 import { useParams, useNavigate, useLocation, Link, Outlet } from 'react-router-dom'
-import { useEffect} from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
 import { convertDateFormat } from '../../utils/helpers'
+// import { setEditMode, fetchOneProduction, fetchDeleteProduction } from './productionSlice'
+// import styled from 'styled-components'
 import NotFound from '../../components/NotFound'
 import { toast } from 'react-hot-toast';
-import { Button, Container, Image, Row, Col } from 'react-bootstrap'
+import TrackCard from '../track/TrackCard'
+import EventCard from '../event/EventCard'
+import ArtistCard from './ArtistCard'
+import FanCard from '../fan/FanCard'
+import { Button, Container, Nav, Navbar, Image, Row, Col, Text } from 'react-bootstrap'
 import { FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
 
 
@@ -38,15 +44,25 @@ const ArtistWrapper = () => {
         return <NotFound />
     }
 
-    const { id, name, location, img, genres, bio } = artist 
+    // const handleEdit = () => {
+    //     dispatch(setEditMode(true))
+    //     history.push(`/productions/edit/${production.id}`)
+    // }
+
+    const { id, name, location, img, genres, bio, followed_artists, artist_followers, fan_followers } = artist 
+    const num_followers = [...fan_followers, ...artist_followers].length
+    const num_followed = followed_artists.length
+    
     return (
         <>
             <Container id='user-nav' style={{flexDirection: 'column'}}>
                 <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                     <Container style={{width: '200px'}}> 
-                        <Image src={img} style={{ width: '150px', height: '150px', padding: '0' }} roundedCircle />
+                        <Image src={img} style={{ border: '3px solid black', width: '150px', height: '150px', padding: '0' }} roundedCircle />
+                        <div className='text-center'>{num_followers} Followers</div>
+                        <div className='text-center'>{num_followed} Followed</div>
                     </Container>    
-                    <Container>
+                    <Container style={{ width: '1000%', border: '3px solid black'}}>
                     <h2>{name}</h2>
 
                     <Row style={{ alignItems: 'center', width: '100%', display: 'flex', justifyContent: 'space-between' }}>

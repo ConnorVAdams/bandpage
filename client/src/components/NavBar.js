@@ -36,7 +36,7 @@ const NavBar = () => {
         <Navbar bg="light" expand="lg" id='main-nav' style={{ flexDirection: 'column'}}>
             <Navbar.Brand>
                 <img
-                src={process.env.PUBLIC_URL + '/logo.png'}
+                src={process.env.PUBLIC_URL + '/assets/logo.png'}
                 alt="Logo"
                 width="30"
                 height="30"

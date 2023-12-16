@@ -9,49 +9,44 @@ import TrackCard from '../track/TrackCard'
 import EventCard from '../event/EventCard'
 import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 
 const ArtistDetail = () => {
     const artist = useSelector(state => state.artist.current)
 
     if (artist) {
-        const {id, name, genres, bio, location, img, tracks, upcoming_events, fan_followers, artist_followers, followed_artists, favorited_tracks, events_attended, events_attending } = artist 
+        const {id, bio, tracks, upcoming_events } = artist 
+        
+        const topTrack = tracks.reduce((maxTrack, currentTrack) => {
+            return currentTrack.likes > maxTrack.likes ? currentTrack : maxTrack;
+            }, tracks[0])
+        
+            const nextEvent = upcoming_events[0]
+
         return (
-<></>
+            <Container>
+                <Container>
+                    <p>{bio}</p>
+                </Container>
+                <Container>
+                    <h3>Top Track</h3>
+                    {topTrack ?
+                    <TrackCard key={topTrack.id} track={topTrack}/>
+                    :
+                    'No tracks liked yet!'}
+                </Container>
 
+                <Container>
+                    <h3>Next Event</h3>
+                    {nextEvent ?
+                        <EventCard key={nextEvent.id} event={nextEvent}/>
+                        :
+                        'No events scheduled yet!'}
+                </Container>
 
-            
-                // <div id={id} className='wrapper'>
-                //     <h2>{fan_followers.length + artist_followers.length} Followers</h2>
-                //     {/* <div>
-                //         {fan_followers && fan_followers.map(fan => fan && (
-                //             <FanCard key={fan.id} fan={fan} />
-                //         ))}
-                //         {artist_followers && artist_followers.map(artist => artist && (
-                //             <ArtistCard key={`follower ${artist.id}`} artist={artist} />
-                //         ))}
-                //     </div> */}
-                //     {/* <h2>Followed Artists:</h2>
-                //     <div>
-                //         {followed_artists && followed_artists.map(artist => artist && (
-                //             <ArtistCard key={`followed ${artist.id}`} artist={artist} />
-                //         ))}
-                //     </div> */}
-                //     <h2>Top Five Tracks:</h2>
-                //     <div>
-                //         {favorited_tracks && favorited_tracks.map(track => track && (
-                //             <TrackCard key={track.id} track={track} />
-                //         ))}
-                //     </div>
-                //     <h2>Upcoming Events:</h2>
-                //     <div>
-                //         {upcoming_events && upcoming_events.map(event => event && (
-                //             <EventCard key={event.id} event={event} />
-                //         ))}
-                //     </div>
-                // </div>
-            // {/* <button onClick={handleEdit} >Edit Production</button>
-            // <button onClick={handleDelete} >Delete Production</button> */}
+            </Container>
+
             )
         }
     }
