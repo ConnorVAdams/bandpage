@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import EventCard from '../event/EventCard'
 import ArtistCard from '../artist/ArtistCard'
 import TrackCard from '../track/TrackCard'
@@ -11,13 +11,15 @@ import { fetchDeleteUser } from './userSlice'
 const UserLanding = () => {
     const user = useSelector(state => state.user.data)
     const dispatch = useDispatch()
-    const handleDelete = async () => {
-        const { payload } = await dispatch(fetchDeleteUser(user.id))
+    const navigate = useNavigate()
 
+
+    const handleDelete = async () => {
+        dispatch(fetchDeleteUser(user.id))
     }
 
     const handleEdit = () => {
-        
+        navigate('/artists/edit')
     }
 
     if (user.artist) {
@@ -109,7 +111,9 @@ const UserLanding = () => {
                         <h2>{name}</h2>
                         <img src={img} alt={name}/>
                         <br/>
-                    <Link>Edit Profile</Link>
+                    <button onClick={handleEdit}>Edit Profile</button>
+                    <br/>
+                    <button onClick={handleDelete}>Delete Account</button>
                 </div>
                 <div id='Landing-info'>
                     <h1>LandingInfo</h1>

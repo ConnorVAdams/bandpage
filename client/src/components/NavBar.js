@@ -21,17 +21,43 @@ const NavBar = () => {
     const handleLogout = () => {
         localStorage.clear()
         dispatch(setUser(null))
-        navigate('/')
-        // TODO How?
     }
 
     if (user) return (
         <>
-            <span><Link to={'/landing'}>Landing</Link></span>
+            {/* <span><Link to={'/landing'}>Landing</Link></span>
             {user.artist ? <span><h4 onClick={handleClick}>My Artist Page</h4></span>: null }
             <span><Link to={'/artists'}>All Artists</Link></span>
             <br/>
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout}>Logout</button> */}
+            <h1>Navbar</h1>
+
+
+
+        <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+            <Navbar.Brand href="#home">BandPage</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+                <Nav.Link as={Link} to="/landing">Home</Nav.Link>
+                <Nav.Link as={Link} to="/artists">Explore Artists</Nav.Link>
+                <Nav.Link as={Link} to={`/artists/${user.artist.id}`}>My Page</Nav.Link>
+                {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                    Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                    Separated link
+                </NavDropdown.Item>
+                </NavDropdown> */}
+            </Nav>
+            </Navbar.Collapse>
+        </Container>
+        </Navbar>
         </> 
     );
     }

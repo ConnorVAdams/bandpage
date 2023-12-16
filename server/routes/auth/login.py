@@ -16,6 +16,7 @@ class Login(Resource):
     def post(self):
         try:
             data = request.get_json()
+            print(data)
             username = data.get('username')
             user = User.query.filter_by(username=username).first()
             # if yes: now onto validating password -> if yes: send the serialized user to frontend

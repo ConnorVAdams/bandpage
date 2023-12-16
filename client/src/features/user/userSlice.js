@@ -16,6 +16,7 @@ const initialState = {
 }
 
 const register =  async ({ url, values }) => {
+    console.log(values)
     try {
         const resp = await fetch(url, {
             method: 'POST',
@@ -154,6 +155,7 @@ const userSlice = createSlice({
                     if (typeof action.payload === "string") {
                         state.errors.push(action.payload)
                     } else {
+                        console.log(action.payload)
                         state.data = action.payload.user
                     }
                 },
@@ -176,8 +178,6 @@ const userSlice = createSlice({
                     if (typeof action.payload === "string") {
                         state.errors.push(action.payload)
                     } else {
-                        // const idx = state.data.findIndex(user => user.id === parseInt(action.payload.id))
-                        // state.data.splice(idx, 1)
                         state.data = null
                     }
                 },
@@ -201,6 +201,7 @@ export const {
     clearErrors,
     fetchRegister,
     fetchCurrentUser,
+    fetchPatchUser,
     fetchDeleteUser
 } = userSlice.actions
 

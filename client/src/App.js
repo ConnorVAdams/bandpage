@@ -4,7 +4,6 @@ import { clearErrors as clearUserErrors} from './features/user/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 // import {createGlobalStyle} from 'styled-components'
 import {useEffect, useCallback } from 'react'
-import Home from './components/Home'
 import NotFound from './components/NotFound'
 import "./App.css"
 import { setToken } from './utils/main'
@@ -23,7 +22,6 @@ import NavBar from './components/NavBar'
 import Authentication from './features/user/Authentication'
 import { fetchCurrentUser } from './features/user/userSlice'
 import UserLanding from './features/user/userLanding'
-
 
 function App() {
     const user = useSelector(state => state.user.data)
@@ -75,9 +73,13 @@ function App() {
         <>
             <NavBar />
             <Routes>
+
+
+
                 <Route path='/artists/'>
                     <Route index element={<ArtistList />} />
                     <Route path='new' element={<ProfileForm />} />
+                    <Route path='edit' element={<ProfileForm />} />
                     <Route path=':artist_id/' element={<ArtistWrapper/>}>
                         <Route index element={<ArtistDetail />} />
                         <Route path='tracks' element={<TrackList />} />
@@ -94,6 +96,7 @@ function App() {
                     <Route path='tracks' element={<TrackList />} />
                     <Route path='events' element={<EventList />} />
                 </Route>
+
 
                 <Route path='/*' element={<NotFound />} />
             </Routes>

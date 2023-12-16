@@ -41,6 +41,7 @@ const fetchOne = async (artist_id, asyncThunk) => {
 }
 
 const postArtist = async (values, asyncThunk) => {
+    console.log(values)
     try {
         const respCheckToken = await checkToken()
         if (respCheckToken.ok) {
@@ -60,6 +61,37 @@ const postArtist = async (values, asyncThunk) => {
             }
         } else {
             const data = await respCheckToken.json()
+            throw data.message || data.msg
+        }
+    } catch (error) {
+        return error
+    }
+}
+
+const patchArtist = async ({user, values}, asyncThunk) => {
+
+    try {
+        const respCheckToken = await checkToken()
+        
+        if (respCheckToken.ok) {
+            const resp = await fetch(`/artists/${user.id}`, {
+                method: "PATCH",
+                headers: {
+                    'Authorization': `Bearer ${getToken()}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(values)
+            })
+            const data = await resp.json()
+            
+            if (resp.ok) {
+                return data
+            } else {
+                throw data.message || data.msg
+            }
+        } else {
+            const data = await respCheckToken.json()
+            
             throw data.message || data.msg
         }
     } catch (error) {
@@ -206,29 +238,29 @@ const artistSlice = createSlice({
                 },
             }
         ),
-        // fetchPatchProduction: create.asyncThunk(
-        //     patchProduction,
-        //     {
-        //         pending: (state) => {
-        //             state.errors = []
-        //             state.loading = true
-        //         },
-        //         rejected: (state, action) => {
-        //             state.loading = false
-        //             state.errors.push(action.payload)
-        //         },
-        //         fulfilled: (state, action) => {
-        //             state.loading = false
-        //             if (!action.payload.id) {
-        //                 state.errors.push(action.payload)
-        //             } else {
-        //                 const index = state.data.findIndex(production => production.id === parseInt(action.payload.id))
-        //                 state.data[index] = action.payload
-        //                 state.spotlight = null
-        //             }
-        //         },
-        //     }
-        // ),
+        fetchPatchArtist: create.asyncThunk(
+            patchArtist,
+            {
+                pending: (state) => {
+                    state.errors = []
+                    state.loading = true
+                },
+                rejected: (state, action) => {
+                    state.loading = false
+                    state.errors.push(action.payload)
+                },
+                fulfilled: (state, action) => {
+                    state.loading = false
+                    if (!action.payload.id) {
+                        state.errors.push(action.payload)
+                    } else {
+                        const index = state.data.findIndex(user => user.id === parseInt(action.payload.id))
+                        state.data[index] = action.payload
+                        state.data = null
+                    }
+                },
+            }
+        ),
         // fetchDeleteArtist: create.asyncThunk(
         //     deleteArtist,
         //     {
@@ -273,7 +305,7 @@ export const {
     fetchOneArtist,
     fetchNewArtist,
     fetchPostArtist, 
-    // fetchPatchProduction, 
+    fetchPatchArtist, 
     // fetchDeleteArtist
 } = artistSlice.actions
 export const { selectArtists, selectErrors } = artistSlice.selectors

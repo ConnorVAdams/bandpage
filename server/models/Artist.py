@@ -10,8 +10,7 @@ import re
 from models.like import Like
 from models.track import Track
 from models.event import Event
-from models.fan import Fan
-from models.user import User
+
 
 
 class Artist(db.Model):

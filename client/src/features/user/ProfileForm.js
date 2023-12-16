@@ -6,29 +6,61 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 // import artistFormSchema from './artistFormSchema'
 import { Container, Row, Col, Button } from 'react-bootstrap'
-import { fetchPostArtist } from '../artist/artistSlice'
+import { fetchPostArtist, fetchPatchArtist } from '../artist/artistSlice'
 import { setUserType } from './userSlice'
 import { fetchPostFan } from '../fan/fanSlice'
 import { useDispatch } from 'react-redux'
 
 const ProfileForm = () => {
-    const user = useSelector(state => state.user.data)
-    const artist = useLocation().pathname.includes('artist')
+    const acct = useSelector(state => state.user.data)
+    const user = acct.artist || acct.fan
+    console.log(acct.id)
+
+    const path = useLocation().pathname
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
-    const formik = useFormik({
-        initialValues: {
+    let initialValues
+
+    if (path.includes('edit')) {
+        initialValues = {
+            name: user.name,
+            genres: user.genres,
+            bio: user.bio,
+            location: user.location,
+            img: user.img,
+            user_id: acct.user_id
+        }
+    } else {
+        initialValues = {
             name: '',
             genres:'',
             bio:'',
             location: '',
             img:'',
-            user_id: user.id
-        },
+            user_id: acct.id
+        }
+    }
+    // {debugger}
+    const formik = useFormik({
+        initialValues: initialValues
+        ,
         // validationSchema: null,
         onSubmit: async (values, event) => {
-            if (artist) {
+            if (path.includes('edit')) {
+                const action = await dispatch(fetchPatchArtist({user, values}))
+                if (typeof action.payload !== "string") {
+                    toast.success(`Patched ${action.payload}!`)
+                    console.log(action.payload)
+                    dispatch(setUserType(action.payload))
+                    navigate('/landing')
+                } else {
+                    toast.error(action.payload)
+                }
+            }
+
+            else if (path.includes('artist')) {
                 const action = await dispatch(fetchPostArtist(values))
                 if (typeof action.payload !== "string") {
                     toast.success(`Loaded ${action.payload}!`)
@@ -37,7 +69,8 @@ const ProfileForm = () => {
                 } else {
                     toast.error(action.payload)
                 }
-            } else {
+
+            } else { // if (path.includes('fan'))
                 const action = await dispatch(fetchPostFan(values))
                 if (typeof action.payload !== "string") {
                     toast.success(`Loaded ${action.payload}!`)
@@ -52,7 +85,7 @@ const ProfileForm = () => {
     
     return (
         <form onSubmit={formik.handleSubmit}>
-            {artist ? 
+            {path.includes('artist') ? 
             <>
                 <label htmlFor='genres'>Genres</label>
                 <input type='genres' name='genres' value={formik.values.genres} onChange={formik.handleChange} onBlur={formik.handleBlur} />
@@ -62,7 +95,7 @@ const ProfileForm = () => {
             null}
 
 
-                {!artist ? <label htmlFor='name'>Name</label> : <label htmlFor='name'>Artist Name</label>}
+                {!path.includes('artist') ? <label htmlFor='name'>Name</label> : <label htmlFor='name'>Artist Name</label>}
                 <input type='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.errors.name && formik.touched.name ? <div className="error-message show">{formik.errors.name}</div> : null}    
             <br/>
