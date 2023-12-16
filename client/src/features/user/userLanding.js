@@ -6,17 +6,11 @@ import ArtistCard from '../artist/ArtistCard'
 import TrackCard from '../track/TrackCard'
 import FanCard from '../fan/FanCard'
 import ArtistWrapper from '../artist/ArtistWrapper'
-import { fetchDeleteUser } from './userSlice'
 
 const UserLanding = () => {
     const user = useSelector(state => state.user.data)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-
-    const handleDelete = async () => {
-        dispatch(fetchDeleteUser(user.id))
-    }
 
     const handleEdit = () => {
         navigate('/artists/edit')
@@ -48,9 +42,6 @@ const UserLanding = () => {
                 <div id='profile-info'>
                     <h1>ProfileInfo</h1>
                     <h4>Username: {username}</h4>
-                    <button onClick={handleEdit}>Edit Profile</button>
-                    <br/>
-                    <button onClick={handleDelete}>Delete Account</button>
                     <ArtistWrapper />
                 </div>
                 <div id='Landing-info'>
@@ -110,10 +101,6 @@ const UserLanding = () => {
                     <h4>Username: {username}</h4>
                         <h2>{name}</h2>
                         <img src={img} alt={name}/>
-                        <br/>
-                    <button onClick={handleEdit}>Edit Profile</button>
-                    <br/>
-                    <button onClick={handleDelete}>Delete Account</button>
                 </div>
                 <div id='Landing-info'>
                     <h1>LandingInfo</h1>

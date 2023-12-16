@@ -6,49 +6,50 @@ import Button from 'react-bootstrap/Button'
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOneArtist } from '../features/artist/artistSlice';
-import { setUser } from '../features/user/userSlice';
+import { setUser, fetchDeleteUser } from '../features/user/userSlice';
 
 const NavBar = () => {
-    const user = useSelector(state => state.user.data)
-    console.log(user)
+    const user = useSelector(state => state.user.data.artist || state.user.data.fan)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const handleClick = () => {
-        dispatch(fetchOneArtist(user.artist.id))
-            navigate(`/artists/${user.artist.id}`, { replace: true })
-    }
+    // const handleClick = () => {
+    //     dispatch(fetchOneArtist(user.artist.id))
+    //         navigate(`/artists/${user.artist.id}`, { replace: true })
+    // }
 
+    const handleDelete = async () => {
+        dispatch(fetchDeleteUser(user.id))
+    }
+    
     const handleLogout = () => {
         localStorage.clear()
         dispatch(setUser(null))
     }
 
-    if (user.artist || user.fan) return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+    if (user) return (
+    <Navbar expand="lg" className="bg-body-tertiary ">
         <Container>
-            <Navbar.Brand href="#home">BandPage</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav ">
             <Nav className="me-auto">
-                <Nav.Link as={Link} to="/landing">Home</Nav.Link>
-                <Nav.Link as={Link} to="/artists">Explore Artists</Nav.Link>
-                <Nav.Link as={Link} to={`/artists/${user.artist.id}`}>My Page</Nav.Link>
-                {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                    Another action
+                <NavDropdown title={<img src={user.img} alt="User" style={{ maxWidth: '50px' }} className="user-image" />}>
+                <NavDropdown.Item as={Link} to={user.artist ? '/artists/edit' : '/fans/edit'}>
+                    Edit Profile
+                    </NavDropdown.Item>
+                <NavDropdown.Item onClick={handleDelete}>
+                    Delete Account
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                    Separated link
+                <NavDropdown.Item onClick={handleLogout}>
+                    Log Out
                 </NavDropdown.Item>
-                </NavDropdown> */}
-            <Button variant="outline-danger" onClick={handleLogout}>
-                Logout
-            </Button>
+                </NavDropdown>
+                <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
+                <Nav.Link as={Link} to="/artists">Explore Artists</Nav.Link>
+                {user.genres ? <Nav.Link as={Link} to={`/artists/${user.id}`}>My Page</Nav.Link> : null}
+                <Navbar.Brand  as={Link} to={'/landing'} >BandPage</Navbar.Brand>
             </Nav>
             </Navbar.Collapse>
         </Container>

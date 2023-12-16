@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux'
 const ProfileForm = () => {
     const acct = useSelector(state => state.user.data)
     const user = acct.artist || acct.fan
-    console.log(acct.id)
+    console.log(user)
 
     const path = useLocation().pathname
 
