@@ -12,6 +12,7 @@ import { Button, Image } from 'react-bootstrap'
 import { toast } from 'react-hot-toast'
 import { fetchOneArtist } from '../features/artist/artistSlice'
 import { setArtist } from '../features/artist/artistSlice';
+import { useEffect } from 'react'
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -23,10 +24,11 @@ const NavBar = () => {
 
     const handleMyPage = async () => {
         try {
-            const { payload } = await dispatch(fetchOneArtist(user.artist.id))
+            const { payload } = await dispatch(fetchOneArtist(user.id))
             if (typeof payload !== "string") {
+                console.log(payload)
                 dispatch(setArtist(payload))
-                navigate(`artists/${user.artist.id}`)
+                navigate(`artists/${user.id}`)
             } else {
                 toast.error(payload)
             }
@@ -79,7 +81,7 @@ const NavBar = () => {
                     </NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
-                    {user.genres ? <Nav.Link as={Link} to={`/artists/${user.id}`}>My Page</Nav.Link> : null}
+                    {user.genres ? <Nav.Link onClick={handleMyPage}>My Page</Nav.Link> : null}
                     <Button style={{height: '50%', margin: 'auto'}} as={Link} to="/artists">Explore Artists</Button>
             </Nav>
             </Navbar.Collapse>

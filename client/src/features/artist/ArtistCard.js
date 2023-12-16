@@ -10,6 +10,7 @@ import { setArtist } from './artistSlice';
 import { toast } from 'react-hot-toast';
 
 const ArtistCard = ({ artist, admin }) => {
+    
     const { 
         id, 
         name, 
@@ -21,6 +22,8 @@ const ArtistCard = ({ artist, admin }) => {
         followed_artists,
         created_at
     } = artist 
+
+    const current_artist = useSelector(state => state.artist.current)
 
     const num_followers = [...fan_followers, ...artist_followers].length
     const num_followed = followed_artists.length

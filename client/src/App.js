@@ -45,7 +45,6 @@ const App = () => {
 
     useEffect(() => {
         if (!/\d/.test(path)) {
-            console.log('y')
             dispatch(setArtist(null))
         }
     }, [path])
