@@ -3,18 +3,22 @@ import { Card, Button, Row, Col } from 'react-bootstrap';
 import { FaPlayCircle } from 'react-icons/fa';
 import { FaCheck, FaTimes, FaTrash, FaPencilAlt } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react';
 
-const TrackCard = ({ track, userTracks, admin }) => {
+const TrackCard = ({ track }) => {
 
     const { id, name, audio, artist_name } = track
 
-    const isLiked = userTracks.some((userEvent) => userEvent.id === id)
+    const inUserTracks = useSelector(state => {
+        const userTracks = state.user.data.artist.favorited_tracks || state.user.data.fan.favorited_tracks
+        return userTracks && userTracks.some((userTrack) => userTrack.id === id)
+    })
 
     const handleClick = () => {
 
     }
 
-    console.log(admin)
+    // console.log(admin)
 
     return (
         
@@ -29,18 +33,18 @@ const TrackCard = ({ track, userTracks, admin }) => {
             </Col>
             <Col className='ml-auto'>
             <Button
-                variant={isLiked ? 'success' : 'danger'}
+                variant={inUserTracks ? 'success' : 'danger'}
                 onClick={handleClick}
                 className="mr-2 mb-2"
                 >
-            {isLiked ? <FaCheck /> : <FaTimes />} {isLiked ? 'Liked' : 'Like'}
+            {inUserTracks ? <FaCheck /> : <FaTimes />} {inUserTracks ? 'Liked' : 'Like'}
             </Button>
-            {admin ? 
+            {/* {admin ? 
                 <>
                 <FaPencilAlt/> <FaTrash/>
                 </> 
                 : 
-                null}
+                null} */}
             </Col>
             </Row>
         </Card.Body>
