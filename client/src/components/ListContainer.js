@@ -11,6 +11,7 @@ import { fetchAllArtists } from '../features/artist/artistSlice';
 const ListContainer = () => {
     const acct = useSelector(state => state.user.data)
     const artists = useSelector(state => state.artist.data)
+    const artist = useSelector(state => state.artist.current)
     const path = useLocation().pathname
     const dispatch = useDispatch()
     
@@ -21,9 +22,33 @@ const ListContainer = () => {
     }, [path])
 
     const cardComponent = () => {
-        if (path.includes('/artists')) {
+        if (path.includes('/tracks')) {
             return (
                 <>
+                <h1>MUSIC</h1>
+                {artist.tracks && artist.tracks.map(
+                    track => <TrackCard 
+                        key={track.id} 
+                        track={track} />
+                )}
+                </>
+            )
+
+        } else if (path.includes('/events')) {
+            return (
+                <>
+                <h1>EVENTS</h1>
+                {artist.upcoming_events && artist.upcoming_events.map(
+                    event => <EventCard 
+                        key={event.id} 
+                        event={event} />
+                )}
+                </>
+            )
+        } else if (path.includes('/artists')) {
+            return (
+                <>
+                    <h1>EXPLORE ARTISTS</h1>
                     {artists && artists.map(
                         artist => <ArtistCard 
                             key={artist.id} 
@@ -31,32 +56,16 @@ const ListContainer = () => {
                     )}
                 </>
             )
-            } else if (path.includes('/tracks')) {
-                <>
-                {acct.artist.tracks && acct.artist.tracks.map(
-                    track => <TrackCard 
-                        key={track.id} 
-                        track={track} />
-                )}
-            </>
-
-            } else if (path.includes('/events')) {
-                <>
-                {acct.artist.events && acct.artist.events.map(
-                    event => <EventCard 
-                        key={event.id} 
-                        event={event} />
-                )}
-            </>
             } else {
                 // Default component if the path doesn't match any of the above
                 return <NotFound />
             }
     }
 
+    const cardDisplay = cardComponent()
+
     return (
         <Container fluid>
-        <h1>EXPLORE ARTISTS</h1>
         <Row>
             {/* Left 1/3: Search, Sort, Filter Utility Box */}
             <Col md={4}>
@@ -75,7 +84,7 @@ const ListContainer = () => {
             {/* Right 2/3: Container to Hold List Items */}
             <Col md={8}>
             <ListGroup>
-                {cardComponent()}
+                {cardDisplay}
             </ListGroup>
             </Col>
         </Row>
