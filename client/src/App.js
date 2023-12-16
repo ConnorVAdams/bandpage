@@ -62,9 +62,9 @@ const App = () => {
         if (!user) {
             const action = await dispatch(fetchCurrentUser())
             if (typeof action.payload !== "string") {
-            if (action.payload.flag === "refresh") {
-                setToken(action.payload.jwt_token)
-            }
+                if (action.payload.flag === "refresh") {
+                    setToken(action.payload.jwt_token)
+                }
             navigate('/')
             }
         }

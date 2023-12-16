@@ -6,8 +6,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
-
-import { store } from './app/store';
+import { persistor, store } from './app/store';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 
 const container = document.getElementById('root');
@@ -16,7 +16,9 @@ const root = createRoot(container);
 root.render(
     <Provider store={store}>
         <Router>
-            <App />
+            <PersistGate loading={null} persistor={persistor}>
+                <App />
+            </PersistGate>
         </Router>
     </Provider>
     );

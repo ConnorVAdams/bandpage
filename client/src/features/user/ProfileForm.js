@@ -71,7 +71,6 @@ const ProfileForm = () => {
             } else { // if (path.includes('fan'))
                 const action = await dispatch(fetchPostFan(values))
                 if (typeof action.payload !== "string") {
-                    toast.success(`Loaded ${action.payload}!`)
                     dispatch(setUserType(action.payload))
                     navigate('/landing')
                 } else {

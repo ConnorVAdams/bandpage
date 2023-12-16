@@ -33,7 +33,6 @@ const ArtistWrapper = () => {
         if (!artist) {
             const {payload} = await dispatch(fetchOneArtist(artist_id || user.artist.id))
             if (typeof payload !== "string") {
-            toast.success(`Artist ${payload.title} loaded!`)
             } else {
             toast.error(payload)
             navigate("/")
