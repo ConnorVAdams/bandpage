@@ -26,6 +26,7 @@ class FanSchema(ma.SQLAlchemySchema):
                     'events_attended',
                     'events_attending',
                     'username',
-                    'user_id'
+                    'user_id',
+                    'created_at'
                     ]
 

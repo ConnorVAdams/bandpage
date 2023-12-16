@@ -8,6 +8,7 @@ import { fetchRegister } from './userSlice'
 import { fetchAllArtists, fetchPostArtist } from '../artist/artistSlice';
 import { setToken, setRefreshToken } from '../../utils/main';
 import toast from 'react-hot-toast';
+import { Form, Button, Col, Container, Row } from 'react-bootstrap'
 
 function Authentication() {
     // Conditionally render either signup or login option 
@@ -62,36 +63,79 @@ function Authentication() {
     }
 
     return (
-        <> 
-            <div id="register-switch">
+        <Container>
+            <Row className="justify-content-center mt-5">
+            <Col md={6}>
+                <div id="register-switch" className="text-center">
                 <h2>Please Log in or Sign up!</h2>
-                <h3>{signUp ? 'Already a member?':'Not a member?'}</h3>
-                <button onClick={handleClick}>{signUp?'Log In!':'Register now!'}</button>
-
-            </div>
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor='username'>Username</label>
-                <input type='text' name='username' value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                {formik.errors.username && formik.touched.username ? <div className="error-message show">{formik.errors.email}</div> : null}
-                <label htmlFor='password'>Password</label>
-                <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                {formik.errors.password && formik.touched.password ? <div className="error-message show">{formik.errors.password}</div> : null}
-                {signUp ?
-                <>
-                    <label htmlFor='userType'>User Type:</label>
-                    <select id="userType" name='userType' value={formik.values.userType} onChange={formik.handleChange} onBlur={formik.handleBlur}>
+                <h3>{signUp ? 'Already a member?' : 'Not a member?'}</h3>
+                <Button variant="link" onClick={handleClick}>
+                    {signUp ? 'Log In!' : 'Register now!'}
+                </Button>
+                </div>
+                <Form onSubmit={formik.handleSubmit}>
+                <Form.Group controlId="username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                    type="text"
+                    name="username"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    />
+                    {formik.errors.username && formik.touched.username ? (
+                    <div className="error-message show">{formik.errors.username}</div>
+                    ) : null}
+                </Form.Group>
+    
+                <Form.Group controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                    type="password"
+                    name="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    />
+                    {formik.errors.password && formik.touched.password ? (
+                    <div className="error-message show">{formik.errors.password}</div>
+                    ) : null}
+                </Form.Group>
+    
+                {signUp && (
+                    <>
+                    <Form.Group controlId="userType">
+                        <Form.Label>User Type:</Form.Label>
+                        <Form.Control
+                        as="select"
+                        name="userType"
+                        value={formik.values.userType}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        >
                         <option value="">Select</option>
                         <option value="artist">Artist</option>
                         <option value="fan">Fan</option>
-                    </select>
-                    {formik.errors.userType && formik.touched.userType ? <div className="error-message show">{formik.errors.userType}</div> : null}
-                    <button type='submit' value='Register'>Register</button>
-                </>
-                :
-                <input type='submit' value='Log In!'/>}
-                    
-            </form>
-        </>
+                        </Form.Control>
+                        {formik.errors.userType && formik.touched.userType ? (
+                        <div className="error-message show">{formik.errors.userType}</div>
+                        ) : null}
+                    </Form.Group>
+                    <Button type="submit" variant="primary">
+                        Register
+                    </Button>
+                    </>
+                )}
+    
+                {!signUp && (
+                    <Button type="submit" variant="primary">
+                    Log In!
+                    </Button>
+                )}
+                </Form>
+            </Col>
+            </Row>
+        </Container>
     )
 }
 

@@ -29,7 +29,9 @@ class UserSchema(ma.SQLAlchemySchema):
         'followed_artists',
         'favorited_tracks',
         'events_attending',
-        'user_id'
+        'user_id',
+        'username',
+        'created_at'
         )))
     fan = fields.Nested(FanSchema(only=(
         'id', 
@@ -40,4 +42,6 @@ class UserSchema(ma.SQLAlchemySchema):
         'followed_artists',
         'favorited_tracks',
         'events_attending',
+        'username',
+        'created_at'
         )))

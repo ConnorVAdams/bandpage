@@ -65,19 +65,21 @@ function App() {
     if(!user) return (
         <>
             <Toaster />
+            <NavBar />
             <Authentication />
         </>
     )
 
     return (
         <>
+            <Toaster />
             <NavBar />
             <Routes>
 
                 <Route path='/artists/'>
                     <Route index element={<ArtistList />} />
                     <Route path='new' element={<ProfileForm />} />
-                    <Route path='edit' element={<ProfileForm />} />
+                    <Route path='edit/:id' element={<ProfileForm />} />
                     <Route path=':artist_id/' element={<ArtistWrapper/>}>
                         <Route index element={<ArtistDetail />} />
                         <Route path='tracks' element={<TrackList />} />

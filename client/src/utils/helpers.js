@@ -21,4 +21,24 @@ function formatDateTime(datetimeString) {
         };
     }
 
-export { formatDateTime }
+function convertDateFormat(inputDate) {
+    // Assuming the input date format is "yyyy-mm-ddTHH:mm:ss.SSSSSS"
+        const isoDate = new Date(inputDate);
+    
+        if (isNaN(isoDate)) {
+        console.error('Invalid date format. Please provide a valid ISO date string.');
+        return null;
+        }
+    
+        // Extracting date components
+        const year = isoDate.getFullYear();
+        const month = String(isoDate.getMonth() + 1).padStart(2, '0');
+        const day = String(isoDate.getDate()).padStart(2, '0');
+    
+        // Format the date as "mm.dd.yyyy"
+        const formattedDate = `${year}`;
+        
+        return formattedDate;
+    }
+
+    export { formatDateTime, convertDateFormat }

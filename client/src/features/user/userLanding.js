@@ -8,7 +8,8 @@ import FanCard from '../fan/FanCard'
 import ArtistWrapper from '../artist/ArtistWrapper'
 
 const UserLanding = () => {
-    const user = useSelector(state => state.user.data)
+    const acct = useSelector(state => state.user.data)
+    const user = acct.artist || acct.fan
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -16,36 +17,26 @@ const UserLanding = () => {
         navigate('/artists/edit')
     }
 
-    if (user.artist) {
+    if (acct) {
 
         const { 
-            artist: { 
-                name, 
-                img, 
-                id, 
-                upcoming_events, 
-                fan_followers, 
-                artist_followers,
-                followed_artists,
-                favorite_tracks,
-                events_attending
-            },
+            name, 
+            img, 
+            id, 
+            upcoming_events, 
+            fan_followers, 
+            artist_followers,
+            followed_artists,
+            favorite_tracks,
+            events_attending,
             user_id,
             username 
         } = user
 
-        const { artist } = user
-
         return(
         <>
             <div id={user_id}>
-                <div id='profile-info'>
-                    <h1>ProfileInfo</h1>
-                    <h4>Username: {username}</h4>
-                    <ArtistWrapper />
-                </div>
                 <div id='Landing-info'>
-                    <h1>LandingInfo</h1>
 
                     <h5>Events I'm Attending:</h5>
                         <div id='events-attending-div'>

@@ -2,6 +2,7 @@ import { useParams, useNavigate, useLocation, Link, Outlet } from 'react-router-
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
+import { convertDateFormat } from '../../utils/helpers'
 // import { setEditMode, fetchOneProduction, fetchDeleteProduction } from './productionSlice'
 // import styled from 'styled-components'
 import NotFound from '../../components/NotFound'
@@ -61,6 +62,7 @@ const ArtistWrapper = () => {
             <Link to={`/artists/${id}`}>
                 <h1>{name}</h1>
                 <img src={img} alt={name} />
+                <h2>Est. {convertDateFormat(artist.created_at)}</h2>
             </Link>
                 {pathname.includes('artists') ? 
                     <>
