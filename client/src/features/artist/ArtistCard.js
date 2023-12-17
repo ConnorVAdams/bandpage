@@ -16,11 +16,11 @@ const ArtistCard = ({ artist }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const params = useParams()
+    const loc = useLocation()
     const path = useLocation().pathname
     const user = useSelector(state => state.user.data.artist || state.user.data.fan)
     const acct = useSelector(state => state.user.data)
     const admin = user.id === artist.id
-    console.log(acct)
 
     const [ likeValues, setLikeValues ] = useState(
         {
@@ -92,6 +92,7 @@ const ArtistCard = ({ artist }) => {
                 
                 if (resp) {
                     dispatch(fetchCurrentUser())
+                    navigate(loc.pathname)
                     // TODO Where to navigate to refresh current route/page?
                 }
             } else {

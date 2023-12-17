@@ -49,7 +49,6 @@ function Authentication() {
                 setToken(action.payload.jwt_token)
                 setRefreshToken(action.payload.refresh_token)
                 if (signUp) {
-                    debugger
                     navigate(`${values.userType}s/new`)
                 } else {
                     navigate('/landing')

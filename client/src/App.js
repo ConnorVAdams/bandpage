@@ -39,10 +39,14 @@ const App = () => {
     const params = useParams()
 
     useEffect(() => {
-        if ((user && artist) && (user.artist.id === artist.id)) {
-            dispatch(setAdmin(true))
-        } else {
+        if (user && user.artist && artist && user.artist.id === artist.id) {
             dispatch(setAdmin(false))
+        } else if (user && user.artist && artist) {
+            dispatch(setAdmin(true))
+        } else if (user) {
+            console.log('fan')
+        } else {
+            console.log('no user')
         }
     }, [artist])
 

@@ -1,6 +1,12 @@
 export const getToken = () => localStorage.getItem("jwt_token")
 export const getRefreshToken = () => localStorage.getItem("refresh_token")
-export const setToken = (token) => localStorage.setItem("jwt_token", token)
+export const setToken = (token) => {
+    if (token) {
+        localStorage.setItem("jwt_token", token);
+        } else {
+        localStorage.removeItem("jwt_token");
+        }
+    };
 export const setRefreshToken = (token) => localStorage.setItem("refresh_token", token)
 export const checkToken = async () => {
     try {    

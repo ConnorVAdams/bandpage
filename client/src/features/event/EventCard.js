@@ -21,6 +21,7 @@ const EventCard = ({ event }) => {
         }
     )
     
+
     const dispatch = useDispatch()
 
     const acct = useSelector(state => state.user.data)
@@ -54,12 +55,12 @@ const EventCard = ({ event }) => {
 
     const handleClick = async () => {
         if (inUserEvents) {
-            // debugger
             const event = user.events_attending.find(event => event.id === id)
             const like_id = event.likes.find(like => acct.artist ? like.artist_id : like.fan_id).id
             const resp = await dispatch(fetchDeleteLike(like_id));
             
             if (resp) {
+
                 dispatch(fetchCurrentUser())
             }
         } else {

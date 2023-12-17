@@ -12,6 +12,7 @@ import { Button, Image } from 'react-bootstrap'
 import { toast } from 'react-hot-toast'
 import { fetchOneArtist } from '../features/artist/artistSlice'
 import { setArtist } from '../features/artist/artistSlice';
+import { setToken } from '../utils/main';
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -42,7 +43,12 @@ const NavBar = () => {
     
     const handleLogout = () => {
         localStorage.clear()
+        // sessionStorage.clear()
+        // dispatch(setToken(null))
+        dispatch(setArtist(null))
         dispatch(setUser(null))
+        // dispatch({ type: 'RESET_STORE' });
+        // navigate('/')
     }
 
     return (
