@@ -1,8 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit"
-import artistReducer from '../features/artist/artistSlice'
-import userReducer from '../features/user/userSlice'
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import thunk from 'redux-thunk';
+import artistReducer from '../features/artist/artistSlice';
+import userReducer from '../features/user/userSlice';
 import storage from 'redux-persist/lib/storage';
-import { combineReducers } from 'redux';
 import {
     persistReducer,
     FLUSH,
@@ -14,16 +14,23 @@ import {
 } from 'redux-persist';
 
 const persistConfig = {
-    key: 'counter',
+    key: 'root',
     storage,
 };
 
-const reducers = combineReducers({ counter: counterSlice });
+const rootReducer = combineReducers({
+    user: userReducer,
+    artist: artistReducer
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer: {
-        artist: artistReducer,
-        user: userReducer,
-    },
-    devTools: {trace: true}
-})
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
+});
