@@ -22,6 +22,7 @@ class UserSchema(ma.SQLAlchemySchema):
         'bio',
         'location',
         'img',
+        'likes',
         'tracks',
         'upcoming_events',
         'fan_followers',

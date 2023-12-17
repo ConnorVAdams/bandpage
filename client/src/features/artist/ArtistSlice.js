@@ -84,7 +84,6 @@ const patchArtist = async ({user, values}, asyncThunk) => {
                 body: JSON.stringify(values)
             })
             const data = await resp.json()
-            console.log(resp)
             
             if (resp.ok) {
                 return data

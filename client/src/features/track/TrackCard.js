@@ -50,14 +50,22 @@ const TrackCard = ({ track }) => {
         }
     }, [])
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (inUserTracks) {
-            dispatch(fetchDeleteLike(id))
+            const track = user.favorited_tracks.find(track => track.id === id)
+            const like_id = track.likes.find(like => acct.artist ? like.artist_id : like.fan_id).id
+            const resp = await dispatch(fetchDeleteLike(like_id));
+            
+            if (resp) {
+                dispatch(fetchCurrentUser())
+            }
         } else {
-            dispatch(fetchPostLike(likeValues))
+            const resp = await dispatch(fetchPostLike(likeValues));
+            if (resp.payload === 201) {
+                dispatch(fetchCurrentUser())
+            }
         }
-        dispatch(fetchCurrentUser())
-    }
+    };
 
     return (
         

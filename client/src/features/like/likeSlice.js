@@ -10,7 +10,6 @@ const initialState = {
     // loading: true
 }
 const postLike = async (values, asyncThunk) => {
-    console.log(values)
     try {
         const respCheckToken = await checkToken();
         if (respCheckToken.ok) {
@@ -48,9 +47,10 @@ const deleteLike = async (id, asyncThunk) => {
             'Authorization': `Bearer ${getToken()}`
         }
         });
-        if (!resp.ok) { // 204 NO CONTENT
-        const data = await resp.json();
-        throw data.message || data.msg;
+        if (resp.status === 204 ) { // 204 NO CONTENT
+            // const data = await resp.json();
+            // throw data.message || data.msg;
+            return true
         }
     } else {
         const data = await respCheckToken.json();
@@ -69,7 +69,6 @@ const likeSlice = createSlice({
             postLike,
             {
                 pending: (state) => {
-                    console.log('y')
                     state.errors = []
                     state.loading = true
                 },

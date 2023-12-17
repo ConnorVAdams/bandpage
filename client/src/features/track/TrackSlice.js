@@ -41,7 +41,6 @@ const fetchOne = async (artist_id, asyncThunk) => {
 }
 
 const postArtist = async (values, asyncThunk) => {
-    console.log(values)
     try {
         const respCheckToken = await checkToken()
         if (respCheckToken.ok) {

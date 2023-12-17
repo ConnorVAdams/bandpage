@@ -8,6 +8,9 @@ import { convertDateFormat } from '../../utils/helpers'
 import { useSelector } from 'react-redux';
 import { setArtist } from './artistSlice';
 import { toast } from 'react-hot-toast';
+import { fetchDeleteLike, fetchPostLike } from '../like/likeSlice';
+import { fetchCurrentUser } from '../user/userSlice';
+import { useEffect, useState } from 'react';
 
 const ArtistCard = ({ artist }) => {
     const dispatch = useDispatch()
@@ -15,8 +18,41 @@ const ArtistCard = ({ artist }) => {
     const params = useParams()
     const path = useLocation().pathname
     const user = useSelector(state => state.user.data.artist || state.user.data.fan)
-
+    const acct = useSelector(state => state.user.data)
     const admin = user.id === artist.id
+    console.log(acct)
+
+    const [ likeValues, setLikeValues ] = useState(
+        {
+            likeable_type: 'artist',
+            likeable_id: null,
+            liker_type: null,
+            artist_id: null,
+            fan_id: null,
+        }
+    )
+    
+    useEffect(() => {
+        if (artist && user) {
+            const newValues = {
+                likeable_type: 'artist',
+                likeable_id: id,
+                liker_type: !user.artist ? 'artist' : 'fan',
+                // artist_id: acct.artist || acct.artist.id,
+                // fan_id: acct.fan || acct.fan.id,
+                ...(user
+                    ? { 
+                        artist_id: user.id,
+                        fan_id: null
+                        }
+                    : {                         
+                        artist_id: null ,
+                        fan_id: user.id
+                    }),
+                };
+            setLikeValues(newValues)
+        }
+    }, [])
 
     const { 
         id, 
@@ -36,20 +72,34 @@ const ArtistCard = ({ artist }) => {
     const num_followed = followed_artists && followed_artists.length
 
         const handleClick = () => {
-            // try {
+            try {
                 const { payload } = dispatch(fetchOneArtist(id))
                 if (typeof payload !== "string") {
                     dispatch(setArtist(payload))
                 } else {
                     toast.error(payload)
                 }
-            // } catch (error) {
-            //     console.error('Error fetching artist:', error);
-            // }
+            } catch (error) {
+                console.error('Error fetching artist:', error);
+            }
         };
     
-        const handleFollow = () => {
-    
+        const handleFollow = async () => {
+            if (inUserFollows) {
+                const artist_id = user.followed_artists.find(artist => artist.id === id).id
+                const like_id = user.likes.find(like => acct.artist ? like.artist_id : like.fan_id).id
+                const resp = await dispatch(fetchDeleteLike(like_id));
+                
+                if (resp) {
+                    dispatch(fetchCurrentUser())
+                    // TODO Where to navigate to refresh current route/page?
+                }
+            } else {
+                const resp = await dispatch(fetchPostLike(likeValues));
+                if (resp.payload === 201) {
+                    dispatch(fetchCurrentUser())
+                }
+            }
         }
     
         return (

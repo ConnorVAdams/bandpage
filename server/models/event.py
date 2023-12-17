@@ -24,12 +24,12 @@ class Event(db.Model):
         return self.artist.name
 
     @property
-    def attendees(self):
+    def likes(self):
         likes = Like.query.filter(
             Like.likeable_type == 'event',
             Like.likeable_id == self.id
             ).all()
-        return [like.liker for like in likes]
+        return likes
     
     @property
     def attending(self):
