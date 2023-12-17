@@ -29,7 +29,7 @@ class UserSchema(ma.SQLAlchemySchema):
         'followed_artists',
         'favorited_tracks',
         'events_attending',
-        'user_id',
+        # 'user_id',
         'username',
         'created_at'
         )))

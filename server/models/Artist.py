@@ -52,11 +52,6 @@ class Artist(db.Model):
         primaryjoin=lambda: Like.artist_id == Artist.id
     )
 
-    likeables = association_proxy(
-        'likes', 
-        'likeable'
-    )
-
     # **************
     # * PROPERTIES *
     # **************
@@ -80,6 +75,10 @@ class Artist(db.Model):
     #         )
     #     else:
     #         self._account = new_acct
+    
+    @property
+    def likeables(self):
+        return [like.likeable for like in self.likes]
 
     # * PROFILE INFO *
 

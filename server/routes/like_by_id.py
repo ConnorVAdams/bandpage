@@ -4,10 +4,13 @@ from marshmallow import ValidationError
 from flask_jwt_extended import jwt_required
 from app_setup import db
 from models.like import Like
-from schemas.user_schema import UserSchema
+from models.fan import Fan
+from models.artist import Artist
+from schemas.artist_schema import ArtistSchema
+from schemas.fan_schema import FanSchema
 
-# like_schema = LikeSchema(session=db.session)
-
+artist_schema = ArtistSchema(session=db.session)
+fan_schema = FanSchema(session=db.session)
 class LikeById(Resource):
     # def get(self, id):
     #     user = User.query.get_or_404(

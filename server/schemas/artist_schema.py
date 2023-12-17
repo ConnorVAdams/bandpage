@@ -38,6 +38,5 @@ class ArtistSchema(ma.SQLAlchemySchema):
                     'events_attending',
                     'username',
                     'user_id',
-                    'created_at',
-                    'favorited_tracks'
+                    'created_at'
                     ]

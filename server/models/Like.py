@@ -28,6 +28,7 @@ class Like(db.Model):
         from models.event import Event
         from models.track import Track
 
+
         if self.likeable_type == 'artist':
             return Artist.query.get(self.likeable_id)
         elif self.likeable_type == 'event':
