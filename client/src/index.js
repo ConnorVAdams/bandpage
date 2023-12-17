@@ -14,14 +14,10 @@ import { store } from './app/store';
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-let persistor = persistStore(store)
-
 root.render(
     <Provider store={store}>
         <Router>
-            <PersistGate persistor={persistor}>
-                <App />
-            </PersistGate>
+            <App />
         </Router>
     </Provider>
     );
