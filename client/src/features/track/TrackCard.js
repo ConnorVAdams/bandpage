@@ -5,8 +5,9 @@ import { FaCheck, FaTimes, FaTrash, FaPencilAlt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react';
 import { fetchPostLike, fetchDeleteLike } from '../like/likeSlice';
+import { fetchCurrentUser } from '../user/userSlice';
 
-const TrackCard = ({ track, admin }) => {
+const TrackCard = ({ track }) => {
     const { id, name, audio, artist_name } = track
     const [ likeValues, setLikeValues ] = useState(
         {
@@ -17,43 +18,45 @@ const TrackCard = ({ track, admin }) => {
             fan_id: null,
         }
     )
-    const [ liked, setLiked ] = useState(true)
-
-    const isLiked = useSelector(state => state.user)
-    // console.log(isLiked)
-
+    
     const dispatch = useDispatch()
-    
-    const user = useSelector(state => state.user)
-    // console.log(user.data.artist) 
-    
-    const inUserTracks = useSelector(state => {
-        const userTracks = state.user.data.artist.favorited_tracks || state.user.data.fan.favorited_tracks
-        return userTracks && userTracks.some((userTrack) => userTrack.id === id)
-    })
+
+    const acct = useSelector(state => state.user.data)
+    const user = useSelector(state => state.user.data.artist || state.user.data.fan)
+
+    const admin = user.id === track.artist_id
+
+    const inUserTracks = user.favorited_tracks.some(track => track.id === id);
 
     useEffect(() => {
         if (track && user) {
             const newValues = {
                 likeable_type: 'track',
                 likeable_id: id,
-                liker_type: user.type,
-                ...(user.data.artist
-                    ? { artist_id: user.data.artist.id }
-                    : { fan_id: user.data.fan.id }),
+                liker_type: !user.artist ? 'artist' : 'fan',
+                // artist_id: acct.artist || acct.artist.id,
+                // fan_id: acct.fan || acct.fan.id,
+                ...(user
+                    ? { 
+                        artist_id: user.id,
+                        fan_id: null
+                        }
+                    : {                         
+                        artist_id: null ,
+                        fan_id: user.id
+                    }),
                 };
             setLikeValues(newValues)
         }
     }, [])
 
     const handleClick = () => {
-        if (liked) {
+        if (inUserTracks) {
             dispatch(fetchDeleteLike(id))
         } else {
             dispatch(fetchPostLike(likeValues))
         }
-        // update user.data with new user obj
-        // re-render track card 
+        dispatch(fetchCurrentUser())
     }
 
     return (

@@ -9,7 +9,7 @@ from schemas.track_schema import TrackSchema
 class ArtistSchema(ma.SQLAlchemySchema):
     # TODO schema level validations
     # name = fields.Str(required=True, validate=validate.Length(min=1, max=40))
-    tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio', 'likes'))))
+    tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio', 'likes', 'artist_id'))))
     upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
     fan_followers = fields.List(fields.Nested(FanSchema(only=('id', 'name', 'location', 'img'))))
     artist_followers = fields.List(fields.Nested('ArtistSchema', only=('id', 'name', 'location', 'img')))

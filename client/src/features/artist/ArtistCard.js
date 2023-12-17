@@ -31,13 +31,10 @@ const ArtistCard = ({ artist }) => {
     } = artist 
     
     const inUserFollows = user.followed_artists.some(artist => artist.id === id);
-    // console.log(inUserFollows)
 
-    const num_followers = [...fan_followers, ...artist_followers].length
-    const num_followed = followed_artists.length
-    
-    
-    
+    const num_followers = fan_followers && artist_followers && [...fan_followers, ...artist_followers].length
+    const num_followed = followed_artists && followed_artists.length
+
         const handleClick = () => {
             // try {
                 const { payload } = dispatch(fetchOneArtist(id))

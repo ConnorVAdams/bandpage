@@ -8,12 +8,12 @@ class Like(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    likeable_type = db.Column(db.Enum('artist', 'track', 'event', name='likeable_types'), nullable=False, unique=True)
-    likeable_id = db.Column(db.Integer, nullable=False, unique=True)
+    likeable_type = db.Column(db.Enum('artist', 'track', 'event', name='likeable_types'), nullable=False)
+    likeable_id = db.Column(db.Integer, nullable=False)
     
-    liker_type = db.Column(db.Enum('artist', 'fan', name='liker_types'), nullable=False, unique=True)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'), unique=True)
-    fan_id = db.Column(db.Integer, db.ForeignKey('fans.id'), unique=True)
+    liker_type = db.Column(db.Enum('artist', 'fan', name='liker_types'), nullable=False)
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
+    fan_id = db.Column(db.Integer, db.ForeignKey('fans.id'))
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())

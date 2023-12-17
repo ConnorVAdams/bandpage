@@ -13,7 +13,6 @@ import { Form, Button, Col, Container, Row } from 'react-bootstrap'
 function Authentication() {
     // Conditionally render either signup or login option 
     const [signUp, setSignUp] = useState(false)
-    const [ userTypeVal, setUserTypeVal ] = useState(null)
     const dispatch = useDispatch() 
     const navigate = useNavigate()
 
@@ -34,6 +33,8 @@ function Authentication() {
     // })
     const url = signUp ? "/signup" : "/login"
 
+
+
     const formik = useFormik({
         initialValues: {
             username:'',
@@ -48,6 +49,7 @@ function Authentication() {
                 setToken(action.payload.jwt_token)
                 setRefreshToken(action.payload.refresh_token)
                 if (signUp) {
+                    debugger
                     navigate(`${values.userType}s/new`)
                 } else {
                     navigate('/landing')
