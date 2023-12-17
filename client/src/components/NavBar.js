@@ -17,22 +17,22 @@ const NavBar = () => {
     const acct = useSelector(state => state.user.data)
     const user = acct ? acct.artist || acct.fan : null
 
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleMyPage = async () => {
-        // debugger
-        try {
-            const { payload } = await dispatch(fetchOneArtist(user.id))
-            if (typeof payload !== "string") {
-                dispatch(setArtist(payload))
-                navigate(`artists/${user.artist.id}`)
-            } else {
-                toast.error(payload)
+        if (user) {
+            try {
+                const { payload } = await dispatch(fetchOneArtist(user.id))
+                if (typeof payload !== "string") {
+                    dispatch(setArtist(payload))
+                    navigate(`artists/${user.artist.id}`)
+                } else {
+                    toast.error(payload)
+                }
+            } catch (error) {
+                console.error('Error fetching artist:', error);
             }
-        } catch (error) {
-            console.error('Error fetching artist:', error);
         }
     }
 

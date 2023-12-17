@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 // import artistFormSchema from './artistFormSchema'
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import { fetchPostArtist, fetchPatchArtist } from '../artist/artistSlice'
-import { setUserType } from './userSlice'
+import { setUser, setUserType } from './userSlice'
 import { fetchPostFan } from '../fan/fanSlice'
 import { useDispatch } from 'react-redux'
 
@@ -50,10 +50,7 @@ const ProfileForm = () => {
             if (path.includes('edit')) {
                 const action = await dispatch(fetchPatchArtist({user, values}))
                 if (typeof action.payload !== "string") {
-                    console.log(action.payload)
-                    // toast.success(`Patched ${action.payload}!`)
-                    // dispatch(setUserType(action.payload))
-                    // navigate('/landing')
+                    dispatch(setUser(null))
                 } else {
                     toast.error(action.payload)
                 }

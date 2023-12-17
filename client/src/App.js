@@ -56,6 +56,7 @@ const App = () => {
 
     }, [])
 
+    console.log(params, path)
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)
@@ -73,7 +74,7 @@ const App = () => {
                 if (action.payload.flag === "refresh") {
                     setToken(action.payload.jwt_token)
                 }
-            navigate('/')
+            navigate('/landing')
             }
         }
         })()

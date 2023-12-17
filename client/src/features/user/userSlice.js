@@ -23,7 +23,6 @@ const getInitialState = (data) => {
 const initialState = getInitialState(null)
 
 const register =  async ({ url, values }) => {
-    console.log(values)
     try {
         const resp = await fetch(url, {
             method: 'POST',

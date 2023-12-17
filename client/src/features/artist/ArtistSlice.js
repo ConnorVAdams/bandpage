@@ -198,9 +198,7 @@ const artistSlice = createSlice({
                     if (!action.payload.id) {
                         state.errors.push(action.payload)
                     } else {
-                        const index = state.data.findIndex(artist => artist.id === parseInt(action.payload.id))
-                        state.data[index] = action.payload
-                        state.data = null
+                        
                     }
                 },
             }

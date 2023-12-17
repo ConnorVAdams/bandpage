@@ -6,6 +6,8 @@ import ArtistCard from '../artist/ArtistCard'
 import TrackCard from '../track/TrackCard'
 import FanCard from '../fan/FanCard'
 import ArtistWrapper from '../artist/ArtistWrapper'
+import { fetchCurrentUser } from './userSlice'
+import { setToken } from '../../utils/main'
 
 const UserLanding = () => {
     const acct = useSelector(state => state.user.data)
@@ -16,6 +18,18 @@ const UserLanding = () => {
     const handleEdit = () => {
         navigate('/artists/edit')
     }
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const action = await dispatch(fetchCurrentUser())
+    //         if (typeof action.payload !== "string") {
+    //             if (action.payload.flag === "refresh") {
+    //                 setToken(action.payload.jwt_token)
+    //             }
+    //         navigate('/')
+    //     }
+    //     })()
+    // }, [])
 
     if (acct) {
 
