@@ -5,6 +5,7 @@ import logging
 import time
 import re
 from urllib.parse import urlencode
+from flask_cors import CORS
 
 from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
@@ -71,7 +72,10 @@ api.add_resource(CheckToken, "/check")
 # #! No need for a logout route in this configuration!
 # api.add_resource(GetSpotifyToken, '/get_spotify_token')
 
-@app.route('/api/v1/authorize')
+# TODO Further Restrict CORS after OAuth achieved
+CORS(app, origins="*", allow_headers="*")
+
+@app.route('/api/v1/authorize', methods=['GET'])
 def authorize():
     import secrets
 
@@ -95,8 +99,9 @@ def authorize():
 
     redirect_url = authorize_url + urlencode(parameters)
     response = redirect(redirect_url)
-    import ipdb; ipdb.set_trace()
-    return response
+    # import ipdb; ipdb.set_trace()
+    # print(response)
+    return response.headers[2][1]
     
 @app.route('/api/v1/callback')
 def callback():

@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
@@ -17,6 +18,9 @@ app = Flask(
     static_folder="../client/build",
     template_folder="../client/build",
 )
+
+# CORS(app, origins=["http://127.0.0.1:5555", "https://accounts.spotify.com"])
+
 if os.environ.get("ENVIRONMENT") == "production":
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
 else:

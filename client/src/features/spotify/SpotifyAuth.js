@@ -5,9 +5,10 @@ const SpotifyAuth = () => {
         method: 'GET',
         // You can include headers or other options if needed
       });
-
       // Check if the request was successful (status code 200-299)
       if (response.ok) {
+        debugger
+        debugger
         // Handle the successful response here
         console.log('Authorization request successful');
       } else {
