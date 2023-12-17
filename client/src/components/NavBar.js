@@ -37,7 +37,7 @@ const NavBar = () => {
     }
 
     const handleDelete = async () => {
-        dispatch(fetchDeleteUser(user.id))
+        dispatch(fetchDeleteUser(acct.id))
     }
     
     const handleLogout = () => {

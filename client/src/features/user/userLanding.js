@@ -19,18 +19,6 @@ const UserLanding = () => {
         navigate('/artists/edit')
     }
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const action = await dispatch(fetchCurrentUser())
-    //         if (typeof action.payload !== "string") {
-    //             if (action.payload.flag === "refresh") {
-    //                 setToken(action.payload.jwt_token)
-    //             }
-    //         navigate('/')
-    //     }
-    //     })()
-    // }, [])
-
     if (acct) {
 
         const { 

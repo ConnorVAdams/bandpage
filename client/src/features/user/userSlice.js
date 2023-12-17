@@ -82,6 +82,7 @@ const deleteUser = async (id, asyncThunk) => {
             })
             if (resp.ok) { //! 204 NO CONTENT
             } else {
+                console.log(resp)
                 const data = await resp.json()
                 throw data.message || data.msg
             }
@@ -180,7 +181,6 @@ const userSlice = createSlice({
                 },
                 fulfilled: (state, action) => {
                     state.loading = false
-
                     if (typeof action.payload === "string") {
                         state.errors.push(action.payload)
                     } else {
