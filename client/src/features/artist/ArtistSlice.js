@@ -1,8 +1,11 @@
 import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
 import { checkToken, getToken } from "../../utils/main";
+import { useDispatch } from "react-redux";
+import { fetchCurrentUser } from "../user/userSlice";
 export const createSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },
 })
+
 
 const initialState = {
     data: null,
@@ -195,7 +198,7 @@ const artistSlice = createSlice({
                     if (!action.payload.id) {
                         state.errors.push(action.payload)
                     } else {
-                        const index = state.data.findIndex(user => user.id === parseInt(action.payload.id))
+                        const index = state.data.findIndex(artist => artist.id === parseInt(action.payload.id))
                         state.data[index] = action.payload
                         state.data = null
                     }

@@ -51,6 +51,11 @@ const App = () => {
         }
     }, [path])
 
+    useEffect(() => {
+
+    }, [])
+
+
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)
     // const errors = [...userErrors, ...artistErrors]

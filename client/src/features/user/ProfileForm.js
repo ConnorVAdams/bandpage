@@ -50,9 +50,10 @@ const ProfileForm = () => {
             if (path.includes('edit')) {
                 const action = await dispatch(fetchPatchArtist({user, values}))
                 if (typeof action.payload !== "string") {
-                    toast.success(`Patched ${action.payload}!`)
-                    dispatch(setUserType(action.payload))
-                    navigate('/landing')
+                    console.log(action.payload)
+                    // toast.success(`Patched ${action.payload}!`)
+                    // dispatch(setUserType(action.payload))
+                    // navigate('/landing')
                 } else {
                     toast.error(action.payload)
                 }
