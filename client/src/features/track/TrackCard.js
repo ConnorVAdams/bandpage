@@ -17,10 +17,15 @@ const TrackCard = ({ track, admin }) => {
             fan_id: null,
         }
     )
+    const [ liked, setLiked ] = useState(true)
+
+    const isLiked = useSelector(state => state.user)
+    // console.log(isLiked)
 
     const dispatch = useDispatch()
     
-    const user = useSelector(state => state.user) 
+    const user = useSelector(state => state.user)
+    // console.log(user.data.artist) 
     
     const inUserTracks = useSelector(state => {
         const userTracks = state.user.data.artist.favorited_tracks || state.user.data.fan.favorited_tracks
@@ -42,8 +47,13 @@ const TrackCard = ({ track, admin }) => {
     }, [])
 
     const handleClick = () => {
-        // dispatch(fetchPostLike(likeValues))
-        dispatch(fetchDeleteLike(id))
+        if (liked) {
+            dispatch(fetchDeleteLike(id))
+        } else {
+            dispatch(fetchPostLike(likeValues))
+        }
+        // update user.data with new user obj
+        // re-render track card 
     }
 
     return (

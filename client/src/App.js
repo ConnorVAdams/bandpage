@@ -47,7 +47,6 @@ const App = () => {
 
     useEffect(() => {
         if (!/\d/.test(path)) {
-            console.log('y')
             dispatch(setArtist(null))
         }
     }, [path])
@@ -55,8 +54,6 @@ const App = () => {
     useEffect(() => {
 
     }, [])
-
-    console.log(params, path)
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)

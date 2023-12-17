@@ -51,8 +51,6 @@ const ArtistWrapper = () => {
     // }
 
     const { id, name, location, img, genres, followed_artists, artist_followers, fan_followers } = artist 
-    const num_followers = [...fan_followers, ...artist_followers].length
-    const num_followed = followed_artists.length
     
     return (
         <>
