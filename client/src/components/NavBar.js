@@ -26,7 +26,7 @@ const NavBar = () => {
                 const { payload } = await dispatch(fetchOneArtist(user.id))
                 if (typeof payload !== "string") {
                     dispatch(setArtist(payload))
-                    navigate(`artists/${user.artist.id}`)
+                    navigate(`artists/${user.id}`)
                 } else {
                     toast.error(payload)
                 }
