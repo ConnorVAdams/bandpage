@@ -7,13 +7,11 @@ import EventCard from '../features/event/EventCard';
 import NotFound from './NotFound';
 import { useEffect } from 'react'
 import { fetchAllArtists } from '../features/artist/artistSlice';
-import { useAdmin } from '../features/artist/adminContext';
 
 const ListContainer = () => {
     const acct = useSelector(state => state.user.data)
     const user = useSelector(state => state.user.data.artist)
 
-    const admin = useAdmin()
 
     const artists = useSelector(state => state.artist.data)
     const artist = useSelector(state => state.artist.current)
@@ -34,8 +32,7 @@ const ListContainer = () => {
                 {artist.tracks && artist.tracks.map(
                     track => <TrackCard 
                         key={track.id} 
-                        track={track}
-                        admin={admin} />
+                        track={track} />
                 )}
                 </>
             )
@@ -47,8 +44,7 @@ const ListContainer = () => {
                 {artist.upcoming_events && artist.upcoming_events.map(
                     event => <EventCard 
                         key={event.id} 
-                        event={event}
-                        admin={admin} />
+                        event={event} />
                 )}
                 </>
             )
@@ -92,7 +88,6 @@ const ListContainer = () => {
             <Col md={8}>
             <ListGroup>
                 {cardDisplay}
-
             </ListGroup>
             </Col>
         </Row>

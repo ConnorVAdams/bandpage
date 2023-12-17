@@ -18,10 +18,10 @@ let persistor = persistStore(store)
 
 root.render(
     <Provider store={store}>
-        <Router>
-            <PersistGate persistor={persistor}>
+        <PersistGate persistor={persistor}>
+            <Router>
                 <App />
-            </PersistGate>
-        </Router>
+            </Router>
+        </PersistGate>
     </Provider>
     );

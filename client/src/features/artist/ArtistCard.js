@@ -9,33 +9,32 @@ import { useSelector } from 'react-redux';
 import { setArtist } from './artistSlice';
 import { toast } from 'react-hot-toast';
 
-const ArtistCard = ({ artist, admin }) => {
+const ArtistCard = ({ artist }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const params = useParams()
     const path = useLocation().pathname
     const user = useSelector(state => state.user.data.artist || state.user.data.fan)
-    
-    const inUserFollows = user.followed_artists && user.followed_artists.some((userFollow) => userFollow.id === user.id)
-    console.log(inUserFollows)
 
-        const { 
-            id, 
-            name, 
-            location, 
-            img, 
-            genres, 
-            artist_followers, 
-            fan_followers,
-            followed_artists,
-            created_at
-        } = artist 
+    const admin = user.id === artist.id
+
+    const { 
+        id, 
+        name, 
+        location, 
+        img, 
+        genres, 
+        artist_followers, 
+        fan_followers,
+        followed_artists,
+        created_at
+    } = artist 
     
-        // // let num_followed = []
-        // // let num_followers = []
-    
-        // // num_followers = [...fan_followers, ...artist_followers].length
-        // // num_followed = followed_artists.length
+    const inUserFollows = user.followed_artists.some(artist => artist.id === id);
+    // console.log(inUserFollows)
+
+    const num_followers = [...fan_followers, ...artist_followers].length
+    const num_followed = followed_artists.length
     
     
     
@@ -83,17 +82,22 @@ const ArtistCard = ({ artist, admin }) => {
                         }}
                         roundedCircle
                     />
-                    {/* <div className='text-center'>{num_followers} Followers</div>
-                    <div className='text-center'>{num_followed} Followed</div> */}
-                    {/* {(!admin && path !== '/artists') || inUserFollows ? (
-                        <Button
-                        variant={inUserFollows ? 'success' : 'danger'}
-                        onClick={handleFollow}
-                        className="mr-2 mb-2"
-                        >
-                            {inUserFollows ? 'Following' : 'Follow'}
-                        </Button>
-                    ) : null} */}
+                    
+                    <>
+                        <div className='text-center'>{num_followers} Followers</div>
+                        <div className='text-center'>{num_followed} Followed</div>
+                        {(!admin && path !== '/artists') || inUserFollows ? (
+                            <Button
+                            variant={inUserFollows ? 'success' : 'danger'}
+                            onClick={handleFollow}
+                            className="mr-2 mb-2"
+                            >
+                                {inUserFollows ? 'Following' : 'Follow'}
+                            </Button>
+                        ) : null}
+                    </> 
+
+                    
                     </Container>
                     <Container style={{ width: '1000%' }}>
                     <h2>{name}</h2>

@@ -25,12 +25,13 @@ import UserLanding from './features/user/userLanding'
 import ListContainer from './components/ListContainer'
 import { useLocation } from 'react-router-dom'
 import { fetchOneArtist, setArtist } from './features/artist/artistSlice'
+import { AdminProvider } from './features/artist/adminContext'
 
 const App = () => {
     const user = useSelector(state => state.user.data)
     const artist = useSelector(state => state.artist.current)
     const admin = useSelector(state => state.user.admin)
-    
+        
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const loc = useLocation()
@@ -51,9 +52,6 @@ const App = () => {
         }
     }, [path])
 
-    useEffect(() => {
-
-    }, [])
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)
@@ -99,33 +97,35 @@ const App = () => {
     return (
         <>
             <Toaster />
-            <NavBar />
-            <Routes>
+            <AdminProvider value={admin}>
+                <NavBar />
+                <Routes>
 
-                <Route path='/artists/'>
-                    <Route index element={<ListContainer />} />
-                    <Route path='new' element={<ProfileForm />} />
-                    <Route path='edit/:id' element={<ProfileForm />} />
-                    <Route path=':artist_id/' element={<ArtistWrapper />}>
-                        <Route index element={<ArtistDetail />} />
-                        <Route path='tracks' element={<ListContainer />} />
-                        <Route path='events' element={<ListContainer />} />
+                    <Route path='/artists/'>
+                        <Route index element={<ListContainer />} />
+                        <Route path='new' element={<ProfileForm />} />
+                        <Route path='edit/:id' element={<ProfileForm />} />
+                        <Route path=':artist_id/' element={<ArtistWrapper />}>
+                            <Route index element={<ArtistDetail />} />
+                            <Route path='tracks' element={<ListContainer />} />
+                            <Route path='events' element={<ListContainer />} />
+                        </Route>
                     </Route>
-                </Route>
 
-                <Route path='/fans/'>
-                    <Route path='new' element={<ProfileForm />} />
-                </Route>
+                    <Route path='/fans/'>
+                        <Route path='new' element={<ProfileForm />} />
+                    </Route>
 
-                <Route path='/landing/'>
-                    <Route index element={<UserLanding />} />
-                    <Route path='tracks' element={<TrackList />} />
-                    <Route path='events' element={<EventList />} />
-                </Route>
+                    <Route path='/landing/'>
+                        <Route index element={<UserLanding />} />
+                        <Route path='tracks' element={<TrackList />} />
+                        <Route path='events' element={<EventList />} />
+                    </Route>
 
 
-                <Route path='/*' element={<NotFound />} />
-            </Routes>
+                    <Route path='/*' element={<NotFound />} />
+                </Routes>
+            </AdminProvider>
         </>
     )
     }

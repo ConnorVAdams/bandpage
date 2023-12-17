@@ -13,7 +13,6 @@ import ArtistCard from './ArtistCard'
 import FanCard from '../fan/FanCard'
 import { Button, Container, Nav, Navbar, Image, Row, Col, Text } from 'react-bootstrap'
 import { FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
-import { AdminProvider } from './adminContext'
 
 
 const ArtistWrapper = () => {
@@ -57,9 +56,7 @@ const ArtistWrapper = () => {
             <ArtistCard 
                 key={id}
                 artist={artist}/>
-            <AdminProvider value={admin}>
                 <Outlet />
-            </AdminProvider>
         </>
         )
     }
