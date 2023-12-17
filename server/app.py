@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 from flask import jsonify, current_app, request, session, redirect, url_for, make_response
 from flask_restful import Resource
-
+import logging
+import time
+import re
+from urllib.parse import urlencode
 
 from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
@@ -70,21 +73,86 @@ api.add_resource(CheckToken, "/check")
 
 @app.route('/api/v1/authorize')
 def authorize():
-	client_id = app.config['SPOTIFY_CLIENT_ID']
-	client_secret = app.config['SPOTIFY_CLIENT_SECRET']
-	redirect_uri = app.config['REDIRECT_URI']
-	scope = ''
+    import secrets
 
-	# state key used to protect against cross-site forgery attacks
-	# state_key = createStateKey(15)
-	# session['state_key'] = state_key
+    client_id = app.config['SPOTIFY_CLIENT_ID']
+    redirect_uri = 'http://localhost:4000/callback'
+    scope = 'user-read-private user-read-email'
 
-	# redirect user to Spotify authorization page
-	authorize_url = 'https://accounts.spotify.com/en/authorize?'
-	parameters = f'response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}'
-	response = make_response(redirect(authorize_url + parameters))
+    # Generate a random state value and store it in the session
+    state = secrets.token_urlsafe(16)
+    session['state'] = state
 
-	return response
+    # Redirect user to Spotify authorization page with the state parameter
+    authorize_url = 'https://accounts.spotify.com/authorize?'
+    parameters = {
+        'response_type': 'code',
+        'client_id': client_id,
+        'scope': scope,
+        'redirect_uri': redirect_uri,
+        'state': state
+    }
+
+    redirect_url = authorize_url + urlencode(parameters)
+    response = redirect(redirect_url)
+    import ipdb; ipdb.set_trace()
+    return response
+    
+@app.route('/api/v1/callback')
+def callback():
+
+    # import ipdb; ipdb.set_trace()
+    print('e')
+    if request.args.get('error'):
+        return render_template('index.html', error='Spotify error.')
+
+    code = request.args.get('code')
+
+    # get access token to make requests on behalf of the user
+    payload = get_spotify_token(code)
+    
+    # if payload is not None:
+    #     session['token'] = payload[0]
+    #     session['refresh_token'] = payload[1]
+    #     session['token_expiration'] = time.time() + payload[2]
+    # else:
+    #     return render_template('index.html', error='Failed to access token.')
+
+    # current_user = getUserInformation(session)
+    # session['user_id'] = current_user['id']
+    # logging.info('new user:' + session['user_id'])
+
+    # # Redirect to the previous URL or a default URL
+    # return redirect(session.get('previous_url', '/'))
+
+@app.route('/api/v1/get_spotify_token', methods=['POST'])
+def get_spotify_token():
+    import ipdb; ipdb.set_trace()
+    print('e')
+
+    authorization_code = request.form.get('code')
+    redirect_uri = request.form.get('redirect_uri')
+
+    client_id = app.config['SPOTIFY_CLIENT_ID']
+    client_secret = app.config['SPOTIFY_CLIENT_SECRET']
+
+    # Make a request to Spotify's token endpoint to exchange the code for tokens
+    response = requests.post(
+        'https://accounts.spotify.com/api/token',
+        data={
+            'grant_type': 'authorization_code',
+            'code': authorization_code,
+            'redirect_uri': redirect_uri,
+            'client_id': client_id,
+            'client_secret': client_secret,
+        }
+    )
+    data = response.json()
+    access_token = data.get('access_token')
+    refresh_token = data.get('refresh_token')
+    expires_in = data.get('expires_in')
+
+    return jsonify({'access_token': access_token, 'refresh_token': refresh_token, 'expires_in': expires_in})
 
 
 # # Register a callback function that loads a user from your database whenever

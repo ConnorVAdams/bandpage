@@ -26,6 +26,8 @@ import ListContainer from './components/ListContainer'
 import { useLocation } from 'react-router-dom'
 import { fetchOneArtist, setArtist } from './features/artist/artistSlice'
 import { AdminProvider } from './features/artist/adminContext'
+import SpotifyCallback from './features/spotify/SpotifyCallback'
+import SpotifyAuth from './features/spotify/SpotifyAuth'
 
 const App = () => {
     const user = useSelector(state => state.user.data)
@@ -126,7 +128,8 @@ const App = () => {
                         <Route path='events' element={<EventList />} />
                     </Route>
 
-
+                    <Route path='/authorize' element={<SpotifyAuth />} />
+                    {/* <Route path='/callback' element={<SpotifyCallback />} /> */}
                     <Route path='/*' element={<NotFound />} />
                 </Routes>
             </AdminProvider>
