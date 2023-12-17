@@ -5,11 +5,11 @@ from flask_restful import Api
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from datetime import timedelta
 import os
 
-# load_dotenv()  # take environment variables from .env.
+load_dotenv()  # take environment variables from .env.
 
 app = Flask(
     __name__,
@@ -27,6 +27,9 @@ app.config["SQLALCHEMY_ECHO"] = True
 app.secret_key = os.environ.get("APP_SECRET")
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
 app.config["PROPAGATE_EXCEPTIONS"] = True
+
+app.config["SPOTIFY_CLIENT_ID"] = os.environ.get("SPOTIFY_CLIENT_ID")
+app.config["SPOTIFY_CLIENT_SECRET"] = os.environ.get("SPOTIFY_CLIENT_SECRET")
 
 # Here you can globally configure all the ways you want to allow JWTs to
 # be sent to your web application. By default, this will be only headers.

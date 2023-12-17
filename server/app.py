@@ -26,6 +26,7 @@ from routes.auth.refresh import Refresh
 from routes.auth.check_token import CheckToken
 from routes.like_by_id import LikeById
 from routes.likes import Likes
+from routes.spotify.get_spotify_token import GetSpotifyToken
 from flask import render_template
 
 api.add_resource(Artists, "/artists")
@@ -62,6 +63,7 @@ api.add_resource(Refresh, "/refresh")
 # #! GET Check Token
 api.add_resource(CheckToken, "/check")
 # #! No need for a logout route in this configuration!
+api.add_resource(GetSpotifyToken, '/get_spotify_token')
 
 
 # # Register a callback function that loads a user from your database whenever
