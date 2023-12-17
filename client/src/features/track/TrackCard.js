@@ -42,7 +42,8 @@ const TrackCard = ({ track, admin }) => {
     }, [])
 
     const handleClick = () => {
-        dispatch(fetchPostLike(likeValues))
+        // dispatch(fetchPostLike(likeValues))
+        dispatch(fetchDeleteLike(id))
     }
 
     return (
