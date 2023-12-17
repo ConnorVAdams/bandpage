@@ -19,7 +19,7 @@ class Likes(Resource):
             db.session.commit()
             # # * Serialize the data and package your JSON response
             # new_artist = artist_schema.dump(artist)
-            # return new_artist, 201
+            return 201   
         except (ValidationError, ValueError) as e:
             db.session.rollback()
             abort(400, str(e))

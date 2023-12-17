@@ -42,7 +42,7 @@ class LikeById(Resource):
     # @jwt_required()
     def delete(self, id):
         like = Like.query.get_or_404(
-            id, description=f"Could not find user with id: {id}"
+            id, description=f"Could not find like with id: {id}"
         )
         try:
             db.session.delete(like)

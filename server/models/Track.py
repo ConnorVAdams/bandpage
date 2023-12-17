@@ -23,17 +23,13 @@ class Track(db.Model):
         return self.artist.name
 
     @property
-    def fans(self):
+    def likes(self):
         likes = Like.query.filter(
             Like.likeable_type == 'track',
             Like.likeable_id == self.id
         ).all()
-        return [like.liker for like in likes]
-    
-    @property
-    def likes(self):
-        return len(self.fans)
-    
+        return likes
+
     @validates('name')
     def validate_name(self, _, name):
         if not isinstance(name, str):
