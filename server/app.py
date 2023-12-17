@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+from flask import jsonify, current_app, request, session, redirect, url_for, make_response
+from flask_restful import Resource
+
 
 from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
@@ -26,7 +29,7 @@ from routes.auth.refresh import Refresh
 from routes.auth.check_token import CheckToken
 from routes.like_by_id import LikeById
 from routes.likes import Likes
-from routes.spotify.get_spotify_token import GetSpotifyToken
+# from routes.spotify.get_spotify_token import GetSpotifyToken
 from flask import render_template
 
 api.add_resource(Artists, "/artists")
@@ -63,7 +66,25 @@ api.add_resource(Refresh, "/refresh")
 # #! GET Check Token
 api.add_resource(CheckToken, "/check")
 # #! No need for a logout route in this configuration!
-api.add_resource(GetSpotifyToken, '/get_spotify_token')
+# api.add_resource(GetSpotifyToken, '/get_spotify_token')
+
+@app.route('/api/v1/authorize')
+def authorize():
+	client_id = app.config['SPOTIFY_CLIENT_ID']
+	client_secret = app.config['SPOTIFY_CLIENT_SECRET']
+	redirect_uri = app.config['REDIRECT_URI']
+	scope = ''
+
+	# state key used to protect against cross-site forgery attacks
+	# state_key = createStateKey(15)
+	# session['state_key'] = state_key
+
+	# redirect user to Spotify authorization page
+	authorize_url = 'https://accounts.spotify.com/en/authorize?'
+	parameters = f'response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}'
+	response = make_response(redirect(authorize_url + parameters))
+
+	return response
 
 
 # # Register a callback function that loads a user from your database whenever
