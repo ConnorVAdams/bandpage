@@ -62,11 +62,12 @@ const App = () => {
 
     useEffect(() => {
         let intervalId;
+        const timer = getSpotifyExp()
     
         if (spotify) {
             intervalId = setInterval(() => {
                 getSpotifyRefreshToken();
-            }, 3000);
+            }, timer);
         }
     
         return () => {
