@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import jsonify, abort, current_app, request, session, redirect, url_for, make_response
+from flask import render_template, jsonify, abort, current_app, request, session, redirect, url_for, make_response
 from flask_restful import Resource
 from flask_cors import cross_origin
 import logging
@@ -8,6 +8,7 @@ import re
 from urllib.parse import urlencode
 import requests
 import base64
+import os
 
 from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
@@ -75,11 +76,11 @@ api.add_resource(CheckToken, "/check")
 
 # TODO Further Restrict CORS after OAuth achieved
 
-@app.route('/')
-def index():
-    response = redirect('http://localhost:4000/landing')
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+# @app.route('/')
+# def home():
+#     response = redirect('http://localhost:4000/landing')
+#     response.headers.add("Access-Control-Allow-Origin", "*")
+#     return response
 
 @app.route('/spotify_api')
 def spotify_api():
@@ -192,13 +193,8 @@ def handle_404(error):
     response = {"message": error.description}
     return response, error.code
 
-# @app.route("/")
-# @app.route("/production-detail/<int:id>")
-# @app.route("/edit-production/<int:id>")
-# @app.route("/new-production")
-# def index(id=0):
-#     return render_template("index.html")
-
+def index(id=0):
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5555)
