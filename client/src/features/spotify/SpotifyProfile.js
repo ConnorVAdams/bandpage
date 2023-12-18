@@ -6,12 +6,10 @@ import { getSpotifyToken } from "../../utils/main";
 const SpotifyProfile = () => {
     const [spotProf, setSpotProf ] = useState(null)
 
-    const access_token = localStorage.getItem('spotify_access_token')
-
     useEffect(() => {
         fetch('https://api.spotify.com/v1/me', {
             headers: {
-                'Authorization': `Bearer ${access_token}`
+                'Authorization': `Bearer ${getSpotifyToken()}`
             }
         })
         .then(resp => resp.json())

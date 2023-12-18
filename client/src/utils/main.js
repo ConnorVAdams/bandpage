@@ -46,7 +46,7 @@ export const postRefreshToken = async () => {
     return resp 
 }
 
-export const getSpotifyToken = () => localStorage.spotify_refresh_token
+export const getSpotifyToken = () => localStorage.getItem('spotify_access_token')
 export const setSpotifyToken = (token) => {
     if (token) {
         localStorage.setItem("jwt_token", token);
