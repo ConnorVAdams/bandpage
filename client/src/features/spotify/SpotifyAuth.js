@@ -1,8 +1,41 @@
+import { useState } from 'react'
+
 const SpotifyAuth = () => {
-  const handleAuthorize = () => {
-    fetch('/authorize')
-    window.open('https://accounts.spotify.com/en/login?continue=https%3A%2F%2Faccounts.spotify.com%2Fauthorize%3Fscope%3Duser-read-private%2Buser-read-email%26response_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A4000%252Fcallback%26state%3D-njVxkbIT0L6Rsm8k_ctzA%26client_id%3Dc7a80c9b38f94f0da27d90b428318214', '_blank')
+  const [url, setUrl] = useState(null)
+
+  const handleAuthorize = async () => {
+    try {
+      const response = await fetch('/authorize', {
+        method: 'GET',
+        // You can include headers or other options if needed
+      });
+
+      // Check if the request was successful (status code 200-299)
+      if (response.ok) {
+        // Extract the 'location' header from the response
+        const locationHeader = response.headers.get('location');
+
+        // Update the 'url' state with the extracted URL
+        setUrl(locationHeader);
+
+        // Open a new tab with the extracted URL
+        if (locationHeader) {
+          window.open(locationHeader, '_blank');
+        }
+
+        // Handle the successful response here
+        console.log('Authorization request successful');
+      } else {
+        // Handle errors for non-2xx status codes
+        console.error('Authorization request failed');
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error during authorization request:', error);
+    }
   };
+
+  console.log(url)
 
   return (
     <div>
