@@ -1,13 +1,9 @@
 import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
 import { getToken, getRefreshToken, checkToken } from "../../utils/main";
-// import { fetchOneArtist } from "../artist/artistSlice";
-// import { fetchOneFan } from "../fan/fanSlice"
-import { useLocation } from "react-router-dom";
+
 export const createSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },
 })
-
-// Send user info and/or credentials from client to server
 
 const initialState =  {
         data: null,

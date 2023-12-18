@@ -16,9 +16,6 @@ const SpotifyProfile = () => {
         .then(data => setSpotProf(data))
     }, [])
 
-    // debugger
-
-
     if (spotProf) {
         return (
             <Card 

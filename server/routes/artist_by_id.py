@@ -2,7 +2,7 @@ from flask import request, abort
 from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError
-from flask_jwt_extended import jwt_required, get_jwt_identity, current_user
+from flask_jwt_extended import jwt_required
 from app_setup import db
 from models.artist import Artist
 from schemas.artist_schema import ArtistSchema

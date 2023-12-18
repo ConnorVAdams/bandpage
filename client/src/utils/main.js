@@ -12,7 +12,6 @@ export const checkToken = async () => {
     try {    
         const resp = await fetch("/check", {
             headers: {
-            //! NOTICE HERE I send the refresh token since I know the access token is expired
                 "Authorization": `Bearer ${getToken()}`
             }
         })
@@ -39,7 +38,6 @@ export const postRefreshToken = async () => {
     const resp = await fetch("/refresh", {
         method: "POST",
         headers: {
-            //! NOTICE HERE I send the refresh token since I know the access token is expired
             "Authorization": `Bearer ${getRefreshToken()}`
         }
     })
@@ -86,47 +84,4 @@ export const setSpotifyToken = (token) => {
         }
     };
 
-
-
-// export const setSpotifyRefreshToken = (token) => localStorage.setItem("refresh_token", token)
-// export const checkSpotifyToken = async () => {
-//     try {
-//         const response = await fetch('/get_spotify_token', {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({ 
-//             'grant_type': 'refresh_token',
-//             'refresh_token': `${getSpotifyRefreshToken()}`,
-
-//         });
-//         if (!response.ok) {
-//             const followResp = await postSpotifyRefreshToken()
-//             if (followResp.ok) {
-//                 const { jwt_token } = await followResp.json()
-//                 setToken(jwt_token)
-//                 return followResp
-//             } else {
-                
-//                 const { msg, message } = await followResp.json()
-//                 throw Error(msg || message)
-//             }
-//         } else {
-//             return resp
-//         }
-//     } catch (error) {
-        
-//         return error
-//     }
-// }
-// export const postSpotifyRefreshToken = async () => {
-//     const resp = await fetch("/refresh", {
-//         method: "POST",
-//         headers: {
-//             //! NOTICE HERE I send the refresh token since I know the access token is expired
-//             "Authorization": `Bearer ${getRefreshToken()}`
-//         }
-//     })
-//     return resp 
-// }
+export const setSpotifyRefreshToken = (token) => localStorage.setItem("refresh_token", token)

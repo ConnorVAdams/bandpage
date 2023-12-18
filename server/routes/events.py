@@ -15,18 +15,15 @@ class Events(Resource):
         return events, 200
 
     # @jwt_required()
-    def post(self):
-        try:
-            data = request.json
-            # * Validate the data, if problems arise you'll see ValidationError
-            event_schema.validate(data)
-            # * Deserialize the data with load()
-            event = event_schema.load(data)
-            db.session.add(event)
-            db.session.commit()
-            # * Serialize the data and package your JSON response
-            serialized_crew = event_schema.dump(event)
-            return serialized_crew, 201
-        except (ValidationError, ValueError) as e:
-            db.session.rollback()
-            abort(400, str(e))
+    # def post(self):
+    #     try:
+    #         data = request.json
+    #         event_schema.validate(data)
+    #         event = event_schema.load(data)
+    #         db.session.add(event)
+    #         db.session.commit()
+    #         serialized_event = event_schema.dump(event)
+    #         return serialized_event, 201
+    #     except (ValidationError, ValueError) as e:
+    #         db.session.rollback()
+    #         abort(400, str(e))

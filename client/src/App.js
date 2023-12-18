@@ -1,21 +1,14 @@
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { clearErrors as clearUserErrors} from './features/user/userSlice'
-// import { clearErrors as clearProductionErrors} from './features/production/productionSlice'
 import { useDispatch, useSelector } from 'react-redux'
-// import {createGlobalStyle} from 'styled-components'
-import {useEffect, useState } from 'react'
+import {useEffect} from 'react'
 import NotFound from './components/NotFound'
 import "./App.css"
 import { getSpotifyExp, getSpotifyRefreshToken, getSpotifyToken, setToken } from './utils/main'
 import { Toaster } from 'react-hot-toast';
 import ProfileForm from './features/user/ProfileForm'
-import EventCard from './features/event/EventCard'
-import FanCard from './features/fan/FanCard'
-import TrackCard from './features/track/TrackCard'
 import ArtistDetail from './features/artist/ArtistDetail'
 import ArtistWrapper from './features/artist/ArtistWrapper'
-import ArtistLanding from './features/user/userLanding'
-import ArtistList from './features/artist/ArtistList'
 import EventList from './features/event/EventList'
 import TrackList from './features/track/TrackList'
 import NavBar from './components/NavBar'
@@ -24,8 +17,7 @@ import { fetchCurrentUser, setAdmin } from './features/user/userSlice'
 import UserLanding from './features/user/userLanding'
 import ListContainer from './components/ListContainer'
 import { useLocation } from 'react-router-dom'
-import { fetchOneArtist, setArtist } from './features/artist/artistSlice'
-import { AdminProvider } from './features/artist/adminContext'
+import { setArtist } from './features/artist/artistSlice'
 import SpotifyCallback from './features/spotify/SpotifyCallback'
 import SpotifyAuth from './features/spotify/SpotifyAuth'
 import SpotifyProfile from './features/spotify/SpotifyProfile'
@@ -35,7 +27,7 @@ const App = () => {
     const artist = useSelector(state => state.artist.current)
     const admin = useSelector(state => state.user.admin)
     const spotify = useSelector(state => state.user.spotify)
-        
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const loc = useLocation()
@@ -102,10 +94,6 @@ const App = () => {
     // useEffect(() => {
     //     if (errors.length) {
     //     clearErrorsAction()
-    //     // const timeout = setTimeout(clearErrorsAction, 3000)
-    //     // return () => {
-    //     //   clearTimeout(timeout)
-    //     // };
     //     }
     // }, [errors, clearErrorsAction]);
     
@@ -120,7 +108,6 @@ const App = () => {
     return (
         <>
             <Toaster />
-            <AdminProvider value={admin}>
                 <NavBar />
                 <Routes>
 
@@ -152,7 +139,6 @@ const App = () => {
                     
                     <Route path='/*' element={<NotFound />} />
                 </Routes>
-            </AdminProvider>
         </>
     )
     }

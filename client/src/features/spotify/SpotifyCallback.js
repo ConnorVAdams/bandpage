@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap'
@@ -6,13 +7,10 @@ import { setSpotify } from "../user/userSlice";
 import { getSpotifyRefreshToken } from "../../utils/main";
 
 const SpotifyCallback = () => {
+  // const [ tokenInStorage, setTokenInStorage ] = useState(false)
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
-    // useEffect(() => {
-    //   if (!tokenInStorage)
-    //   handleCallback()
-    // })
 
     const handleCallback = async () => {
 
@@ -38,6 +36,7 @@ const SpotifyCallback = () => {
 
         if (response.ok) {
           dispatch(setSpotify(true))
+          // setTokenInStorage(true)
           navigate('/spotify_prof')
         } else {
           console.error('Authorization request failed');

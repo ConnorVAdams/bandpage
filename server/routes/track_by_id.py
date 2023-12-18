@@ -21,31 +21,31 @@ class TrackById(Resource):
             abort(400, str(e))
 
     # @jwt_required()
-    def patch(self, id):
-        artist = Track.query.get_or_404(
-            id, description=f"Could not find artist with ID: {id}"
-        )
-        try:
-            data = request.get_json()
-            artist_schema.validate(data)
-            updated_artist = artist_schema.load(
-                data, instance=artist, partial=True, session=db.session
-            )
-            db.session.commit()
-            return artist_schema.dump(updated_artist), 200
-        except (ValueError, ValidationError, IntegrityError) as e:
-            db.session.rollback()
-            abort(400, str(e))
+    # def patch(self, id):
+    #     artist = Track.query.get_or_404(
+    #         id, description=f"Could not find artist with ID: {id}"
+    #     )
+    #     try:
+    #         data = request.get_json()
+    #         artist_schema.validate(data)
+    #         updated_artist = artist_schema.load(
+    #             data, instance=artist, partial=True, session=db.session
+    #         )
+    #         db.session.commit()
+    #         return artist_schema.dump(updated_artist), 200
+    #     except (ValueError, ValidationError, IntegrityError) as e:
+    #         db.session.rollback()
+    #         abort(400, str(e))
 
     # @jwt_required()
-    def delete(self, id):
-        prod = Track.query.get_or_404(
-            id, description=f"Could not find production with id: {id}"
-        )
-        try:
-            db.session.delete(prod)
-            db.session.commit()
-            return None, 204
-        except Exception as e:
-            db.session.rollback()
-            abort(400, str(e))
+    # def delete(self, id):
+    #     prod = Track.query.get_or_404(
+    #         id, description=f"Could not find production with id: {id}"
+    #     )
+    #     try:
+    #         db.session.delete(prod)
+    #         db.session.commit()
+    #         return None, 204
+    #     except Exception as e:
+    #         db.session.rollback()
+    #         abort(400, str(e))

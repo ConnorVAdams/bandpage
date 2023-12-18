@@ -109,19 +109,6 @@ const artistSlice = createSlice({
             state.loading = false
             state.errors = []
         }),
-        // setEditMode: create.reducer((state, action) => {
-        //     state.editMode = action.payload
-        //     state.loading = false
-        //     state.errors = []
-        // }),
-        // addError: create.reducer((state, action) => {
-        //     state.errors.push(action.payload)
-        //     state.loading = false
-        // }),
-        // clearErrors: create.reducer((state) => {
-        //     state.errors = []
-        //     state.loading = false
-        // }),
         fetchAllArtists: create.asyncThunk(
             fetchAll,
             {
@@ -203,30 +190,6 @@ const artistSlice = createSlice({
                 },
             }
         ),
-        // fetchDeleteArtist: create.asyncThunk(
-        //     deleteArtist,
-        //     {
-        //         pending: (state) => {
-        //             state.errors = []
-        //             state.loading = true
-        //         },
-        //         rejected: (state, action) => {
-        //             state.loading = false
-        //             state.errors.push(action.payload)
-        //         },
-        //         fulfilled: (state, action) => {
-        //             state.loading = false
-
-        //             if (typeof action.payload === "string") {
-        //                 state.errors.push(action.payload)
-        //             } else {
-        //                 const idx = state.data.findIndex(artist => artist.id === parseInt(action.payload.prod_id))
-        //                 state.data.splice(idx, 1)
-        //                 state.spotlight = null
-        //             }
-        //         },
-        //     }
-        // ),
     }),
     selectors: {
         selectArtists(state){
@@ -240,15 +203,11 @@ const artistSlice = createSlice({
 
 export const {
     setArtist,
-    // setEditMode, 
-    // addError, 
-    // clearErrors, 
     fetchAllArtists, 
     fetchOneArtist,
     fetchNewArtist,
     fetchPostArtist, 
     fetchPatchArtist, 
-    // fetchDeleteArtist
 } = artistSlice.actions
 export const { selectArtists, selectErrors } = artistSlice.selectors
 export default artistSlice.reducer

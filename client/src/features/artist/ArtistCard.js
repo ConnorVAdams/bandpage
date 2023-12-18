@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
 import { Card, Button, Row, Col, Image, Container } from 'react-bootstrap';
-import { FaPlayCircle, FaCheck, FaTimes, FaPencilAlt, FaTrash, FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
+import { FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
 import { convertDateFormat } from '../../utils/helpers'
 import { useSelector } from 'react-redux';
 import { setArtist } from './artistSlice';
@@ -15,7 +15,6 @@ import { useEffect, useState } from 'react';
 const ArtistCard = ({ artist }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const params = useParams()
     const loc = useLocation()
     const path = useLocation().pathname
     const user = useSelector(state => state.user.data.artist || state.user.data.fan)
@@ -86,7 +85,7 @@ const ArtistCard = ({ artist }) => {
     
         const handleFollow = async () => {
             if (inUserFollows) {
-                const artist_id = user.followed_artists.find(artist => artist.id === id).id
+                // const artist_id = user.followed_artists.find(artist => artist.id === id).id
                 const like_id = user.likes.find(like => acct.artist ? like.artist_id : like.fan_id).id
                 const resp = await dispatch(fetchDeleteLike(like_id));
                 

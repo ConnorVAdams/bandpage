@@ -1,13 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import EventCard from '../event/EventCard'
 import ArtistCard from '../artist/ArtistCard'
 import TrackCard from '../track/TrackCard'
 import FanCard from '../fan/FanCard'
-import ArtistWrapper from '../artist/ArtistWrapper'
-import { fetchCurrentUser } from './userSlice'
-import { setToken } from '../../utils/main'
 
 const UserLanding = () => {
     const acct = useSelector(state => state.user.data)
