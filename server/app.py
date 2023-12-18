@@ -115,13 +115,15 @@ def authorize():
 
     return response, 200
 
-@app.route('/callback')
+@app.route('/callback', methods=['POST'])
 def callback():
 
+    data = request.get_json()
+
+    import ipdb; ipdb.set_trace()
     response = redirect('http://localhost:4000')
     response.headers.add("Access-Control-Allow-Origin", "*")
 
-    # import ipdb; ipdb.set_trace()
     
     # if request.args.get('error'):
     #     return render_template('index.html', error='Spotify error.')
@@ -145,7 +147,7 @@ def callback():
     # # Redirect to the previous URL or a default URL
     # return redirect(session.get('previous_url', '/'))
 
-    return response
+    # return response
 
 @app.route('/api/v1/get_spotify_token', methods=['POST'])
 def get_spotify_token():
