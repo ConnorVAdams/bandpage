@@ -19,7 +19,7 @@ app = Flask(
     template_folder="../client/build",
 )
 
-cors = CORS(app, resources=[r'/*'])
+CORS(app)
 
 if os.environ.get("ENVIRONMENT") == "production":
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")

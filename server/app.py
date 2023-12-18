@@ -8,7 +8,7 @@ import re
 from urllib.parse import urlencode
 
 from werkzeug.exceptions import NotFound
-from app_setup import app, db, api, jwt, cors
+from app_setup import app, db, api, jwt
 from models.artist import Artist
 from models.fan import Fan
 from models.user import User
@@ -74,6 +74,12 @@ api.add_resource(CheckToken, "/check")
 
 # TODO Further Restrict CORS after OAuth achieved
 
+@app.route('/')
+def index():
+    response = redirect('http://localhost:4000/landing')
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
 @app.route('/authorize')
 def authorize():
     import secrets
@@ -105,12 +111,11 @@ def authorize():
 
 @app.route('/callback')
 def callback():
-    print(request)
 
-    response = redirect('www.google.com')
+    response = redirect('http://localhost:4000')
     response.headers.add("Access-Control-Allow-Origin", "*")
 
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     
     # if request.args.get('error'):
     #     return render_template('index.html', error='Spotify error.')
@@ -134,7 +139,7 @@ def callback():
     # # Redirect to the previous URL or a default URL
     # return redirect(session.get('previous_url', '/'))
 
-    # return response
+    return response
 
 @app.route('/api/v1/get_spotify_token', methods=['POST'])
 def get_spotify_token():
@@ -181,10 +186,6 @@ def user_lookup_callback(_jwt_header, jwt_data):
 def handle_404(error):
     response = {"message": error.description}
     return response, error.code
-
-@app.route('/')
-def index():
-    return '<h1>BandPage</h1>'
 
 # @app.route("/")
 # @app.route("/production-detail/<int:id>")
