@@ -74,8 +74,7 @@ api.add_resource(CheckToken, "/check")
 
 # TODO Further Restrict CORS after OAuth achieved
 
-# @cross_origin(origin=["http://localhost:4000", "http://127.0.0.1:5555", "https://accounts.spotify.com"])
-@app.route('/authorize', methods=['GET'])
+@app.route('/authorize')
 def authorize():
     import secrets
 
@@ -98,9 +97,11 @@ def authorize():
 
     authorization_url = 'https://accounts.spotify.com/authorize?' + urlencode(params)
         
+    response = redirect(authorization_url)
+    response.headers.add("Access-Control-Allow-Origin", "*")
     # import ipdb; ipdb.set_trace()
 
-    return redirect(authorization_url)
+    return response
 
 @app.route('/callback')
 def callback():
@@ -110,27 +111,27 @@ def callback():
 
     import ipdb; ipdb.set_trace()
     
-    if request.args.get('error'):
-        return render_template('index.html', error='Spotify error.')
+    # if request.args.get('error'):
+    #     return render_template('index.html', error='Spotify error.')
 
-    code = request.args.get('code')
+    # code = request.args.get('code')
 
-    # get access token to make requests on behalf of the user
-    payload = get_spotify_token(code)
+    # # get access token to make requests on behalf of the user
+    # payload = get_spotify_token(code)
     
-    if payload is not None:
-        session['token'] = payload[0]
-        session['refresh_token'] = payload[1]
-        session['token_expiration'] = time.time() + payload[2]
-    else:
-        return render_template('index.html', error='Failed to access token.')
+    # if payload is not None:
+    #     session['token'] = payload[0]
+    #     session['refresh_token'] = payload[1]
+    #     session['token_expiration'] = time.time() + payload[2]
+    # else:
+    #     return render_template('index.html', error='Failed to access token.')
 
-    current_user = getUserInformation(session)
-    session['user_id'] = current_user['id']
-    logging.info('new user:' + session['user_id'])
+    # current_user = getUserInformation(session)
+    # session['user_id'] = current_user['id']
+    # logging.info('new user:' + session['user_id'])
 
-    # Redirect to the previous URL or a default URL
-    return redirect(session.get('previous_url', '/'))
+    # # Redirect to the previous URL or a default URL
+    # return redirect(session.get('previous_url', '/'))
 
     return response
 
