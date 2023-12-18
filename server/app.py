@@ -105,6 +105,7 @@ def authorize():
 
 @app.route('/callback')
 def callback():
+    print(request)
 
     response = redirect('www.google.com')
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -133,7 +134,7 @@ def callback():
     # # Redirect to the previous URL or a default URL
     # return redirect(session.get('previous_url', '/'))
 
-    return response
+    # return response
 
 @app.route('/api/v1/get_spotify_token', methods=['POST'])
 def get_spotify_token():

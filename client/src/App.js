@@ -129,7 +129,7 @@ const App = () => {
                     </Route>
 
                     <Route path='/authorize' element={<SpotifyAuth />} />
-                    {/* <Route path='/callback' element={<SpotifyCallback />} /> */}
+                    <Route path='/callback' element={<SpotifyCallback />} />
                     <Route path='/*' element={<NotFound />} />
                 </Routes>
             </AdminProvider>
