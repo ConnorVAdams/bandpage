@@ -16,7 +16,6 @@ from models.fan import Fan
 from models.user import User
 from models.track import Track
 from models.like import Like
-from models.band_member import BandMember
 from models.event import Event
 from routes.artists import Artists
 from routes.artist_by_id import ArtistById

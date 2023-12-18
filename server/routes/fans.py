@@ -18,9 +18,7 @@ class Fans(Resource):
     def post(self):
         try:
             data = request.get_json()
-            # # * Validate the data, if problems arise you'll see ValidationError
             # fan_schema.validate(data)
-            # # * Deserialize the data with load()
             # fan = artist_schema.load(data)
             # TODO Why is load breaking on my schemas but direct instantiation works fine?
             fan = Fan(

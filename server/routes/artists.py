@@ -18,9 +18,7 @@ class Artists(Resource):
     def post(self):
         try:
             data = request.get_json()
-            # # * Validate the data, if problems arise you'll see ValidationError
             # artist_schema.validate(data)
-            # # * Deserialize the data with load()
             # artist = artist_schema.load(data)
             # TODO Why is load breaking on my schemas but direct instantiation works fine?
             artist = Artist(
@@ -33,7 +31,6 @@ class Artists(Resource):
             )
             db.session.add(artist)
             db.session.commit()
-            # # * Serialize the data and package your JSON response
             new_artist = artist_schema.dump(artist)
             return new_artist, 201
         except (ValidationError, ValueError) as e:

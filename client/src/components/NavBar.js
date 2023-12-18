@@ -2,12 +2,10 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaCheckCircle, FaReact, FaUser, FaEdit, FaSignOutAlt, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaSignOutAlt, FaTrash } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-// import { fetchOneArtist } from '../features/artist/artistSlice';
 import { setUser, fetchDeleteUser } from '../features/user/userSlice';
-import { convertDateFormat } from '../utils/helpers';
 import { Button, Image } from 'react-bootstrap'
 import { toast } from 'react-hot-toast'
 import { fetchOneArtist } from '../features/artist/artistSlice'

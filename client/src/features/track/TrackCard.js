@@ -1,4 +1,3 @@
-import { Link, useParams } from 'react-router-dom';
 import { Card, Button, Row, Col } from 'react-bootstrap';
 import { FaPlayCircle } from 'react-icons/fa';
 import { FaCheck, FaTimes, FaTrash, FaPencilAlt } from 'react-icons/fa'
@@ -6,9 +5,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react';
 import { fetchPostLike, fetchDeleteLike } from '../like/likeSlice';
 import { fetchCurrentUser } from '../user/userSlice';
+import { Link } from 'react-router-dom';
 
 const TrackCard = ({ track }) => {
-    const { id, name, audio, artist_name } = track
+    const { id, name, audio, artist_name, artist_id } = track
     const [ likeValues, setLikeValues ] = useState(
         {
             likeable_type: 'track',
@@ -77,6 +77,7 @@ const TrackCard = ({ track }) => {
             </Col>
             <Col>
                 <Card.Title>{name}</Card.Title>
+                <Card.Subtitle as={Link} to={`/artists/${artist_id}`}>{artist_name}</Card.Subtitle>
             </Col>
             <Col className='ml-auto'>
             <Button

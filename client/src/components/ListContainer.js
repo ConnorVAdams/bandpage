@@ -12,7 +12,6 @@ const ListContainer = () => {
     const acct = useSelector(state => state.user.data)
     const user = useSelector(state => state.user.data.artist)
 
-
     const artists = useSelector(state => state.artist.data)
     const artist = useSelector(state => state.artist.current)
     const path = useLocation().pathname
@@ -48,7 +47,7 @@ const ListContainer = () => {
                 )}
                 </>
             )
-        } else if (path.includes('/artists')) {
+        } else if (path.includes('/artists') && artists) {
             return (
                 <>
                     <h1>EXPLORE ARTISTS</h1>
@@ -70,7 +69,7 @@ const ListContainer = () => {
     return (
         <Container fluid>
         <Row>
-            {/* Left 1/3: Search, Sort, Filter Utility Box */}
+            {/* Search, Sort, Filter Utility Box */}
             <Col md={4}>
             <InputGroup className="mb-3">
                 {/* <FormControl
@@ -84,7 +83,7 @@ const ListContainer = () => {
             </InputGroup>
             </Col>
 
-            {/* Right 2/3: Container to Hold List Items */}
+            {/* Container to Hold List Items */}
             <Col md={8}>
             <ListGroup>
                 {cardDisplay}

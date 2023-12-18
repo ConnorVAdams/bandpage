@@ -71,12 +71,11 @@ const EventCard = ({ event }) => {
         }
     };
 
-
     return (
         <Card id={id} className="mb-3">
             <Card.Body>
             <Link to={`/artists/${artist_id}`}>
-                <Card.Title>{artist_name}</Card.Title>
+            <Card.Subtitle as={Link} to={`/artists/${artist_id}`}>{artist_name}</Card.Subtitle>
             </Link>
             <Card.Text>{venue}</Card.Text>
             <Card.Text>Date: {datetime.date}</Card.Text>

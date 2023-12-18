@@ -16,10 +16,6 @@ from models.event import Event
 class Artist(db.Model):
     __tablename__ = 'artists'
 
-    # def __init__(self, name=None, genres=None, bio=None, location=None, img=None):
-    #     print("Arguments in Artist __init__:", name, genres, bio, location, img)
-    #     super().__init__(name=None, genres=None, bio=None, location=None, img=None)
-
     # **************
     # * ATTRIBUTES *
     # **************
@@ -27,7 +23,7 @@ class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     name = db.Column(db.String, unique=True)
-    # TODO serialize genres w/ dumps and loads
+    # TODO serialize genre dicts w/ dumps and loads
     genres = db.Column(db.String)
     bio = db.Column(db.String)
     location = db.Column(db.String)
@@ -35,13 +31,10 @@ class Artist(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    # band_members = db.Relationship('BandMember', back_populates='bands')
-
     # *****************
     # * RELATIONSHIPS *
     # *****************
 
-    # TODO How to make account cascade-delete-able?
     account = db.relationship('User', back_populates='artist', uselist=False)
 
     tracks = db.relationship('Track', back_populates='artist', cascade='all, delete-orphan')

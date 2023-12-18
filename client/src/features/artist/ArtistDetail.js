@@ -1,15 +1,8 @@
-import  { useParams, useHistory } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchOneArtist } from './artistSlice'
+import { useSelector } from 'react-redux'
 import NotFound from '../../components/NotFound'
-import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom'
 import TrackCard from '../track/TrackCard'
 import EventCard from '../event/EventCard'
-import ArtistCard from './ArtistCard'
-import FanCard from '../fan/FanCard'
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 
 const ArtistDetail = () => {
@@ -26,7 +19,9 @@ const ArtistDetail = () => {
             const nextEvent = upcoming_events[0]
 
         return (
+            <div id={id}>
             <Container>
+                
                 <Container>
                     <p>{bio}</p>
                 </Container>
@@ -51,6 +46,7 @@ const ArtistDetail = () => {
                 </Container>
 
             </Container>
+            </div>
 
             )
         }

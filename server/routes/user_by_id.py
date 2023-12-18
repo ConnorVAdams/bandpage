@@ -37,7 +37,7 @@ class UserById(Resource):
     #         db.session.rollback()
     #         abort(400, str(e))
 
-    # @jwt_required()
+    @jwt_required()
     def delete(self, id):
         user = User.query.get_or_404(
             id, description=f"Could not find user with id: {id}"

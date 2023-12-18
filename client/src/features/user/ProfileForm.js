@@ -11,7 +11,6 @@ import { setUser, setUserType } from './userSlice'
 import { fetchPostFan } from '../fan/fanSlice'
 import { useDispatch } from 'react-redux'
 
-
 const ProfileForm = () => {
     const acct = useSelector(state => state.user.data)
     const user = acct.artist || acct.fan
@@ -42,6 +41,9 @@ const ProfileForm = () => {
             user_id: acct.id
         }
     }
+
+    // TODO Yup schema
+
     const formik = useFormik({
         initialValues: initialValues
         ,

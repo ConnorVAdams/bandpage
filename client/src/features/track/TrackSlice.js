@@ -7,8 +7,6 @@ export const createSlice = buildCreateSlice({
 const initialState = {
     data: null,
     // errors: [],
-    // admin: false,
-    current: null,
     // loading: true
 }
 
@@ -98,63 +96,6 @@ const patchArtist = async ({user, values}, asyncThunk) => {
     }
 }
 
-// const patchProduction = async ({id, values}, asyncThunk) => {
-//     console.log("🚀 ~ file: productionSlice.js:67 ~ patchFetchProduction ~ asyncThunk:", asyncThunk)
-//     try {
-//         const respCheckToken = await checkToken()
-        
-//         if (respCheckToken.ok) {
-//             const resp = await fetch(`/productions/${id}`, {
-//                 method: "PATCH",
-//                 headers: {
-//                     'Authorization': `Bearer ${getToken()}`,
-//                     "Content-Type": "application/json"
-//                 },
-//                 body: JSON.stringify(values)
-//             })
-//             const data = await resp.json()
-            
-//             if (resp.ok) {
-//                 return data
-//             } else {
-//                 throw data.message || data.msg
-//             }
-//         } else {
-//             const data = await respCheckToken.json()
-            
-//             throw data.message || data.msg
-//         }
-//     } catch (error) {
-//         return error
-//     }
-// }
-
-// const deleteArtist = async (prod_id, asyncThunk) => {
-//     try {
-//         const respCheckToken = await checkToken()
-        
-//         if (respCheckToken.ok) {
-//             const resp = await fetch(`/artists/${prod_id}`, {
-//                 method: "DELETE",
-//                 headers: {
-//                     'Authorization': `Bearer ${getToken()}`
-//                 }
-//             })
-//             if (resp.ok) { //! 204 NO CONTENT
-//                 return {prod_id}
-//             } else {
-//                 const data = await resp.json()
-//                 throw data.message || data.msg
-//             }
-//         } else {
-//             const data = await respCheckToken.json()
-//             throw data.message || data.msg
-//         }
-//     } catch (error) {
-//         return error
-//     }
-// }
-
 const artistSlice = createSlice({
     name: 'artist',
     initialState,
@@ -164,19 +105,6 @@ const artistSlice = createSlice({
             state.loading = false
             state.errors = []
         }),
-        // setEditMode: create.reducer((state, action) => {
-        //     state.editMode = action.payload
-        //     state.loading = false
-        //     state.errors = []
-        // }),
-        // addError: create.reducer((state, action) => {
-        //     state.errors.push(action.payload)
-        //     state.loading = false
-        // }),
-        // clearErrors: create.reducer((state) => {
-        //     state.errors = []
-        //     state.loading = false
-        // }),
         fetchAllArtists: create.asyncThunk(
             fetchAll,
             {
@@ -260,30 +188,6 @@ const artistSlice = createSlice({
                 },
             }
         ),
-        // fetchDeleteArtist: create.asyncThunk(
-        //     deleteArtist,
-        //     {
-        //         pending: (state) => {
-        //             state.errors = []
-        //             state.loading = true
-        //         },
-        //         rejected: (state, action) => {
-        //             state.loading = false
-        //             state.errors.push(action.payload)
-        //         },
-        //         fulfilled: (state, action) => {
-        //             state.loading = false
-
-        //             if (typeof action.payload === "string") {
-        //                 state.errors.push(action.payload)
-        //             } else {
-        //                 const idx = state.data.findIndex(artist => artist.id === parseInt(action.payload.prod_id))
-        //                 state.data.splice(idx, 1)
-        //                 state.spotlight = null
-        //             }
-        //         },
-        //     }
-        // ),
     }),
     selectors: {
         selectArtists(state){
@@ -296,16 +200,11 @@ const artistSlice = createSlice({
 })
 
 export const {
-    // setProduction,
-    // setEditMode, 
-    // addError, 
-    // clearErrors, 
     fetchAllArtists, 
     fetchOneArtist,
     fetchNewArtist,
     fetchPostArtist, 
     fetchPatchArtist, 
-    // fetchDeleteArtist
 } = artistSlice.actions
 export const { selectArtists, selectErrors } = artistSlice.selectors
 export default artistSlice.reducer

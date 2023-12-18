@@ -9,7 +9,7 @@ const SpotifyAuth = () => {
       if (response.ok) {
         const locationHeader = response.headers.get('location');
         if (locationHeader) {
-          // Redirect the current tab to the Spotify authorization URL
+
           window.location.href = locationHeader;
           return response
         }

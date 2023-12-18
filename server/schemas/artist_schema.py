@@ -9,9 +9,8 @@ from schemas.like_schema import LikeSchema
 
 class ArtistSchema(ma.SQLAlchemySchema):
     # TODO schema level validations
-    # name = fields.Str(required=True, validate=validate.Length(min=1, max=40))
-    tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio', 'likes', 'artist_id'))))
-    upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
+    tracks = fields.List(fields.Nested(TrackSchema(only=('id', 'name', 'audio', 'likes', 'artist_id', 'artist_name'))))
+    upcoming_events = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue', 'artist_id', 'artist_name'))))
     likes = fields.List(fields.Nested(LikeSchema(only=(
                     'id', 
                     'likeable_type', 
@@ -26,7 +25,6 @@ class ArtistSchema(ma.SQLAlchemySchema):
     favorited_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio", 'likes', 'artist_id'))))
     events_attending = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue', 'likes'))))
     events_attended = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
-    #  = fields.TrackSchema(only=('id', 'name', 'audio'))
     class Meta():
         model: Artist
         load_instance = True

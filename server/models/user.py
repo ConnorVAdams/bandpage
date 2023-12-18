@@ -4,12 +4,6 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
-import random
-import re
-
-from models.like import Like
-from models.track import Track
-from models.event import Event
 
 from app_setup import bcrypt
 

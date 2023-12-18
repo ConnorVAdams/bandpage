@@ -15,7 +15,6 @@ from models.artist import Artist
 from models.fan import Fan
 from models.like import Like
 from models.track import Track
-from models.band_member import BandMember
 from models.event import Event
 from models.user import User
 
@@ -140,25 +139,6 @@ def create_events():
     
     return events
 
-# def create_band_members():
-#     band_members = []
-
-#     available_instruments = ['Guitar', 'Bass', 'Keys', 'Vocals', 'Drums', 'Brass', 'Percussion']
-
-#     for i in range(35):
-#         num_instruments = randint(1, 3)
-#         instruments = [choice(available_instruments) for _ in range(num_instruments)]
-        
-#         member = BandMember(
-#             name=fake.name(),
-#             instruments=', '.join(instruments),
-#             bio=fake.text(max_nb_chars=200),
-#             img='https://via.placeholder.com/150',  # Replace with an actual image link
-#         )
-#         band_members.append(member)
-    
-#     return band_members
-
 def create_tracks():
     all_artist_ids = [artist.id for artist in Artist.query.all()]
     url = 'https://audio-hosting-service.com/audio1.mp3'
@@ -221,7 +201,6 @@ if __name__ == '__main__':
         Artist.query.delete()
         Fan.query.delete()
         Event.query.delete()
-        # BandMember.query.delete()
         Track.query.delete()
         Like.query.delete()
 
@@ -232,9 +211,6 @@ if __name__ == '__main__':
 
         events = create_events()
         db.session.add_all(events)
-
-        # band_members = create_band_members()
-        # db.session.add_all(band_members)
 
         tracks = create_tracks()
         db.session.add_all(tracks)

@@ -12,7 +12,6 @@ export const checkToken = async () => {
     try {    
         const resp = await fetch("/check", {
             headers: {
-            //! NOTICE HERE I send the refresh token since I know the access token is expired
                 "Authorization": `Bearer ${getToken()}`
             }
         })
@@ -39,7 +38,6 @@ export const postRefreshToken = async () => {
     const resp = await fetch("/refresh", {
         method: "POST",
         headers: {
-            //! NOTICE HERE I send the refresh token since I know the access token is expired
             "Authorization": `Bearer ${getRefreshToken()}`
         }
     })
@@ -59,7 +57,6 @@ export const checkSpotifyToken = async () => {
     try {    
         const resp = await fetch("/check", {
             headers: {
-            //! NOTICE HERE I send the refresh token since I know the access token is expired
                 "Authorization": `Bearer ${getToken()}`
             }
         })
@@ -82,11 +79,10 @@ export const checkSpotifyToken = async () => {
         return error
     }
 }
-// export const postRefreshToken = async () => {
+// export const postSpotifyRefreshToken = async () => {
 //     const resp = await fetch("/refresh", {
 //         method: "POST",
 //         headers: {
-//             //! NOTICE HERE I send the refresh token since I know the access token is expired
 //             "Authorization": `Bearer ${getRefreshToken()}`
 //         }
 //     })

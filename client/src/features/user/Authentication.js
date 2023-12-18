@@ -5,35 +5,19 @@ import * as yup from "yup"
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { fetchRegister } from './userSlice'
-import { fetchAllArtists, fetchPostArtist } from '../artist/artistSlice';
 import { setToken, setRefreshToken } from '../../utils/main';
 import toast from 'react-hot-toast';
 import { Form, Button, Col, Container, Row } from 'react-bootstrap'
 
 function Authentication() {
-    // Conditionally render either signup or login option 
+
     const [signUp, setSignUp] = useState(false)
     const dispatch = useDispatch() 
     const navigate = useNavigate()
 
-    // const signupSchema = yup.object().shape({
-    //     username: yup.string()
-    //     .required("Please enter a user name"),
-    //     password: yup.string()
-    //     .required('Please enter a user password') 
-    //     .min(8, 'Password is too short - should be 8 chars minimum.')
-    //     .matches(/[a-zA-Z0-9]/, 'Password can only contain Latin letters and numbers.')
-    // })
-    // const loginSchema = yup.object().shape({
-    //     username: yup.string()
-    //     .email("Must be a valid email")
-    //     .required("Please enter a user email"),
-    //     password: yup.string()
-    //     .required('Please enter a user password') 
-    // })
+    // TODO Yup schema
+    
     const url = signUp ? "/signup" : "/login"
-
-
 
     const formik = useFormik({
         initialValues: {

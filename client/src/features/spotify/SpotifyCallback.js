@@ -1,15 +1,10 @@
-import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Card, Button } from 'react-bootstrap'
+import {useState } from "react";
+import { useNavigate} from "react-router-dom";
+import { Button } from 'react-bootstrap'
 
 const SpotifyCallback = () => {
-  const [ tokenInStorage, setTokenInStorage ] = useState(false)
+  // const [ tokenInStorage, setTokenInStorage ] = useState(false)
     const navigate = useNavigate()
-
-    // useEffect(() => {
-    //   if (!tokenInStorage)
-    //   handleCallback()
-    // })
 
     const handleCallback = async () => {
 
@@ -34,8 +29,7 @@ const SpotifyCallback = () => {
         localStorage.setItem('spotify_exp', data.expires_in);
 
         if (response.ok) {
-          // debugger
-          setTokenInStorage(true)
+          // setTokenInStorage(true)
           navigate('/spotify_prof')
         } else {
           console.error('Authorization request failed');
