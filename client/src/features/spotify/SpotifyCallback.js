@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SpotifyCallback = () => {
+  const [ isToken, setIsToken ] = useState(null)
     const navigate = useNavigate()
+
+    // useEffect(() => {
+    //   if (!isToken) {
+
+    //   }
+    // })
 
     const handleCallback = async () => {
 
@@ -11,7 +19,7 @@ const SpotifyCallback = () => {
       // debugger
 
       try {
-        const response = await fetch('/callback', {
+        const response = await fetch('/get_spotify_token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

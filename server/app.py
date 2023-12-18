@@ -119,42 +119,21 @@ def authorize():
 
 @app.route('/callback', methods=['POST'])
 def callback():
-    client_id = app.config['SPOTIFY_CLIENT_ID']
-    client_secret= app.config['SPOTIFY_CLIENT_SECRET']
+    pass
+
     # try:
     #     if request.args.get('error'):
     #         error_message = request.args.get('error_description', 'Spotify error.')
     #         return render_template('index.html', error=error_message)
     #     else:
-    data = request.get_json()
+    # data = request.get_json()
 
     #         if data.get('state') != session.get('state'):
     #             # Handle state error
     #             return render_template('index.html', error='State error.')
     #         else:
-    code = data.get('code')
+    # code = data.get('code')
 
-    token_url = 'https://accounts.spotify.com/api/token'
-    redirect_uri = 'http://localhost:4000/callback'
-    headers = {
-            'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    body = {
-        'code': code,
-        'redirect_uri': redirect_uri,
-        'grant_type': 'authorization_code'
-    }
-
-    post_response = requests.post(token_url,headers=headers,data=body)
-    import ipdb; ipdb.set_trace()
-    
-    
-    if post_response.status_code == 200:
-        pr = post_response.json()
-        return pr['access_token'], pr['refresh_token'], pr['expires_in']
-    
-                # get access token to make requests on behalf of the user
     # payload = get_spotify_token(code)
     # except Exception as e:
     #         abort(500, str(e))
@@ -175,40 +154,44 @@ def callback():
         # response.headers.add("Access-Control-Allow-Origin", "*")
 
         # # Redirect to the previous URL or a default URL
-        # return redirect(session.get('previous_url', '/'))
+    # return redirect(session.get('previous_url', '/'))
 
         # return response
 
 @app.route('/get_spotify_token', methods=['POST'])
-def get_spotify_token(code):
+def get_spotify_token():
 
-    # try:
-    code = request.form.get('code')
+    data = request.get_json()
+    code = data.get('code')
+
+    client_id = app.config['SPOTIFY_CLIENT_ID']
+    client_secret= app.config['SPOTIFY_CLIENT_SECRET']
+
     token_url = 'https://accounts.spotify.com/api/token'
-    authorization = code
     redirect_uri = 'http://localhost:4000/callback'
-    headers = {'Authorization': authorization,
-            'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'}
-    body = {'code': code, 'redirect_uri': redirect_uri,
-            'grant_type': 'authorization_code'}
-    response = requests.post(token_url, headers=headers, data=body)
+    headers = {
+            'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    body = {
+        'code': code,
+        'redirect_uri': redirect_uri,
+        'grant_type': 'authorization_code'
+    }
 
-    import ipdb; ipdb.set_trace()
-    #     if post_response.status_code == 200:
-    #         pr = post_response.json()
-    #         return jsonify({
-    #             'access_token': pr['access_token'],
-    #             'refresh_token': pr['refresh_token'],
-    #             'expires_in': pr['expires_in']
-    #         })
-    #     else:
-    #         logging.error('getToken:' + str(post_response.status_code))
-    #         return jsonify({'error': 'Failed to obtain access token.'}), 500
-
-    # except Exception as e:
-    #     logging.error('getToken:' + str(e))
-    #     return jsonify({'error': 'Internal Server Error.'}), 500
+    post_response = requests.post(token_url,headers=headers,data=body)
+    
+    if post_response.status_code == 200:
+        pr = post_response.json()
+        response_data = {
+            'access_token': pr['access_token'],
+            'refresh_token': pr['refresh_token'],
+            'expires_in': pr['expires_in']
+        }
+        # import ipdb; ipdb.set_trace()
+        return jsonify(response_data)
+    else:
+        return jsonify({'error': 'Failed to obtain access token.'}), 500
 
 
 # # Register a callback function that loads a user from your database whenever
