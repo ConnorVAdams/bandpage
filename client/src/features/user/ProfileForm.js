@@ -59,7 +59,7 @@ const ProfileForm = () => {
             else if (path.includes('artist')) {
                 const action = await dispatch(fetchPostArtist(values))
                 if (typeof action.payload !== "string") {
-                    toast.success(`Loaded ${action.payload}!`)
+                    toast.success(`Loaded new artist!`)
                     dispatch(setUserType(action.payload))
                     navigate('/landing')
                 } else {

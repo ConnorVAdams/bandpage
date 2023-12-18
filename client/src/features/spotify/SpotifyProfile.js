@@ -6,20 +6,24 @@ const SpotifyProfile = () => {
     const [spotProf, setSpotProf ] = useState(null)
 
     useEffect(() => {
+        const token = JSON.parse(localStorage.getItem('spotify_token'))
         fetch('https://api.spotify.com/v1/me', {
             headers: {
-                'Authorization': `Bearer ${localStorage.spotify_token}`
+                'Authorization': `Bearer ${token.access_token}`
             }
-            })
+        })
         .then(resp => resp.json())
         .then(data => setSpotProf(data))
     }, [])
 
     // debugger
 
+
     if (spotProf) {
         return (
-            <Card id={spotProf.id} className="mb-3">
+            <Card 
+            id={spotProf.id} 
+            className="mb-3">
                 <Card.Body>
                 <Container>
                     <h2>{spotProf.id}</h2>

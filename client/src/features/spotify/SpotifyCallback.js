@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Card, Button } from 'react-bootstrap'
 
 const SpotifyCallback = () => {
   const [ tokenInStorage, setTokenInStorage ] = useState(false)
     const navigate = useNavigate()
 
-    useEffect(() => {
-      console.log(localStorage.spotify_token)
-    })
+    // useEffect(() => {
+    //   if (!tokenInStorage)
+    //   handleCallback()
+    // })
 
     const handleCallback = async () => {
 
@@ -27,14 +29,11 @@ const SpotifyCallback = () => {
         });
     
         const data = await response.json();
-        localStorage.setItem('spotify_token', data.access_token);
-        setTokenInStorage(true)
+        localStorage.setItem('spotify_token', JSON.stringify(data));
         if (response.ok) {
-          const locationHeader = response.headers.get('location');
-          if (locationHeader) {
-            // Redirect the current tab to the Spotify authorization URL
-            window.location.href = locationHeader;
-          }
+          // debugger
+          setTokenInStorage(true)
+          navigate('/spotify_prof')
         } else {
           console.error('Authorization request failed');
         }
@@ -43,14 +42,12 @@ const SpotifyCallback = () => {
       }
     };
 
-  const handleSpotifyProf = () => {
-    navigate('/spotify_prof')
-  }
+
 
   return (
     <div>
-      <h2>Successfully loaded Spotify profile.</h2>
-      {localStorage.spotify_token ? <button onClick={handleSpotifyProf}>Prof</button> : <button onClick={handleCallback}>OK</button> }
+      <h2>Successfully linked Spotify.</h2>
+      <Button onClick={handleCallback} > OK </Button>
     </div>
   )
 }
