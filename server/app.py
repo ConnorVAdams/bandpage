@@ -80,6 +80,11 @@ def index():
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
+@app.route('/spotify_api')
+def spotify_api():
+    response = redirect('http://localhost:4000/landing')
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
 @app.route('/authorize')
 def authorize():
     import secrets
