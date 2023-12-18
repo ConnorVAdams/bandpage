@@ -19,7 +19,7 @@ app = Flask(
     template_folder="../client/build",
 )
 
-# CORS(app, origins=["http://127.0.0.1:5555", "https://accounts.spotify.com"])
+cors = CORS(app, resources=[r'/*'])
 
 if os.environ.get("ENVIRONMENT") == "production":
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
@@ -63,6 +63,8 @@ ma = Marshmallow(app)
 #! flask-bcrypt
 bcrypt = Bcrypt(app)
 #! flask-restful setup
-api = Api(app, prefix="/api/v1")
+api = Api(app, 
+        # prefix="/api/v1"
+        )
 #! Flask-jwt-extended setup
 jwt = JWTManager(app)

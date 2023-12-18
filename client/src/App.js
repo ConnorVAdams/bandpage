@@ -46,9 +46,9 @@ const App = () => {
         } else if (user && user.artist && artist) {
             dispatch(setAdmin(true))
         } else if (user) {
-            console.log('fan')
+            // console.log('fan')
         } else {
-            console.log('no user')
+            // console.log('no user')
         }
     }, [artist])
 

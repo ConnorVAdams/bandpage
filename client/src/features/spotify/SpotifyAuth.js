@@ -1,13 +1,13 @@
 const SpotifyAuth = () => {
   const handleAuthorize = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5555/api/v1/authorize', {
+      const response = await fetch('http://127.0.0.1:5555/authorize', {
         method: 'GET',
         // You can include headers or other options if needed
       });
+      console.log(response)
       // Check if the request was successful (status code 200-299)
       if (response.ok) {
-        debugger
         debugger
         // Handle the successful response here
         console.log('Authorization request successful');

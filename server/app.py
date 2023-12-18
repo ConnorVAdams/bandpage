@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 from flask import jsonify, current_app, request, session, redirect, url_for, make_response
 from flask_restful import Resource
+from flask_cors import cross_origin
 import logging
 import time
 import re
 from urllib.parse import urlencode
-from flask_cors import CORS
 
 from werkzeug.exceptions import NotFound
-from app_setup import app, db, api, jwt
+from app_setup import app, db, api, jwt, cors
 from models.artist import Artist
 from models.fan import Fan
 from models.user import User
@@ -73,9 +73,9 @@ api.add_resource(CheckToken, "/check")
 # api.add_resource(GetSpotifyToken, '/get_spotify_token')
 
 # TODO Further Restrict CORS after OAuth achieved
-CORS(app, origins="*", allow_headers="*")
 
-@app.route('/api/v1/authorize', methods=['GET'])
+# @cross_origin(origin=["http://localhost:4000", "http://127.0.0.1:5555", "https://accounts.spotify.com"])
+@app.route('/authorize', methods=['GET'])
 def authorize():
     import secrets
 
@@ -83,31 +83,33 @@ def authorize():
     redirect_uri = 'http://localhost:4000/callback'
     scope = 'user-read-private user-read-email'
 
-    # Generate a random state value and store it in the session
+    # # Generate a random state value and store it in the session
     state = secrets.token_urlsafe(16)
     session['state'] = state
 
-    # Redirect user to Spotify authorization page with the state parameter
-    authorize_url = 'https://accounts.spotify.com/authorize?'
-    parameters = {
-        'response_type': 'code',
-        'client_id': client_id,
-        'scope': scope,
-        'redirect_uri': redirect_uri,
-        'state': state
+    # # Redirect user to Spotify authorization page with the state parameter
+    params = {
+        "response_type": "code",
+        "client_id": client_id,
+        "scope": scope,
+        "redirect_uri": redirect_uri,
+        "state": state
     }
 
-    redirect_url = authorize_url + urlencode(parameters)
-    response = redirect(redirect_url)
+    authorization_url = 'https://accounts.spotify.com/authorize?' + urlencode(params)
+        
     # import ipdb; ipdb.set_trace()
-    # print(response)
-    return response.headers[2][1]
-    
-@app.route('/api/v1/callback')
+
+    return redirect(authorization_url)
+
+@app.route('/callback')
 def callback():
 
-    # import ipdb; ipdb.set_trace()
-    print('e')
+    response = redirect('www.google.com')
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    import ipdb; ipdb.set_trace()
+    
     if request.args.get('error'):
         return render_template('index.html', error='Spotify error.')
 
@@ -116,19 +118,21 @@ def callback():
     # get access token to make requests on behalf of the user
     payload = get_spotify_token(code)
     
-    # if payload is not None:
-    #     session['token'] = payload[0]
-    #     session['refresh_token'] = payload[1]
-    #     session['token_expiration'] = time.time() + payload[2]
-    # else:
-    #     return render_template('index.html', error='Failed to access token.')
+    if payload is not None:
+        session['token'] = payload[0]
+        session['refresh_token'] = payload[1]
+        session['token_expiration'] = time.time() + payload[2]
+    else:
+        return render_template('index.html', error='Failed to access token.')
 
-    # current_user = getUserInformation(session)
-    # session['user_id'] = current_user['id']
-    # logging.info('new user:' + session['user_id'])
+    current_user = getUserInformation(session)
+    session['user_id'] = current_user['id']
+    logging.info('new user:' + session['user_id'])
 
-    # # Redirect to the previous URL or a default URL
-    # return redirect(session.get('previous_url', '/'))
+    # Redirect to the previous URL or a default URL
+    return redirect(session.get('previous_url', '/'))
+
+    return response
 
 @app.route('/api/v1/get_spotify_token', methods=['POST'])
 def get_spotify_token():
