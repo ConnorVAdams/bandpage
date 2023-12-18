@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { Card, Container, Image, Button, Row, Col } from 'react-bootstrap'
+import { getSpotifyToken } from "../../utils/main";
 
 const SpotifyProfile = () => {
     const [spotProf, setSpotProf ] = useState(null)
 
+    const access_token = localStorage.getItem('spotify_access_token')
+
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem('spotify_token'))
         fetch('https://api.spotify.com/v1/me', {
             headers: {
-                'Authorization': `Bearer ${token.access_token}`
+                'Authorization': `Bearer ${access_token}`
             }
         })
         .then(resp => resp.json())

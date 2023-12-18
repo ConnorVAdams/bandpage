@@ -29,7 +29,10 @@ const SpotifyCallback = () => {
         });
     
         const data = await response.json();
-        localStorage.setItem('spotify_token', JSON.stringify(data));
+        localStorage.setItem('spotify_access_token', data.access_token);
+        localStorage.setItem('spotify_refresh_token', data.refresh_token);
+        localStorage.setItem('spotify_exp', data.expires_in);
+
         if (response.ok) {
           // debugger
           setTokenInStorage(true)
