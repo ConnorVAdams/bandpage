@@ -28,8 +28,11 @@ const UserLanding = () => {
             favorited_tracks,
             events_attending,
             user_id,
+            created_at,
             username 
         } = user
+
+        // debugger
 
         return(
         <>

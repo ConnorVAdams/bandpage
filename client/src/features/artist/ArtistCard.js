@@ -31,6 +31,7 @@ const ArtistCard = ({ artist }) => {
         }
     )
     
+    
     useEffect(() => {
         if (artist && user) {
             const newValues = {
@@ -43,30 +44,31 @@ const ArtistCard = ({ artist }) => {
                     ? { 
                         artist_id: user.id,
                         fan_id: null
-                        }
+                    }
                     : {                         
                         artist_id: null ,
                         fan_id: user.id
                     }),
                 };
-            setLikeValues(newValues)
-        }
-    }, [])
-
-    const { 
-        id, 
-        name, 
-        location, 
-        img, 
-        genres, 
-        artist_followers, 
-        fan_followers,
-        followed_artists,
-        created_at
-    } = artist 
-    
-    const inUserFollows = user.followed_artists.some(artist => artist.id === id);
-
+                setLikeValues(newValues)
+            }
+        }, [])
+        
+        const { 
+            id, 
+            name, 
+            location, 
+            img, 
+            genres, 
+            artist_followers, 
+            fan_followers,
+            followed_artists,
+            created_at
+        } = artist 
+        
+        // debugger
+        const inUserFollows = user.followed_artists.some(artist => artist.id === id);
+        
     const num_followers = fan_followers && artist_followers && [...fan_followers, ...artist_followers].length
     const num_followed = followed_artists && followed_artists.length
 
