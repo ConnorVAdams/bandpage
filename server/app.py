@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-from flask import jsonify, current_app, request, session, redirect, url_for, make_response
+from flask import jsonify, abort, current_app, request, session, redirect, url_for, make_response
 from flask_restful import Resource
 from flask_cors import cross_origin
 import logging
 import time
 import re
 from urllib.parse import urlencode
+import requests
+import base64
 
 from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
@@ -117,66 +119,96 @@ def authorize():
 
 @app.route('/callback', methods=['POST'])
 def callback():
-
+    client_id = app.config['SPOTIFY_CLIENT_ID']
+    client_secret= app.config['SPOTIFY_CLIENT_SECRET']
+    # try:
+    #     if request.args.get('error'):
+    #         error_message = request.args.get('error_description', 'Spotify error.')
+    #         return render_template('index.html', error=error_message)
+    #     else:
     data = request.get_json()
 
-    import ipdb; ipdb.set_trace()
-    response = redirect('http://localhost:4000')
-    response.headers.add("Access-Control-Allow-Origin", "*")
+    #         if data.get('state') != session.get('state'):
+    #             # Handle state error
+    #             return render_template('index.html', error='State error.')
+    #         else:
+    code = data.get('code')
 
-    
-    # if request.args.get('error'):
-    #     return render_template('index.html', error='Spotify error.')
-
-    # code = request.args.get('code')
-
-    # # get access token to make requests on behalf of the user
-    # payload = get_spotify_token(code)
-    
-    # if payload is not None:
-    #     session['token'] = payload[0]
-    #     session['refresh_token'] = payload[1]
-    #     session['token_expiration'] = time.time() + payload[2]
-    # else:
-    #     return render_template('index.html', error='Failed to access token.')
-
-    # current_user = getUserInformation(session)
-    # session['user_id'] = current_user['id']
-    # logging.info('new user:' + session['user_id'])
-
-    # # Redirect to the previous URL or a default URL
-    # return redirect(session.get('previous_url', '/'))
-
-    # return response
-
-@app.route('/api/v1/get_spotify_token', methods=['POST'])
-def get_spotify_token():
-    import ipdb; ipdb.set_trace()
-    print('e')
-
-    authorization_code = request.form.get('code')
-    redirect_uri = request.form.get('redirect_uri')
-
-    client_id = app.config['SPOTIFY_CLIENT_ID']
-    client_secret = app.config['SPOTIFY_CLIENT_SECRET']
-
-    # Make a request to Spotify's token endpoint to exchange the code for tokens
-    response = requests.post(
-        'https://accounts.spotify.com/api/token',
-        data={
-            'grant_type': 'authorization_code',
-            'code': authorization_code,
-            'redirect_uri': redirect_uri,
-            'client_id': client_id,
-            'client_secret': client_secret,
+    token_url = 'https://accounts.spotify.com/api/token'
+    redirect_uri = 'http://localhost:4000/callback'
+    headers = {
+            'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
-    )
-    data = response.json()
-    access_token = data.get('access_token')
-    refresh_token = data.get('refresh_token')
-    expires_in = data.get('expires_in')
+    body = {
+        'code': code,
+        'redirect_uri': redirect_uri,
+        'grant_type': 'authorization_code'
+    }
 
-    return jsonify({'access_token': access_token, 'refresh_token': refresh_token, 'expires_in': expires_in})
+    post_response = requests.post(token_url,headers=headers,data=body)
+    import ipdb; ipdb.set_trace()
+    
+    
+    if post_response.status_code == 200:
+        pr = post_response.json()
+        return pr['access_token'], pr['refresh_token'], pr['expires_in']
+    
+                # get access token to make requests on behalf of the user
+    # payload = get_spotify_token(code)
+    # except Exception as e:
+    #         abort(500, str(e))
+        
+        # if payload is not None:
+        #     session['token'] = payload[0]
+        #     session['refresh_token'] = payload[1]
+        #     session['token_expiration'] = time.time() + payload[2]
+        # else:
+        #     return render_template('index.html', error='Failed to access token.')
+
+        # current_user = getUserInformation(session)
+        # session['user_id'] = current_user['id']
+        # logging.info('new user:' + session['user_id'])
+
+
+        # response = redirect('http://localhost:4000')
+        # response.headers.add("Access-Control-Allow-Origin", "*")
+
+        # # Redirect to the previous URL or a default URL
+        # return redirect(session.get('previous_url', '/'))
+
+        # return response
+
+@app.route('/get_spotify_token', methods=['POST'])
+def get_spotify_token(code):
+
+    # try:
+    code = request.form.get('code')
+    token_url = 'https://accounts.spotify.com/api/token'
+    authorization = code
+    redirect_uri = 'http://localhost:4000/callback'
+    headers = {'Authorization': authorization,
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'}
+    body = {'code': code, 'redirect_uri': redirect_uri,
+            'grant_type': 'authorization_code'}
+    response = requests.post(token_url, headers=headers, data=body)
+
+    import ipdb; ipdb.set_trace()
+    #     if post_response.status_code == 200:
+    #         pr = post_response.json()
+    #         return jsonify({
+    #             'access_token': pr['access_token'],
+    #             'refresh_token': pr['refresh_token'],
+    #             'expires_in': pr['expires_in']
+    #         })
+    #     else:
+    #         logging.error('getToken:' + str(post_response.status_code))
+    #         return jsonify({'error': 'Failed to obtain access token.'}), 500
+
+    # except Exception as e:
+    #     logging.error('getToken:' + str(e))
+    #     return jsonify({'error': 'Internal Server Error.'}), 500
 
 
 # # Register a callback function that loads a user from your database whenever
