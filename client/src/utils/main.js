@@ -77,7 +77,7 @@ export const setSpotifyToken = (token) => {
     if (token) {
         localStorage.setItem("spotify_access_token", token.access_token);
         localStorage.setItem("spotify_refresh_token", token.refresh_token);
-        localStorage.setItem("spotify_exp", token.exp);
+        localStorage.setItem("spotify_exp", token.expires_in);
         } else {
         localStorage.removeItem("spotify_access_token");
         localStorage.removeItem("spotify_refresh_token");

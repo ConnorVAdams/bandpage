@@ -60,20 +60,20 @@ const App = () => {
         }
     }, [path])
 
-    // useEffect(() => {
-    //     let intervalId;
+    useEffect(() => {
+        let intervalId;
     
-    //     if (spotify) {
-    //         intervalId = setInterval(() => {
-    //             getSpotifyRefreshToken();
-    //         }, 3000);
-    //     }
+        if (spotify) {
+            intervalId = setInterval(() => {
+                getSpotifyRefreshToken();
+            }, 3000);
+        }
     
-    //     return () => {
-    //         // Clear the interval when the component unmounts or when spotify becomes falsy
-    //         clearInterval(intervalId);
-    //     };
-    // }, [spotify]);
+        return () => {
+            // Clear the interval when the component unmounts or when spotify becomes falsy
+            clearInterval(intervalId);
+        };
+    }, [spotify]);
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)
