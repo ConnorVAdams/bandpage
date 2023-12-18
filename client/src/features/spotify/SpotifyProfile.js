@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { Card, Container, Image, Button, Row, Col } from 'react-bootstrap'
-import { getSpotifyToken } from "../../utils/main";
+import { getSpotifyRefreshToken, getSpotifyToken } from "../../utils/main";
 
 const SpotifyProfile = () => {
     const [spotProf, setSpotProf ] = useState(null)
@@ -31,7 +31,8 @@ const SpotifyProfile = () => {
                     <h4>Country: {spotProf.country}</h4>
                     <h4>Followers: {spotProf.followers.total}</h4>
                 </Container>
-                <Button as={Link} to={`${spotProf.external_urls.spotify}`} target="_blank" rel="noopener noreferrer">My Spotify Profile</Button>
+                <Button as={Link} to={`${spotProf.external_urls.spotify}`} target="_blank" rel="noopener noreferrer">My Spotify Webpage</Button>
+                <Button onClick={() => getSpotifyRefreshToken()}>Refresh</Button>
                 </Card.Body>
             </Card>
         );

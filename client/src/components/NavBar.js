@@ -87,7 +87,7 @@ const NavBar = () => {
                     </NavDropdown>
                     <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
                     {user.genres ? <Nav.Link onClick={handleMyPage}>My Page</Nav.Link> : null}
-                    {localStorage.spotify_token ?
+                    {localStorage.getItem('spotify_access_token') ?
                     <Nav.Link  as={Link} to="/spotify_prof">My Spotify Profile</Nav.Link> : 
                     <Nav.Link  as={Link} to="/authorize">Link Spotify Profile</Nav.Link> }
                     <Button style={{height: '50%', margin: 'auto'}} as={Link} to="/artists">Explore Artists</Button>
