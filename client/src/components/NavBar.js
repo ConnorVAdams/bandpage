@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaEdit, FaSignOutAlt, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaSignOutAlt, FaSpotify, FaTrash } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 // import { fetchOneArtist } from '../features/artist/artistSlice';
@@ -17,6 +17,7 @@ import { setSpotifyToken, setToken } from '../utils/main';
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
     const user = acct ? acct.artist || acct.fan : null
+    const spotify = useSelector(state => state.user.spotify)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -43,10 +44,10 @@ const NavBar = () => {
     
     const handleLogout = () => {
         localStorage.clear()
-        dispatch(setToken(null))
+        setToken(null)
         dispatch(setArtist(null))
         dispatch(setUser(null))
-        dispatch(setSpotifyToken(null))
+        setSpotifyToken(null)
         dispatch(setSpotify(false))
     }
 
@@ -76,6 +77,9 @@ const NavBar = () => {
                     <NavDropdown.Item as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
                         <FaEdit/> Edit Profile
                         </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/authorize">
+                        <FaSpotify/> Link Spotify Profile
+                    </NavDropdown.Item>
                     <NavDropdown.Item onClick={handleDelete}>
                         <FaTrash/> Delete Account
                     </NavDropdown.Item>
@@ -86,9 +90,9 @@ const NavBar = () => {
                     </NavDropdown>
                     <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
                     {user.genres ? <Nav.Link onClick={handleMyPage}>My Page</Nav.Link> : null}
-                    {localStorage.getItem('spotify_access_token') ?
+                    {spotify ?
                     <Nav.Link  as={Link} to="/spotify_prof">My Spotify Profile</Nav.Link> : 
-                    <Nav.Link  as={Link} to="/authorize">Link Spotify Profile</Nav.Link> }
+                    null }
                     <Button style={{height: '50%', margin: 'auto'}} as={Link} to="/artists">Explore Artists</Button>
             </Nav>
             </Navbar.Collapse>
