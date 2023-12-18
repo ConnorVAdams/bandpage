@@ -1,7 +1,7 @@
 from app_setup import db
 
 class BandMember(db.Model):
-    __tablename__ = 'band_members'
+    # __tablename__ = 'band_members'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)

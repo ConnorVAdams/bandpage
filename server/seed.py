@@ -11,14 +11,28 @@ from faker import Faker
 # Local imports
 from app import app
 from app_setup import db
-from models.artist import Artist, artist_to_artist
+from models.artist import Artist
 from models.fan import Fan
 from models.like import Like
 from models.track import Track
 from models.band_member import BandMember
 from models.event import Event
+from models.user import User
+
+# *******************
+# * FAKER FUNCTIONS *
+# *******************
 
 fake = Faker()
+
+username_set = set()
+
+while len(username_set) < 100:
+    username = fake.user_name()
+    username_set.add(username)
+
+unique_usernames = list(username_set)
+
 # *****************************
 # * RANDOM DATETIME FUNCTIONS *
 # *****************************
@@ -44,50 +58,71 @@ def rand_date():
 def create_artists():
     artists = []
 
-    for i in range(11):
+    for i in range(10):
+
         artist = Artist(
             name=fake.word().title(),
             genres=choice(['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Electronic', 'Country', 'R&B', 'Classical']),
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
+            img='https://picsum.photos/id/334/200',
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
+
         artists.append(artist)
+
     return artists
-
-def create_artist_follows():
-    follows = []
-
-    # Fetch all artist IDs from the database
-    all_artist_ids = [artist.id for artist in Artist.query.all()]
-
-    # Create rows for the artist_to_artist table
-    for i in range(31):
-        id_one = choice(all_artist_ids)
-        id_two = choice(all_artist_ids)
-
-        # If the pair doesn't exist in follows or in the database, add it to follows
-        if not (id_one, id_two) in follows:
-            follow = (id_one, id_two)
-            follows.append(follow)
-
-    return follows
 
 def create_fans():
     fans = []
 
     for i in range(50):
+
         fan = Fan(
             name=fake.name().title(),
             bio=fake.text(max_nb_chars=200),
             location=fake.city(),
+            img='https://picsum.photos/id/342/200',
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
+        
         fans.append(fan)
 
     return fans
+
+def create_users(artists, fans):
+    
+    for artist in artists:
+        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
+
+        user = User(
+            username = username
+            )
+        
+        user.password_hash = fake.word()        
+        db.session.add(user)
+        db.session.commit()
+
+        artist.user_id = user.id
+
+    db.session.add_all(artists)
+
+    for fan in fans:
+        username = unique_usernames.pop(randint(0, (len(unique_usernames) - 1)))
+
+        user = User(
+            username = username
+            )
+        
+        user.password_hash = 'password'
+        db.session.add(user)
+        db.session.commit()
+
+        fan.user_id = user.id
+    
+    db.session.add_all(fans)
 
 def create_events():
     events = []
@@ -105,24 +140,24 @@ def create_events():
     
     return events
 
-def create_band_members():
-    band_members = []
+# def create_band_members():
+#     band_members = []
 
-    available_instruments = ['Guitar', 'Bass', 'Keys', 'Vocals', 'Drums', 'Brass', 'Percussion']
+#     available_instruments = ['Guitar', 'Bass', 'Keys', 'Vocals', 'Drums', 'Brass', 'Percussion']
 
-    for i in range(35):
-        num_instruments = randint(1, 3)
-        instruments = [choice(available_instruments) for _ in range(num_instruments)]
+#     for i in range(35):
+#         num_instruments = randint(1, 3)
+#         instruments = [choice(available_instruments) for _ in range(num_instruments)]
         
-        member = BandMember(
-            name=fake.name(),
-            instruments=', '.join(instruments),
-            bio=fake.text(max_nb_chars=200),
-            img='https://via.placeholder.com/150',  # Replace with an actual image link
-        )
-        band_members.append(member)
+#         member = BandMember(
+#             name=fake.name(),
+#             instruments=', '.join(instruments),
+#             bio=fake.text(max_nb_chars=200),
+#             img='https://via.placeholder.com/150',  # Replace with an actual image link
+#         )
+#         band_members.append(member)
     
-    return band_members
+#     return band_members
 
 def create_tracks():
     all_artist_ids = [artist.id for artist in Artist.query.all()]
@@ -130,7 +165,7 @@ def create_tracks():
 
     tracks = []
     
-    for i in range(100):
+    for i in range(60):
         track = Track(
             name=fake.text(max_nb_chars=20),
             audio=url,
@@ -142,69 +177,70 @@ def create_tracks():
 
 def create_likes():
     # Fetch all fan IDs from the database
-    all_fan_ids = [fan.id for fan in Fan.query.all()]
-    all_artist_ids = [artist.id for artist in Artist.query.all()]
-    all_event_ids = [event.id for event in Event.query.all()]
-    all_track_ids = [track.id for track in Track.query.all()]
+    all_fan_ids = {fan.id for fan in Fan.query.all()}
+    all_artist_ids = {artist.id for artist in Artist.query.all()}
+    all_event_ids = {event.id for event in Event.query.all()}
+    all_track_ids = {track.id for track in Track.query.all()}
 
     # Create placeholder relationships
-    likes = []
-    for i in range(50):  # Adjust the number of placeholder likes as needed
-        fan_id = choice(all_fan_ids)
+    likes = set()
+    while len(likes) < 150:  # Adjust the number of placeholder likes as needed
         likeable_type = choice(['artist', 'event', 'track'])
-        
+        liker_type = choice(['artist', 'fan'])
+        artist_id = None
+        fan_id = None
+        if liker_type == 'artist':
+            artist_id = choice(list(all_artist_ids))
+        else:  # if liker_type == 'fan'
+            fan_id = choice(list(all_fan_ids))
+
         if likeable_type == 'artist':
-            likeable_id = choice(all_artist_ids)
+            likeable_id = choice(list(all_artist_ids))
         elif likeable_type == 'event':
-            likeable_id = choice(all_event_ids)
+            likeable_id = choice(list(all_event_ids))
         else:  # likeable_type == 'track'
-            likeable_id = choice(all_track_ids)
-        
-        like = Like(
-            fan_id=fan_id,
-            likeable_id=likeable_id,
-            likeable_type=likeable_type
-        )
-        likes.append(like)
-    
+            likeable_id = choice(list(all_track_ids))
+
+        like_tuple = (likeable_type, likeable_id, liker_type, artist_id, fan_id)
+
+        if like_tuple not in likes:
+            like = Like(
+                likeable_type=likeable_type,
+                likeable_id=likeable_id,
+                liker_type=liker_type,
+                artist_id=artist_id,
+                fan_id=fan_id,
+            )
+            likes.add(like)
     return likes
 
 if __name__ == '__main__':
     with app.app_context():
         print('Clearing db...')
+        User.query.delete()
         Artist.query.delete()
         Fan.query.delete()
         Event.query.delete()
-        BandMember.query.delete()
+        # BandMember.query.delete()
         Track.query.delete()
         Like.query.delete()
-        db.session.query(artist_to_artist).delete()
-        db.session.commit()
 
         print("Starting seed...")
         artists = create_artists()
-        db.session.add_all(artists)
-
         fans = create_fans()
-        db.session.add_all(fans)
+        create_users(artists, fans)
 
         events = create_events()
         db.session.add_all(events)
 
-        band_members = create_band_members()
-        db.session.add_all(band_members)
+        # band_members = create_band_members()
+        # db.session.add_all(band_members)
 
         tracks = create_tracks()
         db.session.add_all(tracks)
 
-        likes = create_likes()
-        db.session.add_all(likes)
+        # likes = create_likes()
+        # db.session.add_all(likes)
 
-        db.session.commit()
-
-        artist_follows = create_artist_follows()
-        for row_data in artist_follows:
-            association_row = artist_to_artist.insert().values(row_data)
-            db.session.execute(association_row)
         db.session.commit()
         

@@ -1,4 +1,7 @@
+from sqlalchemy.orm import validates
+
 from app_setup import db
+from models.like import Like
 
 class Track(db.Model):
     __tablename__ = 'tracks'
@@ -13,17 +16,40 @@ class Track(db.Model):
 
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
 
-    fans_liked = db.relationship(
-        'Fan',
-        secondary='likes',
-        primaryjoin=(
-            "and_(Track.id==Like.likeable_id, "
-            "Like.likeable_type=='track')"
-        ),
-        secondaryjoin=(
-            "and_(Fan.id==Like.fan_id, "
-            "Like.likeable_type=='track')"
-        ),
-        backref=db.backref('liked_tracks', lazy='dynamic'),
-        lazy='dynamic'
-    )
+    artist = db.relationship('Artist', back_populates='tracks')
+
+    @property
+    def artist_name(self):
+        return self.artist.name
+
+    @property
+    def likes(self):
+        likes = Like.query.filter(
+            Like.likeable_type == 'track',
+            Like.likeable_id == self.id
+        ).all()
+        return likes
+
+    @validates('name')
+    def validate_name(self, _, name):
+        if not isinstance(name, str):
+            raise TypeError(
+                'Name must be a string.'
+            )
+        elif len(name) not in range(40):
+            raise ValueError(
+                'Name must be between 1 and 40 characters.'
+            )
+        return name
+    
+    @validates('audio')
+    def validate_audio(self, _, audio):
+        if not isinstance(audio, str):
+            raise TypeError(
+                'Audio must be a string.'
+            )
+        elif len(audio) not in range(100):
+            raise ValueError(
+                'Audio must be between 1 and 40 characters.'
+            )
+        return audio

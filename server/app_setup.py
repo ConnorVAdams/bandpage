@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
@@ -17,6 +18,9 @@ app = Flask(
     static_folder="../client/build",
     template_folder="../client/build",
 )
+
+CORS(app)
+
 if os.environ.get("ENVIRONMENT") == "production":
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
 else:
@@ -27,6 +31,11 @@ app.config["SQLALCHEMY_ECHO"] = True
 app.secret_key = os.environ.get("APP_SECRET")
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
 app.config["PROPAGATE_EXCEPTIONS"] = True
+
+app.config["SPOTIFY_CLIENT_ID"] = os.environ.get("SPOTIFY_CLIENT_ID")
+app.config["SPOTIFY_CLIENT_SECRET"] = os.environ.get("SPOTIFY_CLIENT_SECRET")
+app.config['REDIRECT_URI'] = os.environ.get('REDIRECT_URI')
+
 
 # Here you can globally configure all the ways you want to allow JWTs to
 # be sent to your web application. By default, this will be only headers.
@@ -43,7 +52,7 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=1)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=3)
 
 # the following restricts JWT to https protocols only
-# app.config["JWT_COOKIE_CSRF_PROTECT"] = True
+app.config["JWT_COOKIE_CSRF_PROTECT"] = True
 
 #! flask-sqlalchemy setup
 db = SQLAlchemy(app)
@@ -54,6 +63,8 @@ ma = Marshmallow(app)
 #! flask-bcrypt
 bcrypt = Bcrypt(app)
 #! flask-restful setup
-api = Api(app)  # , prefix="/api/v1")
+api = Api(app, 
+        # prefix="/api/v1"
+        )
 #! Flask-jwt-extended setup
 jwt = JWTManager(app)
