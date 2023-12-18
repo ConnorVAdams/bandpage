@@ -87,6 +87,7 @@ const NavBar = () => {
                     </NavDropdown>
                     <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
                     {user.genres ? <Nav.Link onClick={handleMyPage}>My Page</Nav.Link> : null}
+                    {localStorage.spotify_token ?<Nav.Link  as={Link} to="/spotify_prof">Spotify Profile</Nav.Link> : null }
                     <Button style={{height: '50%', margin: 'auto'}} as={Link} to="/artists">Explore Artists</Button>
             </Nav>
             </Navbar.Collapse>

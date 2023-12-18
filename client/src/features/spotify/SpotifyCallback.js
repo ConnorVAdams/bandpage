@@ -2,21 +2,18 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SpotifyCallback = () => {
-  const [ isToken, setIsToken ] = useState(null)
+  const [ tokenInStorage, setTokenInStorage ] = useState(false)
     const navigate = useNavigate()
 
-    // useEffect(() => {
-    //   if (!isToken) {
-
-    //   }
-    // })
+    useEffect(() => {
+      console.log(localStorage.spotify_token)
+    })
 
     const handleCallback = async () => {
 
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get('code');
       const state = urlParams.get('state');
-      // debugger
 
       try {
         const response = await fetch('/get_spotify_token', {
@@ -30,8 +27,8 @@ const SpotifyCallback = () => {
         });
     
         const data = await response.json();
-        console.log(data);
-    
+        localStorage.setItem('spotify_token', data.access_token);
+        setTokenInStorage(true)
         if (response.ok) {
           const locationHeader = response.headers.get('location');
           if (locationHeader) {
@@ -46,10 +43,15 @@ const SpotifyCallback = () => {
       }
     };
 
+  const handleSpotifyProf = () => {
+    navigate('/spotify_prof')
+  }
+
   return (
     <div>
       <h2>Successfully loaded Spotify profile.</h2>
       <button onClick={handleCallback}>OK</button>
+      {localStorage.spotify_token ? <button onClick={handleSpotifyProf}>Prof</button> : null }
     </div>
   )
 }

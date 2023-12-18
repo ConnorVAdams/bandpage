@@ -28,6 +28,7 @@ import { fetchOneArtist, setArtist } from './features/artist/artistSlice'
 import { AdminProvider } from './features/artist/adminContext'
 import SpotifyCallback from './features/spotify/SpotifyCallback'
 import SpotifyAuth from './features/spotify/SpotifyAuth'
+import SpotifyProfile from './features/spotify/SpotifyProfile'
 
 const App = () => {
     const user = useSelector(state => state.user.data)
@@ -130,6 +131,9 @@ const App = () => {
 
                     <Route path='/authorize' element={<SpotifyAuth />} />
                     <Route path='/callback' element={<SpotifyCallback />} />
+                    <Route path='/spotify_prof' element={<SpotifyProfile />} />
+
+                    
                     <Route path='/*' element={<NotFound />} />
                 </Routes>
             </AdminProvider>
