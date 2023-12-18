@@ -121,7 +121,7 @@ def callback():
     response = redirect('http://localhost:4000')
     response.headers.add("Access-Control-Allow-Origin", "*")
 
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     
     # if request.args.get('error'):
     #     return render_template('index.html', error='Spotify error.')
