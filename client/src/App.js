@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {useEffect} from 'react'
 import NotFound from './components/NotFound'
 import "./App.css"
-import { setToken } from './utils/main'
+import { getSpotifyExp, getSpotifyRefreshToken, getSpotifyToken, setToken } from './utils/main'
 import { Toaster } from 'react-hot-toast';
 import ProfileForm from './features/user/ProfileForm'
 import ArtistDetail from './features/artist/ArtistDetail'
@@ -25,8 +25,9 @@ import SpotifyProfile from './features/spotify/SpotifyProfile'
 const App = () => {
     const user = useSelector(state => state.user.data)
     const artist = useSelector(state => state.artist.current)
-    // const admin = useSelector(state => state.user.admin)
-        
+    const admin = useSelector(state => state.user.admin)
+    const spotify = useSelector(state => state.user.spotify)
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const loc = useLocation()
@@ -51,6 +52,21 @@ const App = () => {
         }
     }, [path])
 
+    useEffect(() => {
+        let intervalId;
+        const timer = getSpotifyExp()
+    
+        if (spotify) {
+            intervalId = setInterval(() => {
+                getSpotifyRefreshToken();
+            }, timer);
+        }
+    
+        return () => {
+            // Clear the interval when the component unmounts or when spotify becomes falsy
+            clearInterval(intervalId);
+        };
+    }, [spotify]);
 
     // const userErrors = useSelector(state => state.user.errors)
     // const artistErrors = useSelector(state => state.artist.errors)

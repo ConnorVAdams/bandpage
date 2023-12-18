@@ -5,12 +5,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaEdit, FaSignOutAlt, FaTrash } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, fetchDeleteUser } from '../features/user/userSlice';
+// import { fetchOneArtist } from '../features/artist/artistSlice';
+import { setUser, fetchDeleteUser, setSpotify } from '../features/user/userSlice';
+import { convertDateFormat } from '../utils/helpers';
 import { Button, Image } from 'react-bootstrap'
 import { toast } from 'react-hot-toast'
 import { fetchOneArtist } from '../features/artist/artistSlice'
 import { setArtist } from '../features/artist/artistSlice';
-import { setToken } from '../utils/main';
+import { setSpotifyToken, setToken } from '../utils/main';
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -41,12 +43,11 @@ const NavBar = () => {
     
     const handleLogout = () => {
         localStorage.clear()
-        // sessionStorage.clear()
-        // dispatch(setToken(null))
+        dispatch(setToken(null))
         dispatch(setArtist(null))
         dispatch(setUser(null))
-        // dispatch({ type: 'RESET_STORE' });
-        // navigate('/')
+        dispatch(setSpotifyToken(null))
+        dispatch(setSpotify(false))
     }
 
     return (
@@ -85,7 +86,7 @@ const NavBar = () => {
                     </NavDropdown>
                     <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
                     {user.genres ? <Nav.Link onClick={handleMyPage}>My Page</Nav.Link> : null}
-                    {localStorage.spotify_token ?
+                    {localStorage.getItem('spotify_access_token') ?
                     <Nav.Link  as={Link} to="/spotify_prof">My Spotify Profile</Nav.Link> : 
                     <Nav.Link  as={Link} to="/authorize">Link Spotify Profile</Nav.Link> }
                     <Button style={{height: '50%', margin: 'auto'}} as={Link} to="/artists">Explore Artists</Button>

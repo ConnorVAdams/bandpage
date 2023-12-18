@@ -116,81 +116,64 @@ def authorize():
 
     return response, 200
 
-@app.route('/callback', methods=['POST'])
-def callback():
-    pass
-
-    # try:
-    #     if request.args.get('error'):
-    #         error_message = request.args.get('error_description', 'Spotify error.')
-    #         return render_template('index.html', error=error_message)
-    #     else:
-    # data = request.get_json()
-
-    #         if data.get('state') != session.get('state'):
-    #             # Handle state error
-    #             return render_template('index.html', error='State error.')
-    #         else:
-    # code = data.get('code')
-
-    # payload = get_spotify_token(code)
-    # except Exception as e:
-    #         abort(500, str(e))
-        
-        # if payload is not None:
-        #     session['token'] = payload[0]
-        #     session['refresh_token'] = payload[1]
-        #     session['token_expiration'] = time.time() + payload[2]
-        # else:
-        #     return render_template('index.html', error='Failed to access token.')
-
-        # current_user = getUserInformation(session)
-        # session['user_id'] = current_user['id']
-        # logging.info('new user:' + session['user_id'])
-
-
-        # response = redirect('http://localhost:4000')
-        # response.headers.add("Access-Control-Allow-Origin", "*")
-
-        # # Redirect to the previous URL or a default URL
-    # return redirect(session.get('previous_url', '/'))
-
-        # return response
-
 @app.route('/get_spotify_token', methods=['POST'])
 def get_spotify_token():
+    client_id = app.config['SPOTIFY_CLIENT_ID']
+    client_secret= app.config['SPOTIFY_CLIENT_SECRET']
+    token_url = 'https://accounts.spotify.com/api/token'
+    redirect_uri = 'http://localhost:4000/callback'
 
     data = request.get_json()
     code = data.get('code')
+    refresh_token = data.get('refresh_token')
 
-    client_id = app.config['SPOTIFY_CLIENT_ID']
-    client_secret= app.config['SPOTIFY_CLIENT_SECRET']
-
-    token_url = 'https://accounts.spotify.com/api/token'
-    redirect_uri = 'http://localhost:4000/callback'
     headers = {
             'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
             'Content-Type': 'application/x-www-form-urlencoded'
+            }
+    body = {}
+
+    if code:
+        body = {
+            'code': code,
+            'redirect_uri': redirect_uri,
+            'grant_type': 'authorization_code'
         }
-    body = {
-        'code': code,
-        'redirect_uri': redirect_uri,
-        'grant_type': 'authorization_code'
-    }
+
+    elif refresh_token:
+
+        body = {
+                "grant_type": "refresh_token",
+                "refresh_token": refresh_token,
+                "client_id": client_id
+            }
 
     post_response = requests.post(token_url,headers=headers,data=body)
-    
+        
+
     if post_response.status_code == 200:
         pr = post_response.json()
-        response_data = {
-            'access_token': pr['access_token'],
-            'refresh_token': pr['refresh_token'],
-            'expires_in': pr['expires_in']
-        }
+        if pr.get('refresh_token'):
+            response_data = {
+                'access_token': pr['access_token'],
+                'refresh_token': pr['refresh_token'],
+                'expires_in': pr['expires_in']
+            }
+        else:
+            response_data = {
+                'access_token': pr['access_token'],
+                'refresh_token': refresh_token,
+                'expires_in': pr['expires_in']
+            }
+    
         # import ipdb; ipdb.set_trace()
+
         return jsonify(response_data)
     else:
-        return jsonify({'error': 'Failed to obtain access token.'}), 500
+        return jsonify({'error': 'Failed to obtain access token.'}), 500    
+
+
+
 
 
 # # Register a callback function that loads a user from your database whenever
