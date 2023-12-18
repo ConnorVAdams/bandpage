@@ -50,8 +50,7 @@ const SpotifyCallback = () => {
   return (
     <div>
       <h2>Successfully loaded Spotify profile.</h2>
-      <button onClick={handleCallback}>OK</button>
-      {localStorage.spotify_token ? <button onClick={handleSpotifyProf}>Prof</button> : null }
+      {localStorage.spotify_token ? <button onClick={handleSpotifyProf}>Prof</button> : <button onClick={handleCallback}>OK</button> }
     </div>
   )
 }
