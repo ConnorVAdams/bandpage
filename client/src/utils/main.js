@@ -70,18 +70,20 @@ export const getSpotifyRefreshToken = async () => {
         const response = await data.json()
         setSpotifyToken(response)
     }
-    export const setSpotifyToken = (token) => {
-        if (token) {
-            // debugger
-            localStorage.setItem("spotify_access_token", token.access_token);
-            localStorage.setItem("spotify_refresh_token", token.refresh_token);
-            localStorage.setItem("spotify_exp", token.exp);
-            } else {
-            localStorage.removeItem("spotify_access_token");
-            localStorage.removeItem("spotify_refresh_token");
-            localStorage.removeItem("spotify_exp");
-            }
-        };
+
+export const getSpotifyExp = () => localStorage.getItem('spotify_exp')
+
+export const setSpotifyToken = (token) => {
+    if (token) {
+        localStorage.setItem("spotify_access_token", token.access_token);
+        localStorage.setItem("spotify_refresh_token", token.refresh_token);
+        localStorage.setItem("spotify_exp", token.exp);
+        } else {
+        localStorage.removeItem("spotify_access_token");
+        localStorage.removeItem("spotify_refresh_token");
+        localStorage.removeItem("spotify_exp");
+        }
+    };
 
 
 

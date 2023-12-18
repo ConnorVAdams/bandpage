@@ -11,7 +11,8 @@ export const createSlice = buildCreateSlice({
 
 const initialState =  {
         data: null,
-        admin: false,
+        // admin: false,
+        spotify: false,
         errors: [],
         loading: true
     }
@@ -105,6 +106,11 @@ const userSlice = createSlice({
         }),
         setUser: create.reducer((state, action) => {
             state.data = action.payload
+            state.loading = false
+            state.errors = []
+        }),
+        setSpotify: create.reducer((state, action) => {
+            state.spotify = action.payload
             state.loading = false
             state.errors = []
         }),
@@ -204,7 +210,8 @@ export const {
     fetchCurrentUser,
     fetchPatchUser,
     fetchDeleteUser,
-    setAdmin
+    setAdmin,
+    setSpotify
 } = userSlice.actions
 
 export const {
