@@ -6,13 +6,13 @@ import { FaCheckCircle, FaReact, FaUser, FaEdit, FaSignOutAlt, FaTrash } from 'r
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 // import { fetchOneArtist } from '../features/artist/artistSlice';
-import { setUser, fetchDeleteUser } from '../features/user/userSlice';
+import { setUser, fetchDeleteUser, setSpotify } from '../features/user/userSlice';
 import { convertDateFormat } from '../utils/helpers';
 import { Button, Image } from 'react-bootstrap'
 import { toast } from 'react-hot-toast'
 import { fetchOneArtist } from '../features/artist/artistSlice'
 import { setArtist } from '../features/artist/artistSlice';
-import { setToken } from '../utils/main';
+import { setSpotifyToken, setToken } from '../utils/main';
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -43,12 +43,11 @@ const NavBar = () => {
     
     const handleLogout = () => {
         localStorage.clear()
-        // sessionStorage.clear()
-        // dispatch(setToken(null))
+        dispatch(setToken(null))
         dispatch(setArtist(null))
         dispatch(setUser(null))
-        // dispatch({ type: 'RESET_STORE' });
-        // navigate('/')
+        dispatch(setSpotifyToken(null))
+        dispatch(setSpotify(false))
     }
 
     return (

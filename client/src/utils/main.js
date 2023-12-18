@@ -69,6 +69,7 @@ export const getSpotifyRefreshToken = async () => {
         const data = await fetch(url, payload)
         const response = await data.json()
         setSpotifyToken(response)
+        // TODO Handle errors for bad response -> spotify === false
     }
 
 export const getSpotifyExp = () => localStorage.getItem('spotify_exp')
