@@ -34,8 +34,8 @@ const SpotifyCallback = () => {
         localStorage.setItem('spotify_exp', data.expires_in);
 
         if (response.ok) {
-          // debugger
-          setTokenInStorage(true)
+          console.log(data.access_token)
+          setTokenInStorage(data.access_token)
           navigate('/spotify_prof')
         } else {
           console.error('Authorization request failed');
@@ -51,6 +51,7 @@ const SpotifyCallback = () => {
     <div>
       <h2>Successfully linked Spotify.</h2>
       <Button onClick={handleCallback} > OK </Button>
+      {/* <SpotifyCallback /> */}
     </div>
   )
 }

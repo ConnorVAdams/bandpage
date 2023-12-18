@@ -128,33 +128,51 @@ def get_spotify_token():
     code = data.get('code')
     refresh_token = data.get('refresh_token')
 
-    if code:
-        headers = {
-                'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
-                'Content-Type': 'application/x-www-form-urlencoded'
+    headers = {
+            'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
+            'Content-Type': 'application/x-www-form-urlencoded'
             }
+    body = {}
+
+    if code:
         body = {
             'code': code,
             'redirect_uri': redirect_uri,
             'grant_type': 'authorization_code'
         }
 
-        post_response = requests.post(token_url,headers=headers,data=body)
+    elif refresh_token:
+
+        body = {
+                "grant_type": "refresh_token",
+                "refresh_token": refresh_token,
+                "client_id": client_id
+            }
+
+    post_response = requests.post(token_url,headers=headers,data=body)
         
-        if post_response.status_code == 200:
-            pr = post_response.json()
+
+    if post_response.status_code == 200:
+        pr = post_response.json()
+        if pr.get('refresh_token'):
             response_data = {
                 'access_token': pr['access_token'],
                 'refresh_token': pr['refresh_token'],
                 'expires_in': pr['expires_in']
             }
-            return jsonify(response_data)
         else:
-            return jsonify({'error': 'Failed to obtain access token.'}), 500
+            response_data = {
+                'access_token': pr['access_token'],
+                'refresh_token': refresh_token,
+                'expires_in': pr['expires_in']
+            }
     
-    elif refresh_token:
+        # import ipdb; ipdb.set_trace()
 
-        import ipdb; ipdb.set_trace()
+        return jsonify(response_data)
+    else:
+        return jsonify({'error': 'Failed to obtain access token.'}), 500    
+
 
 
 

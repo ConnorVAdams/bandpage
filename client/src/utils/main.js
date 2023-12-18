@@ -46,6 +46,8 @@ export const postRefreshToken = async () => {
     return resp 
 }
 
+// * SPOTIFY *
+
 export const getSpotifyToken = () => localStorage.getItem('spotify_access_token')
 export const getSpotifyRefreshToken = async () => {
     const refresh_token = localStorage.getItem('spotify_refresh_token')
@@ -57,25 +59,32 @@ export const getSpotifyRefreshToken = async () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "grant_type": "refresh_token",
+            "grant-type": "refresh_token",
             "refresh_token": `${refresh_token}`,
         })
         }
         
     
 
-    const data = await fetch(url, payload)
-    debugger
-    const response = await data.json()
-}
+        const data = await fetch(url, payload)
+        const response = await data.json()
+        setSpotifyToken(response)
+    }
+    export const setSpotifyToken = (token) => {
+        if (token) {
+            // debugger
+            localStorage.setItem("spotify_access_token", token.access_token);
+            localStorage.setItem("spotify_refresh_token", token.refresh_token);
+            localStorage.setItem("spotify_exp", token.exp);
+            } else {
+            localStorage.removeItem("spotify_access_token");
+            localStorage.removeItem("spotify_refresh_token");
+            localStorage.removeItem("spotify_exp");
+            }
+        };
 
-// export const setSpotifyToken = (token) => {
-//     if (token) {
-//         localStorage.setItem("spotify_access_token", token);
-//         } else {
-//         localStorage.removeItem("spotify_access_token");
-//         }
-//     };
+
+
 // export const setSpotifyRefreshToken = (token) => localStorage.setItem("refresh_token", token)
 // export const checkSpotifyToken = async () => {
 //     try {
