@@ -131,8 +131,8 @@ const App = () => {
 
                     <Route path='/landing/'>
                         <Route index element={<UserLanding />} />
-                        <Route path='tracks' element={<TrackList />} />
-                        <Route path='events' element={<EventList />} />
+                        {/* <Route path='tracks' element={<TrackList />} />
+                        <Route path='events' element={<EventList />} /> */}
                     </Route>
 
                     <Route path='/authorize' element={<SpotifyAuth />} />
