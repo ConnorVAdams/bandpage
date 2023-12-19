@@ -76,7 +76,10 @@ api.add_resource(CheckToken, "/check")
 
 # TODO Further Restrict CORS after OAuth achieved
 
-# @app.route('/')
+@app.route('/')
+def index():
+    return '<h1>StageFinder</h1>'
+    
 # def home():
 #     response = redirect('http://127.0.0.1:5555/callback')
 #     response.headers.add("Access-Control-Allow-Origin", "*")
