@@ -77,13 +77,13 @@ api.add_resource(CheckToken, "/check")
 
 # @app.route('/')
 # def index():
-#     response = redirect('http://127.0.0.1:5555/landing')
+#     response = redirect('http://localhost:4000/landing')
 #     # response.headers.add("Access-Control-Allow-Origin", "*")
 #     return response
 
 @app.route('/spotify_api')
 def spotify_api():
-    response = redirect('http://127.0.0.1:5555/landing')
+    response = redirect('http://localhost:4000/landing')
     # response.headers.add("Access-Control-Allow-Origin", "*")
 
 @app.route('/authorize')
@@ -92,7 +92,7 @@ def authorize():
     import secrets
 
     client_id = app.config['SPOTIFY_CLIENT_ID']
-    redirect_uri = 'http://127.0.0.1:5555/callback'
+    redirect_uri = 'http://localhost:4000/callback'
     scope = 'user-read-private user-read-email'
 
     # # Generate a random state value and store it in the session
@@ -121,7 +121,7 @@ def get_spotify_token():
     client_id = app.config['SPOTIFY_CLIENT_ID']
     client_secret= app.config['SPOTIFY_CLIENT_SECRET']
     token_url = 'https://accounts.spotify.com/api/token'
-    redirect_uri = 'http://127.0.0.1:5555/callback'
+    redirect_uri = 'http://localhost:4000/callback'
 
     data = request.get_json()
     code = data.get('code')

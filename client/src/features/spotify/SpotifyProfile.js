@@ -29,7 +29,6 @@ const SpotifyProfile = () => {
                     <h4>Followers: {spotProf.followers.total}</h4>
                 </Container>
                 <Button as={Link} to={`${spotProf.external_urls.spotify}`} target="_blank" rel="noopener noreferrer">My Spotify Webpage</Button>
-                <Button onClick={() => getSpotifyRefreshToken()}>Refresh</Button>
                 </Card.Body>
             </Card>
         );
