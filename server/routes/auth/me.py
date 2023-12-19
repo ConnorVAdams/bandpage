@@ -8,7 +8,6 @@ from app_setup import db
 
 user_schema = UserSchema(session=db.session)
 
-
 class Me(Resource):
     @jwt_required()
     def get(self):
