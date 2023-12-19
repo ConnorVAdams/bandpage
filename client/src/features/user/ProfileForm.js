@@ -49,7 +49,7 @@ const ProfileForm = () => {
         ,
         // validationSchema: null,
         onSubmit: async (values, event) => {
-            debugger
+            // debugger
             if (path.includes('edit')) {
                 const action = await dispatch(fetchPatchArtist({user, values}))
                 if (typeof action.payload !== "string") {

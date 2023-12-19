@@ -60,7 +60,6 @@ const EventCard = ({ event }) => {
             const resp = await dispatch(fetchDeleteLike(like_id));
             
             if (resp) {
-
                 dispatch(fetchCurrentUser())
             }
         } else {

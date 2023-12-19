@@ -41,6 +41,7 @@ class LikeById(Resource):
 
     @jwt_required()
     def delete(self, id):
+        # import ipdb; ipdb.set_trace()
         like = Like.query.get_or_404(
             id, description=f"Could not find like with id: {id}"
         )

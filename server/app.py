@@ -81,10 +81,8 @@ api.add_resource(CheckToken, "/check")
 #     # response.headers.add("Access-Control-Allow-Origin", "*")
 #     return response
 
-@app.route('/spotify_api')
-def spotify_api():
-    response = redirect('http://localhost:4000/landing')
-    # response.headers.add("Access-Control-Allow-Origin", "*")
+# @app.route('/spotify_api')
+# def spotify_api():
 
 @app.route('/authorize')
 def authorize():
@@ -171,10 +169,6 @@ def get_spotify_token():
         return jsonify(response_data)
     else:
         return jsonify({'error': 'Failed to obtain access token.'}), 500    
-
-
-
-
 
 # # Register a callback function that loads a user from your database whenever
 # # a protected route is accessed. This should return any python object on a

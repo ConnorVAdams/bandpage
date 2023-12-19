@@ -21,15 +21,15 @@ const ArtistCard = ({ artist }) => {
     const acct = useSelector(state => state.user.data)
     const admin = user.id === artist.id
 
-    const [ likeValues, setLikeValues ] = useState(
-        {
-            likeable_type: 'artist',
-            likeable_id: null,
-            liker_type: null,
-            artist_id: null,
-            fan_id: null,
-        }
-    )
+    const defaultValues = {
+        likeable_type: 'artist',
+        likeable_id: null,
+        liker_type: null,
+        artist_id: null,
+        fan_id: null,
+    }
+
+    const [ likeValues, setLikeValues ] = useState(defaultValues)
     
     useEffect(() => {
         if (artist && user) {
@@ -84,24 +84,27 @@ const ArtistCard = ({ artist }) => {
         };
     
         const handleFollow = async () => {
+            // console.log('likeid toplevel', like_id)
+            
             if (inUserFollows) {
-                // const artist_id = user.followed_artists.find(artist => artist.id === id).id
-                const like_id = user.likes.find(like => acct.artist ? like.artist_id : like.fan_id).id
+                const like_id = user.likes.find(like => like.likeable_id === id).id
+                // const artist_id = user.followed_artists.find(artist => artist.id === id).id    
                 const resp = await dispatch(fetchDeleteLike(like_id));
-                
                 if (resp) {
                     dispatch(fetchCurrentUser())
-                    navigate(loc.pathname)
-                    // TODO Where to navigate to refresh current route/page?
                 }
             } else {
                 const resp = await dispatch(fetchPostLike(likeValues));
                 if (resp.payload === 201) {
+                    // console.log('likeid post', like_id)
                     dispatch(fetchCurrentUser())
                 }
             }
+            navigate(path)
         }
     
+
+
         return (
             <Card id={id} className="mb-3">
                 <Card.Body>
@@ -122,63 +125,49 @@ const ArtistCard = ({ artist }) => {
                     <Image
                         src={img}
                         style={{
-                        border: '3px solid black',
-                        width: '150px',
-                        height: '150px',
-                        padding: '0',
+                            border: '3px solid black',
+                            width: '150px',
+                            height: '150px',
+                            padding: '0',
                         }}
                         roundedCircle
                     />
-                    
-                    <>
-                        <div className='text-center'>{num_followers} Followers</div>
-                        <div className='text-center'>{num_followed} Followed</div>
-                        {(!admin && path !== '/artists') || inUserFollows ? (
-                            <Button
-                            variant={inUserFollows ? 'success' : 'danger'}
-                            onClick={handleFollow}
-                            className="mr-2 mb-2"
-                            >
-                                {inUserFollows ? 'Following' : 'Follow'}
-                            </Button>
-                        ) : null}
-                    </> 
 
-                    
                     </Container>
                     <Container style={{ width: '1000%' }}>
                     <h2>{name}</h2>
-                    <Row
-                        style={{
-                        alignItems: 'center',
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        marginBottom: '20px'
-                        }}
-                        
-                    >
-                        <Col xs={2} md={4}>
-                        <h6>
-                            <FaCalendar /> Est. {convertDateFormat(created_at)}
-                        </h6>
-                        </Col>
-                        <Col xs={2} md={4}>
-                        <h6>
-                            <FaMapMarker /> {location}
-                        </h6>
-                        </Col>
-                        <Col xs={2} md={4}>
-                        <h6>
-                            <FaMusic /> {genres}
-                        </h6>
-                        </Col>
-                    </Row>
+                        <Row
+                            style={{
+                                alignItems: 'center',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                marginBottom: '20px'
+                            }}
+                            
+                        >
+                            <Col xs={2} md={4}>
+                            <h6>
+                                <FaCalendar /> Est. {convertDateFormat(created_at)}
+                            </h6>
+                            </Col>
+                            <Col xs={2} md={4}>
+                            <h6>
+                                <FaMapMarker /> {location}
+                            </h6>
+                            </Col>
+                            <Col xs={2} md={4}>
+                            <h6>
+                                <FaMusic /> {genres}
+                            </h6>
+                            </Col>
+                        </Row>
+
                     <Container
                         style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            
                         }}
                     >
                         <Button as={Link} to={`/artists/${id}`}>
@@ -191,6 +180,19 @@ const ArtistCard = ({ artist }) => {
                         Music
                         </Button>
                     </Container>
+                    <>
+                                    <div className='text-center'>{num_followers} Followers</div>
+                                    <div className='text-center'>{num_followed} Followed</div>
+                                    {(!admin && path !== '/artists') || inUserFollows ? (
+                                        <Button
+                                        variant={inUserFollows ? 'success' : 'danger'}
+                                        onClick={handleFollow}
+                                        className="mr-2 mb-2"
+                                        >
+                                            {inUserFollows ? 'Following' : 'Follow'}
+                                        </Button>
+                                    ) : null}
+                                </> 
                     </Container>
                     </Container>
                 </Card.Body>
