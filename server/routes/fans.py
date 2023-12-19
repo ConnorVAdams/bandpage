@@ -3,7 +3,7 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 from flask_jwt_extended import jwt_required
 from app_setup import db
-from bandpage.server.models.fan import Fan
+from models.fan import Fan
 from schemas.fan_schema import FanSchema
 
 fans_schema = FanSchema(many=True, session=db.session)

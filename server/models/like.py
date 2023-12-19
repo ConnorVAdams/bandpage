@@ -41,7 +41,7 @@ class Like(db.Model):
     @property
     def liker(self):
         from models.artist import Artist
-        from bandpage.server.models.fan import Fan
+        from models.fan import Fan
         
         if self.liker_type == 'artist':
             return Artist.query.get(self.artist_id)
