@@ -36,7 +36,6 @@ app.config["SPOTIFY_CLIENT_ID"] = os.environ.get("SPOTIFY_CLIENT_ID")
 app.config["SPOTIFY_CLIENT_SECRET"] = os.environ.get("SPOTIFY_CLIENT_SECRET")
 app.config['REDIRECT_URI'] = os.environ.get('REDIRECT_URI')
 
-
 # Here you can globally configure all the ways you want to allow JWTs to
 # be sent to your web application. By default, this will be only headers.
 app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies", "json", "query_string"]

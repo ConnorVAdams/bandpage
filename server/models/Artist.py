@@ -11,8 +11,6 @@ from models.like import Like
 from models.track import Track
 from models.event import Event
 
-
-
 class Artist(db.Model):
     __tablename__ = 'artists'
 

@@ -75,16 +75,16 @@ api.add_resource(CheckToken, "/check")
 
 # TODO Further Restrict CORS after OAuth achieved
 
-@app.route('/')
-def index():
-    response = redirect('http://localhost:4000/landing')
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+# @app.route('/')
+# def index():
+#     response = redirect('http://127.0.0.1:5555/landing')
+#     # response.headers.add("Access-Control-Allow-Origin", "*")
+#     return response
 
 @app.route('/spotify_api')
 def spotify_api():
-    response = redirect('http://localhost:4000/landing')
-    response.headers.add("Access-Control-Allow-Origin", "*")
+    response = redirect('http://127.0.0.1:5555/landing')
+    # response.headers.add("Access-Control-Allow-Origin", "*")
 
 @app.route('/authorize')
 def authorize():
@@ -92,7 +92,7 @@ def authorize():
     import secrets
 
     client_id = app.config['SPOTIFY_CLIENT_ID']
-    redirect_uri = 'http://localhost:4000/callback'
+    redirect_uri = 'http://127.0.0.1:5555/callback'
     scope = 'user-read-private user-read-email'
 
     # # Generate a random state value and store it in the session
@@ -111,7 +111,7 @@ def authorize():
     authorization_url = 'https://accounts.spotify.com/authorize?' + urlencode(params)
         
     response = redirect(authorization_url)
-    response.headers.add("Access-Control-Allow-Origin", "*")
+    # response.headers.add("Access-Control-Allow-Origin", "*")
     # import ipdb; ipdb.set_trace()
 
     return response, 200
@@ -121,7 +121,7 @@ def get_spotify_token():
     client_id = app.config['SPOTIFY_CLIENT_ID']
     client_secret= app.config['SPOTIFY_CLIENT_SECRET']
     token_url = 'https://accounts.spotify.com/api/token'
-    redirect_uri = 'http://localhost:4000/callback'
+    redirect_uri = 'http://127.0.0.1:5555/callback'
 
     data = request.get_json()
     code = data.get('code')
