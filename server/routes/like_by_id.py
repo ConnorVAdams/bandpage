@@ -4,7 +4,7 @@ from marshmallow import ValidationError
 from flask_jwt_extended import jwt_required
 from app_setup import db
 from models.like import Like
-from bandpage.server.models.f import Fan
+from bandpage.server.models.fan import Fan
 from models.artist import Artist
 from schemas.artist_schema import ArtistSchema
 from schemas.fan_schema import FanSchema
