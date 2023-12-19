@@ -76,11 +76,11 @@ api.add_resource(CheckToken, "/check")
 
 # TODO Further Restrict CORS after OAuth achieved
 
-@app.route('/')
-def home():
-    response = redirect('http://127.0.0.1:5555/callback')
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+# @app.route('/')
+# def home():
+#     response = redirect('http://127.0.0.1:5555/callback')
+#     response.headers.add("Access-Control-Allow-Origin", "*")
+#     return response
 
 @app.route('/spotify_api')
 def spotify_api():
@@ -197,4 +197,7 @@ def index(id=0):
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5555)
+    port = int(os.environ.get("PORT", 5555))
+
+    # Run the Flask app with 0.0.0.0 as the host
+    app.run(host="0.0.0.0", port=port)
