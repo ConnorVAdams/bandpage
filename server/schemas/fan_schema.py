@@ -1,5 +1,5 @@
 from marshmallow import fields, validate
-from models.fan import Fan
+from bandpage.server.models.f import Fan
 from models.artist import Artist
 from app_setup import ma
 from schemas.event_schema import EventSchema

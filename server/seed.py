@@ -12,7 +12,7 @@ from faker import Faker
 from app import app
 from app_setup import db
 from models.artist import Artist
-from models.fan import Fan
+from bandpage.server.models.f import Fan
 from models.like import Like
 from models.track import Track
 from models.event import Event
