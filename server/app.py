@@ -75,10 +75,6 @@ api.add_resource(CheckToken, "/check")
 # api.add_resource(GetSpotifyToken, '/get_spotify_token')
 
 # TODO Further Restrict CORS after OAuth achieved
-
-@app.route('/')
-def index():
-    return '<h1>StageFinder</h1>'
     
 # def home():
 #     response = redirect('http://127.0.0.1:5555/callback')
@@ -196,6 +192,7 @@ def handle_404(error):
     response = {"message": error.description}
     return response, error.code
 
+@app.route('/')
 def index(id=0):
     return render_template("index.html")
 
