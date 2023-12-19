@@ -20,6 +20,7 @@ python-dotenv = "*"
 flask-jwt-extended = "*"
 gunicorn = "*"
 requests = "*"
+psycopg2 = '*'
 
 
 [dev-packages]
