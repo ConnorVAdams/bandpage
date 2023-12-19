@@ -32,7 +32,8 @@ class UserSchema(ma.SQLAlchemySchema):
         'events_attending',
         # 'user_id',
         'username',
-        'created_at'
+        'created_at',
+        'genres'
         )))
     fan = fields.Nested(FanSchema(only=(
         'id', 

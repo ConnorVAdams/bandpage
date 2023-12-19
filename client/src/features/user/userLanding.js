@@ -28,6 +28,8 @@ const UserLanding = () => {
             favorited_tracks,
             events_attending,
             user_id,
+            created_at,
+            genres,
             username 
         } = user
 

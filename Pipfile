@@ -15,9 +15,13 @@ faker = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 flask-bcrypt = "*"
+flask-cors = "==4.0.0"
 python-dotenv = "*"
 flask-jwt-extended = "*"
 gunicorn = "*"
+requests = "*"
+psycopg2 = "*"
+
 
 [dev-packages]
 ipdb = "*"
