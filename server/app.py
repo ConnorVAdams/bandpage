@@ -76,11 +76,11 @@ api.add_resource(CheckToken, "/check")
 
 # TODO Further Restrict CORS after OAuth achieved
 
-# @app.route('/')
-# def home():
-#     response = redirect('http://localhost:4000/landing')
-#     response.headers.add("Access-Control-Allow-Origin", "*")
-#     return response
+@app.route('/')
+def home():
+    response = redirect('http://localhost:4000/landing')
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 @app.route('/spotify_api')
 def spotify_api():
