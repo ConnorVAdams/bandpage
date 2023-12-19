@@ -33,18 +33,34 @@ const App = () => {
     const loc = useLocation()
     const path = useLocation().pathname
     const params = useParams()
-
+    
+    // debugger
     useEffect(() => {
-        if (user && user.artist && artist && user.artist.id === artist.id) {
-            dispatch(setAdmin(false))
-        } else if (user && user.artist && artist) {
-            dispatch(setAdmin(true))
-        } else if (user) {
-            // console.log('fan')
-        } else {
-            // console.log('no user')
+        (async () => {
+        if (!user) {
+            const action = await dispatch(fetchCurrentUser())
+            if (typeof action.payload !== "string") {
+                if (action.payload.flag === "refresh") {
+                    setToken(action.payload.jwt_token)
+                }
+                navigate('/')
+            }
         }
-    }, [artist])
+        })()
+    }, [user])
+
+    
+    // useEffect(() => {
+    //     if (user && user.artist && artist && user.artist.id === artist.id) {
+    //         dispatch(setAdmin(false))
+    //     } else if (user && user.artist && artist) {
+    //         dispatch(setAdmin(true))
+    //     } else if (user) {
+    //         // console.log('fan')
+    //     } else {
+    //         // console.log('no user')
+    //     }
+    // }, [artist])
 
     useEffect(() => {
         if (!/\d/.test(path)) {
@@ -76,19 +92,6 @@ const App = () => {
     //     dispatch(clearArtistErrors(""))
     // }, [dispatch, clearUserErrors, clearProductionErrors]);
 
-    useEffect(() => {
-        (async () => {
-        if (!user) {
-            const action = await dispatch(fetchCurrentUser())
-            if (typeof action.payload !== "string") {
-                if (action.payload.flag === "refresh") {
-                    setToken(action.payload.jwt_token)
-                }
-            navigate('/landing')
-            }
-        }
-        })()
-    }, [user])
 
 
     // useEffect(() => {
