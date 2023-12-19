@@ -21,10 +21,10 @@ app = Flask(
 
 CORS(app)
 
-if os.environ.get("ENVIRONMENT") == "production":
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
-else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///bandpage.db"
+# if os.environ.get("ENVIRONMENT") == "production":
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
+# else:
+#     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///bandpage.db"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True

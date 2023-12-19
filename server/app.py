@@ -191,7 +191,7 @@ def user_lookup_callback(_jwt_header, jwt_data):
 def handle_404(error):
     response = {"message": error.description}
     return response, error.code
-
+# 
 @app.route('/')
 def index(id=0):
     return render_template("index.html")
