@@ -172,10 +172,6 @@ def get_spotify_token():
     else:
         return jsonify({'error': 'Failed to obtain access token.'}), 500    
 
-
-
-
-
 # # Register a callback function that loads a user from your database whenever
 # # a protected route is accessed. This should return any python object on a
 # # successful lookup, or None if the lookup failed for any reason (for example
@@ -185,13 +181,12 @@ def user_lookup_callback(_jwt_header, jwt_data):
     identity = jwt_data["sub"]
     return db.session.get(User, identity)
 
-
 # #! Global Error Handling
 @app.errorhandler(NotFound)  #! 404
 def handle_404(error):
     response = {"message": error.description}
     return response, error.code
-# 
+
 @app.route('/')
 def index(id=0):
     return render_template("index.html")
