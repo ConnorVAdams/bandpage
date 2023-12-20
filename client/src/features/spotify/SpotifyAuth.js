@@ -1,4 +1,6 @@
 
+import toast from 'react-hot-toast'
+
 const SpotifyAuth = () => {
   const handleAuthorize = async () => {
     try {
@@ -14,10 +16,10 @@ const SpotifyAuth = () => {
           return response
         }
       } else {
-        console.error('Authorization request failed');
+        toast('Access request failed.');
       }
     } catch (error) {
-      console.error('Error during authorization request:', error);
+      toast('Error during access:', error);
     }
   };
 

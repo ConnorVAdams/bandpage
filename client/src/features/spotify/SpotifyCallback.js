@@ -5,12 +5,18 @@ import { Card, Button } from 'react-bootstrap'
 import { useDispatch } from "react-redux";
 import { setSpotify } from "../user/userSlice";
 import { getSpotifyRefreshToken } from "../../utils/main";
+import toast from 'react-hot-toast'
 
 const SpotifyCallback = () => {
-  // const [ tokenInStorage, setTokenInStorage ] = useState(false)
-
+    const spotify = useSelector(sta)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    useEffect(() => {
+      if (!token) {
+        handleCallback()
+      }
+    }, [token])
 
     const handleCallback = async () => {
 
@@ -29,32 +35,25 @@ const SpotifyCallback = () => {
             "state": `${state}` }),
         });
     
-        const data = await response.json();
-        localStorage.setItem('spotify_access_token', data.access_token);
-        localStorage.setItem('spotify_refresh_token', data.refresh_token);
-        localStorage.setItem('spotify_exp', data.expires_in);
-
         if (response.ok) {
+          debugger
           dispatch(setSpotify(true))
           // setTokenInStorage(true)
           navigate('/spotify_prof')
         } else {
-          console.error('Authorization request failed');
+          toast('Authorization request failed');
         }
       } catch (error) {
-        console.error('Error during authorization request:', error);
+        toast('Error during authorization request:', error);
       }
     };
 
-
-
-  return (
-    <div>
-      <h2>Successfully linked Spotify.</h2>
-      <Button onClick={handleCallback} > OK </Button>
-      {/* <SpotifyCallback /> */}
-    </div>
-  )
+  // return (
+  //   <div>
+  //     <h2>Successfully linked Spotify.</h2>
+  //     <Button onClick={handleCallback} > OK </Button>
+  //   </div>
+  // )
 }
 
 export default SpotifyCallback

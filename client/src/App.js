@@ -34,7 +34,6 @@ const App = () => {
     const path = useLocation().pathname
     const params = useParams()
     
-    // debugger
     useEffect(() => {
         (async () => {
         if (!user) {

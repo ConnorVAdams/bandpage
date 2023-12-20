@@ -11,8 +11,6 @@ const UserLanding = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    // debugger
-
     const handleEdit = () => {
         navigate('/artists/edit')
     }

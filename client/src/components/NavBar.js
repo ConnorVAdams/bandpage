@@ -58,6 +58,27 @@ const NavBar = () => {
         dispatch(setSpotify(false))
     }
 
+    const handleAuthorize = async () => {
+        try {
+        const response = await fetch('/authorize', {
+            method: 'GET',
+        });
+    
+        if (response.ok) {
+            const locationHeader = response.headers.get('location');
+            if (locationHeader) {
+    
+            window.location.href = locationHeader;
+            return response
+            }
+        } else {
+            toast('Access request failed.');
+        }
+        } catch (error) {
+        toast('Error during access:', error);
+        }
+    };
+
     return (
         <>
         <Navbar bg="light" expand="lg" id='main-nav' style={{ flexDirection: 'column'}}>
@@ -85,7 +106,7 @@ const NavBar = () => {
                     <NavDropdown.Item as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
                         <FaEdit/> Edit Profile
                         </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/authorize">
+                    <NavDropdown.Item onClick={handleAuthorize}>
                         <FaSpotify/> Link Spotify Profile
                     </NavDropdown.Item>
                     <NavDropdown.Item onClick={handleShow}>

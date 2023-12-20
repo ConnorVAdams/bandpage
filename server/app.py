@@ -8,6 +8,7 @@ import re
 from urllib.parse import urlencode
 import requests
 import base64
+import secrets
 
 from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
@@ -87,8 +88,6 @@ api.add_resource(CheckToken, "/check")
 @app.route('/authorize')
 def authorize():
 
-    import secrets
-
     client_id = app.config['SPOTIFY_CLIENT_ID']
     redirect_uri = 'http://localhost:4000/callback'
     scope = 'user-read-private user-read-email'
@@ -107,12 +106,14 @@ def authorize():
     }
 
     authorization_url = 'https://accounts.spotify.com/authorize?' + urlencode(params)
-        
-    response = redirect(authorization_url)
-    # response.headers.add("Access-Control-Allow-Origin", "*")
-    # import ipdb; ipdb.set_trace()
 
-    return response, 200
+    try:
+        response = redirect(authorization_url)
+        # response.headers.add("Access-Control-Allow-Origin", "*")
+        return response, 200
+    except Exception as e:
+        abort(400, str(e))
+        
 
 @app.route('/get_spotify_token', methods=['POST'])
 def get_spotify_token():
@@ -147,7 +148,6 @@ def get_spotify_token():
             }
 
     post_response = requests.post(token_url,headers=headers,data=body)
-        
 
     if post_response.status_code == 200:
         pr = post_response.json()
@@ -163,8 +163,6 @@ def get_spotify_token():
                 'refresh_token': refresh_token,
                 'expires_in': pr['expires_in']
             }
-    
-        # import ipdb; ipdb.set_trace()
 
         return jsonify(response_data)
     else:
