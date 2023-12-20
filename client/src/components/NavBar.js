@@ -2,15 +2,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/modal'
+import Image from 'react-bootstrap/Image'
 import { FaEdit, FaSignOutAlt, FaSpotify, FaTrash } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, fetchDeleteUser, setSpotify } from '../features/user/userSlice';
-import { Button, Image } from 'react-bootstrap'
 import { toast } from 'react-hot-toast'
 import { fetchOneArtist } from '../features/artist/artistSlice'
 import { setArtist } from '../features/artist/artistSlice';
 import { setSpotifyToken, setToken } from '../utils/main';
+import { useState } from 'react';
 
 const NavBar = () => {
     const acct = useSelector(state => state.user.data)
@@ -19,6 +22,11 @@ const NavBar = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleMyPage = async () => {
         if (user) {
@@ -38,6 +46,7 @@ const NavBar = () => {
 
     const handleDelete = async () => {
         dispatch(fetchDeleteUser(acct.id))
+        setShow(false)
     }
     
     const handleLogout = () => {
@@ -49,9 +58,8 @@ const NavBar = () => {
         dispatch(setSpotify(false))
     }
 
-    // debugger
-
     return (
+        <>
         <Navbar bg="light" expand="lg" id='main-nav' style={{ flexDirection: 'column'}}>
             <Navbar.Brand>
                 <img
@@ -80,7 +88,7 @@ const NavBar = () => {
                     <NavDropdown.Item as={Link} to="/authorize">
                         <FaSpotify/> Link Spotify Profile
                     </NavDropdown.Item>
-                    <NavDropdown.Item onClick={handleDelete}>
+                    <NavDropdown.Item onClick={handleShow}>
                         <FaTrash/> Delete Account
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
@@ -101,6 +109,22 @@ const NavBar = () => {
             null}
             </Container>
     </Navbar>
+
+    <Modal show={show} onHide={handleClose}>
+    <Modal.Header closeButton>
+    <Modal.Title>Delete Account</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>Are you sure you want to delete your account? This cannot be undone!</Modal.Body>
+    <Modal.Footer>
+    <Button variant="primary" onClick={handleDelete}>
+        Delete
+    </Button>
+    <Button variant="secondary" onClick={handleClose}>
+        Cancel
+    </Button>
+    </Modal.Footer>
+    </Modal>
+    </>
     );
 
     }

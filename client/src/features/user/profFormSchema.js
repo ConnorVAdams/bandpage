@@ -10,14 +10,14 @@ const profFormSchema = () => {
         genres: yup
         .string()
         .max(50, 'Genres must be between 1 and 40 characters.')
-        .required(),
+        .required("Please enter genre(s)."),
         bio: yup
         .string()
         .max(200, 'Bio must be between 1 and 200 characters.'),
         location: yup
         .string()
         .max(50, 'Genres must be between 1 and 40 characters.')
-        .required(),
+        .required("Please enter a location."),
         img: yup
         .string()
         .matches(
