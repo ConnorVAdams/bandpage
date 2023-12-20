@@ -51,14 +51,14 @@ class Like(db.Model):
             return None
 
     # TODO Why does this validation break on the seed file?
-    # @validates('likeable_type')
-    # def validate_likeable_type(self, _, likeable_type):
-    #     if likeable_type not in ['artist', 'fan']:
-    #         raise ValueError('Invalid likeable_type')
-    #     return likeable_type
+    @validates('likeable_type')
+    def validate_likeable_type(self, _, likeable_type):
+        if likeable_type not in ['artist', 'fan']:
+            raise ValueError('Invalid likeable_type')
+        return likeable_type
     
-    # @validates('liker_type')
-    # def validate_liker_type(self, _, liker_type):
-    #     if liker_type not in ['artist', 'track', 'event']:
-    #         raise ValueError('Invalid liker_type')
-    #     return liker_type
+    @validates('liker_type')
+    def validate_liker_type(self, _, liker_type):
+        if liker_type not in ['artist', 'track', 'event']:
+            raise ValueError('Invalid liker_type')
+        return liker_type

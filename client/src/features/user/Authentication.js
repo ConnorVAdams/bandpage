@@ -1,31 +1,30 @@
 import React, {useState} from 'react'
-import styled from "styled-components";
 import { useFormik } from 'formik'
-import * as yup from "yup"
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { fetchRegister } from './userSlice'
 import { setToken, setRefreshToken } from '../../utils/main';
 import toast from 'react-hot-toast';
 import { Form, Button, Col, Container, Row } from 'react-bootstrap'
+import { signUpSchema, loginSchema } from './authFormSchema'
+
 
 function Authentication() {
 
     const [signUp, setSignUp] = useState(false)
     const dispatch = useDispatch() 
     const navigate = useNavigate()
-
-    // TODO Yup schema
     
     const url = signUp ? "/signup" : "/login"
+    const [passwordReqs, setPasswordReqs ] = useState(false)
 
     const formik = useFormik({
         initialValues: {
-            username:'',
-            password:'',
-            userType:'',
+            username: '',
+            password: '',
+            userType: '',
         },
-        // validationSchema: signUp ? signupSchema : loginSchema,
+        validationSchema: signUp ? signUpSchema : loginSchema,
         onSubmit: async (values, event) => {
             const action = await dispatch(fetchRegister({url, values}))
             if (typeof action.payload !== "string") {
@@ -42,6 +41,8 @@ function Authentication() {
                 let error_msg = ''
                 if (action.payload.includes('UNIQUE constraint failed')) {
                     error_msg = "Username already exists. Please choose a different username."
+                } else {
+                    error_msg = 'Username or password incorrect.'
                 }
                 toast.error(error_msg)
             }
@@ -95,6 +96,12 @@ function Authentication() {
                     {formik.errors.password && formik.touched.password ? (
                     <div className="error-message show">{formik.errors.password}</div>
                     ) : null}
+                    {signUp &&
+                    <Form.Text muted>
+                        Password must contain one lowercase letter, one uppercase letter,
+                        one digit, and one special character, and be 8 or more characters.
+                    </Form.Text>
+                    }
                 </Form.Group>
     
                 {signUp && (

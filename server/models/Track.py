@@ -2,15 +2,14 @@ from sqlalchemy.orm import validates
 
 from app_setup import db
 from models.like import Like
+import re
 
 class Track(db.Model):
     __tablename__ = 'tracks'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    # album = db.Column(db.String)
-    # TODO Serialize with dumps and loads and connect to band's /about if possible
-    audio = db.Column(db.String)
+    audio = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -45,11 +44,13 @@ class Track(db.Model):
     @validates('audio')
     def validate_audio(self, _, audio):
         if not isinstance(audio, str):
-            raise TypeError(
-                'Audio must be a string.'
-            )
-        elif len(audio) not in range(100):
-            raise ValueError(
-                'Audio must be between 1 and 40 characters.'
-            )
+            raise TypeError('Audio must be a string.')
+        
+        pattern = re.compile(
+            r'^(http[s]?:\/\/)?'
+            r'(?:(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})'
+            r'(?::\d+)?(?:\/\S*)?$'
+        )
+        if not re.match(pattern, audio):
+            raise ValueError('Invalid audio URL format.')
         return audio

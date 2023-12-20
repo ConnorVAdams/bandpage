@@ -19,8 +19,8 @@ class Artist(db.Model):
     # **************
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    name = db.Column(db.String, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
     # TODO serialize genre dicts w/ dumps and loads
     genres = db.Column(db.String)
     bio = db.Column(db.String)
