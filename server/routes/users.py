@@ -5,6 +5,8 @@ from flask_jwt_extended import jwt_required
 from app_setup import db
 from models.user import User
 from schemas.user_schema import UserSchema
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import NoResultFound
 
 users_schema = UserSchema(many=True, session=db.session)
 user_schema = UserSchema(session=db.session)
@@ -23,8 +25,7 @@ class Users(Resource):
             db.session.add(user)
             db.session.commit()
             serialized_user = user_schema.dump(user)
-            print(serialized_user)
             return serialized_user, 201
-        except (ValidationError, ValueError) as e:
+        except Exception as e:
             db.session.rollback()
             abort(400, str(e))

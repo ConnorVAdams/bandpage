@@ -112,54 +112,52 @@ class Fan(db.Model):
     # * VALIDATIONS *
     # ***************
 
-    # @validates('name')
-    # def validate_name(self, _, name):
-    #     if not isinstance(name, str):
-    #         raise TypeError(
-    #             'Name must be a string.'
-    #         )
-    #     elif len(name) not in range(40):
-    #         raise ValueError(
-    #             'Name must be between 1 and 40 characters.'
-    #         )
-    #     return name
-    
-    # @validates('bio')
-    # def validate_bio(self, _, bio):
-    #     if not isinstance(bio, str):
-    #         raise TypeError(
-    #             'Bio must be a string.'
-    #         )
-    #     elif len(bio) not in range(400):
-    #         raise ValueError(
-    #             'Bio must be between 1 and 40 characters.'
-    #         )
-    #     return bio
+    @validates('name')
+    def validate_name(self, _, name):
+        if not isinstance(name, str):
+            raise TypeError(
+                'Name must be a string.'
+            )
+        elif len(name) not in range(40):
+            raise ValueError(
+                'Name must be between 1 and 40 characters.'
+            )
+        return name
 
-    # @validates('location')
-    # def validate_location(self, _, location):
-    #     if not isinstance(location, str):
-    #         raise TypeError(
-    #             'Location must be a string.'
-    #         )
-    #     elif len(location) not in range(30):
-    #         raise ValueError(
-    #             'Location must be between 1 and 40 characters.'
-    #         )
-    #     return location
+    @validates('bio')
+    def validate_bio(self, _, bio):
+        if not isinstance(bio, str):
+            raise TypeError(
+                'Bio must be a string.'
+            )
+        elif len(bio) not in range(400):
+            raise ValueError(
+                'Bio must be between 1 and 40 characters.'
+            )
+        return bio
+
+    @validates('location')
+    def validate_location(self, _, location):
+        if not isinstance(location, str):
+            raise TypeError(
+                'Location must be a string.'
+            )
+        elif len(location) not in range(30):
+            raise ValueError(
+                'Location must be between 1 and 40 characters.'
+            )
+        return location
     
-    # @validates('img')
-    # def validate_img(self, _, img):
-    #     if not isinstance(img, str):
-    #         raise TypeError('Image URL must be a string.')
+    @validates('img')
+    def validate_img(self, _, img):
+        if not isinstance(img, str):
+            raise TypeError('Image URL must be a string.')
         
-    #     pattern = re.compile(
-    #         r'^(http[s]?:\/\/)?'
-    #         r'(?:(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})'
-    #         r'(?::\d+)?(?:\/\S*)?$'
-    #     )
-
-    #     if not re.match(pattern, img):
-    #         raise ValueError('Invalid image URL format.')
-
-    #     return img
+        pattern = re.compile(
+            r'^(http[s]?:\/\/)?'
+            r'(?:(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})'
+            r'(?::\d+)?(?:\/\S*)?$'
+        )
+        if not re.match(pattern, img):
+            raise ValueError('Invalid image URL format.')
+        return img

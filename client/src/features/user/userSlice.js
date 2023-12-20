@@ -157,7 +157,6 @@ const userSlice = createSlice({
                     if (typeof action.payload === "string") {
                         state.errors.push(action.payload)
                     } else {
-                        // debugger
                         state.data = action.payload.user
                     }
                 },

@@ -39,7 +39,11 @@ function Authentication() {
                 }
 
             } else {
-                toast.error(action.payload)
+                let error_msg = ''
+                if (action.payload.includes('UNIQUE constraint failed')) {
+                    error_msg = "Username already exists. Please choose a different username."
+                }
+                toast.error(error_msg)
             }
         }
     })
