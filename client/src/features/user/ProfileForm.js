@@ -49,8 +49,8 @@ const ProfileForm = () => {
         ,
         // validationSchema: null,
         onSubmit: async (values, event) => {
-            // debugger
             if (path.includes('edit')) {
+                // debugger
                 const action = await dispatch(fetchPatchArtist({user, values}))
                 if (typeof action.payload !== "string") {
                     dispatch(fetchCurrentUser())
@@ -61,6 +61,7 @@ const ProfileForm = () => {
             }
 
             else if (path.includes('artist')) {
+                // debugger
                 const action = await dispatch(fetchPostArtist(values))
                 if (typeof action.payload !== "string") {
                     toast.success(`Loaded new artist!`)
@@ -71,6 +72,7 @@ const ProfileForm = () => {
                 }
 
             } else { // if (path.includes('fan'))
+                // debugger
                 const action = await dispatch(fetchPostFan(values))
                 if (typeof action.payload !== "string") {
                     dispatch(setUserType(action.payload))

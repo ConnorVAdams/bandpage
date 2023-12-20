@@ -11,7 +11,6 @@ from schemas.user_schema import UserSchema
 
 user_schema = UserSchema(session=db.session)
 
-
 class Refresh(Resource):
     @jwt_required(refresh=True)
     def post(self):

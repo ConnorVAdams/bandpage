@@ -5,17 +5,19 @@ import ArtistCard from '../artist/ArtistCard'
 import TrackCard from '../track/TrackCard'
 import FanCard from '../fan/FanCard'
 
-const UserLanding = () => {
+const UserLanding = () => {    
     const acct = useSelector(state => state.user.data)
     const user = acct.artist || acct.fan
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    // debugger
+
     const handleEdit = () => {
         navigate('/artists/edit')
     }
 
-    if (acct) {
+    if (user) {
 
         const { 
             name, 
@@ -70,7 +72,7 @@ const UserLanding = () => {
                 </div>
             </div>
         </>
-    )} else if (user.fan) {
+    )} else if (user && user.fan) {
         const { 
             fan: {
                 name,

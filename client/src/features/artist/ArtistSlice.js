@@ -9,10 +9,10 @@ export const createSlice = buildCreateSlice({
 
 const initialState = {
     data: null,
-    // errors: [],
+    errors: [],
     // admin: false,
     current: null,
-    // loading: true
+    loading: true
 }
 
 const fetchAll = async (asyncThunk) => {
@@ -57,6 +57,7 @@ const postArtist = async (values, asyncThunk) => {
             })
             const data = await resp.json()          
             if (resp.ok) {
+                debugger
                 return data
             } else {
                 throw data.message || data.msg
