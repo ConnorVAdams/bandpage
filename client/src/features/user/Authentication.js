@@ -16,7 +16,6 @@ function Authentication() {
     const navigate = useNavigate()
     
     const url = signUp ? "/signup" : "/login"
-    const [passwordReqs, setPasswordReqs ] = useState(false)
 
     const formik = useFormik({
         initialValues: {
@@ -83,7 +82,7 @@ function Authentication() {
                     <div className="error-message show">{formik.errors.username}</div>
                     ) : null}
                 </Form.Group>
-    
+
                 <Form.Group controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
@@ -107,7 +106,7 @@ function Authentication() {
                 {signUp && (
                     <>
                     <Form.Group controlId="userType">
-                        <Form.Label>User Type:</Form.Label>
+                        <Form.Label>User Type</Form.Label>
                         <Form.Control
                         as="select"
                         name="userType"

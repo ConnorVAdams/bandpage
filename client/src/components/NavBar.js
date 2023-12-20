@@ -5,9 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaEdit, FaSignOutAlt, FaSpotify, FaTrash } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-// import { fetchOneArtist } from '../features/artist/artistSlice';
 import { setUser, fetchDeleteUser, setSpotify } from '../features/user/userSlice';
-import { convertDateFormat } from '../utils/helpers';
 import { Button, Image } from 'react-bootstrap'
 import { toast } from 'react-hot-toast'
 import { fetchOneArtist } from '../features/artist/artistSlice'
@@ -50,6 +48,8 @@ const NavBar = () => {
         setSpotifyToken(null)
         dispatch(setSpotify(false))
     }
+
+    // debugger
 
     return (
         <Navbar bg="light" expand="lg" id='main-nav' style={{ flexDirection: 'column'}}>

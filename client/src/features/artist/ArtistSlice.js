@@ -57,7 +57,6 @@ const postArtist = async (values, asyncThunk) => {
             })
             const data = await resp.json()          
             if (resp.ok) {
-                debugger
                 return data
             } else {
                 throw data.message || data.msg

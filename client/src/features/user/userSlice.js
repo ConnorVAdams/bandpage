@@ -91,10 +91,12 @@ const userSlice = createSlice({
     reducers: (create) => ({
         setUserType: create.reducer((state, action) => {
             if (action.payload.genres) {
+                debugger
                 state.data.artist = action.payload
                 state.loading = false
                 state.errors = []
             } else {
+                debugger
                 state.data.fan = action.payload
                 state.loading = false
                 state.errors = []

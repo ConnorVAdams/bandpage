@@ -10,6 +10,7 @@ import { fetchPostArtist, fetchPatchArtist } from '../artist/artistSlice'
 import { fetchCurrentUser, setUser, setUserType } from './userSlice'
 import { fetchPostFan } from '../fan/fanSlice'
 import { useDispatch } from 'react-redux'
+import profFormSchema from './profFormSchema'
 
 const ProfileForm = () => {
     const acct = useSelector(state => state.user.data)
@@ -42,15 +43,12 @@ const ProfileForm = () => {
         }
     }
 
-    // TODO Yup schema
-
     const formik = useFormik({
         initialValues: initialValues
         ,
-        // validationSchema: null,
+        validationSchema: profFormSchema,
         onSubmit: async (values, event) => {
             if (path.includes('edit')) {
-                // debugger
                 const action = await dispatch(fetchPatchArtist({user, values}))
                 if (typeof action.payload !== "string") {
                     dispatch(fetchCurrentUser())
@@ -61,7 +59,6 @@ const ProfileForm = () => {
             }
 
             else if (path.includes('artist')) {
-                // debugger
                 const action = await dispatch(fetchPostArtist(values))
                 if (typeof action.payload !== "string") {
                     toast.success(`Loaded new artist!`)
@@ -72,7 +69,6 @@ const ProfileForm = () => {
                 }
 
             } else { // if (path.includes('fan'))
-                // debugger
                 const action = await dispatch(fetchPostFan(values))
                 if (typeof action.payload !== "string") {
                     dispatch(setUserType(action.payload))
