@@ -7,7 +7,6 @@ from datetime import datetime
 
 from app_setup import bcrypt
 
-
 class User(db.Model):
     __tablename__ = 'users'
 

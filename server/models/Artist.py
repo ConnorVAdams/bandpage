@@ -5,7 +5,6 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from random import sample
 from datetime import datetime
-import re
 
 from models.like import Like
 from models.track import Track
@@ -52,20 +51,6 @@ class Artist(db.Model):
     @property
     def username(self):
         return self.account.username
-    
-    # TODO How to make this property private? Is it a circular import issue?
-    # @property
-    # def account(self):
-    #     return self._account
-    
-    # @account.setter
-    # def account(self, new_acct):
-    #     if not isinstance(new_acct, User):
-    #         raise TypeError(
-    #             'Account must point to an existing user account.'
-    #         )
-    #     else:
-    #         self._account = new_acct
     
     @property
     def likeables(self):
