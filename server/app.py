@@ -228,12 +228,39 @@ def my_spotify_prof():
         }
 
         response = requests.get(url, headers=headers)
-        import ipdb; ipdb.set_trace()
 
     # Check if the request was successful (status code 200)
         if response.status_code == 200:
             data = response.json()  # Parse the JSON response
+        
+            return jsonify({'response': data, 'ok': True}), 200
+        
+        else:
+            return jsonify({'ok': False}), response.status_code
+    
+@app.route('/my_top_artists')
+def my_spotify_prof():
+    url = 'https://api.spotify.com/v1/me'
+    print(session.get("access_token"))
 
+    refresh_rq = refresh_spotify()
+
+    if refresh_rq:
+
+        headers = {
+            'Authorization': f'Bearer {session.get("spotify_access_token")}'
+        }
+
+        response = requests.get(url, headers=headers)
+
+    # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            data = response.json()  # Parse the JSON response
+        
+            return jsonify({'response': data, 'ok': True}), 200
+        
+        else:
+            return jsonify({'ok': False}), response.status_code
 
 # # Register a callback function that loads a user from your database whenever
 # # a protected route is accessed. This should return any python object on a

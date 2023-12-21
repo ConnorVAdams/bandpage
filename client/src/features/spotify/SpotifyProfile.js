@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
 import { Card, Container, Image, Button, Row, Col } from 'react-bootstrap'
 import { getSpotifyRefreshToken, getSpotifyToken } from "../../utils/main";
+import { useSelector } from "react-redux";
 
 const SpotifyProfile = () => {
-    const [spotProf, setSpotProf ] = useState(null)
+    const spotify = useSelector(state => state.user.spotify)
+    const [ spotProf, setSpotProf ] = useState(null)
 
     const fetchProf = async () => {
-        const response = fetch('/my_spotify_prof')
-        const data = await (await response).json()
-        debugger
-        if (response.ok) {
-            debugger
-        } else {
-            debugger
+        try {
+            const response = await fetch('/my_spotify_prof');
+            const data = await response.json();
+    
+            if (response.ok) {
+                console.log(data);
+                setSpotProf(data.response);
+            } else {
+                console.log('Failed to fetch user data.');
+            }
+        } catch (error) {
+            console.error('Error occurred:', error);
+            // Handle errors or show error message as needed
         }
-    }
+    };
     
     useEffect(() => {
         fetchProf()
