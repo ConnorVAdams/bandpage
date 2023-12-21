@@ -11,6 +11,7 @@ import ArtistDetail from './features/artist/ArtistDetail'
 import ArtistWrapper from './features/artist/ArtistWrapper'
 import EventList from './features/event/EventList'
 import TrackList from './features/track/TrackList'
+import { Row, Col } from 'react-bootstrap'
 import NavBar from './components/NavBar'
 import Authentication from './features/user/Authentication'
 import { fetchCurrentUser, setAdmin } from './features/user/userSlice'
@@ -117,8 +118,17 @@ const App = () => {
 
     return (
         <>
+        
+        <div>
             <Toaster />
+            <Row className="justify-content-center" >
+        <Col className="mt-5" style={{ backgroundColor: "#788585", backgroundImage: 'url("https://i.imgur.com/njwdaAr.png")', backgroundSize: 'cover', backgroundPosition: 'center center', minHeight: '100vh' }}>
+            <Row className="justify-content-center mt-5 invisible">
+            </Row>
+        </Col>
+    </Row>
                 <NavBar />
+    </div>
                 <Routes>
 
                     <Route path='/artists/'>

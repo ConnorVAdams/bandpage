@@ -58,14 +58,16 @@ function Authentication() {
     }
 
     return (
+        <>
+        <Container fluid>
         <Container>
-        <Row className="justify-content-center mt-5">
-            <Col md={6} className="bg-dark p-4 rounded shadow">
-                <Container id="title" className="rounded-pill border p-4 text-center text-warning mb-4">
+        <Row className="justify-content-center mt-5 invisible">
+            <Col md={6} className="bg-dark p-4 rounded shadow invisible">
+                <Container id="title" className="visible rounded-pill border p-4 text-center text-warning mb-4" style={{ width: '85%'}}>
                 <h2>Welcome to BandPage</h2>
                 <h4>Please log in or sign up!</h4>
                 </Container>
-                <Col xs={8} className="rounded-pill border p-4 mb-4 mx-8" style={{ paddingLeft: '20px', paddingRight: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
+                <Col xs={8} className="visible rounded-pill border p-4 mb-4 mx-8" style={{ paddingLeft: '20px', paddingRight: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
                 <div className="text-center text-warning px-4 mx-8">
                     <h3>{signUp ? 'Already a member?' : 'Not a member?'}</h3>
                     <div
@@ -76,10 +78,10 @@ function Authentication() {
                     <span className="text-white p-2">{signUp ? 'Log In!' : 'Register now!'}</span>
                     </div>
                 </div>
-                </Col>xs={6}
-                <Container className="rounded-pill border p-4 mb-4">
+                </Col>
+                <Container className="visible rounded-pill border p-4 mb-4">
                 <Form onSubmit={formik.handleSubmit}>
-                    <Row className="justify-content-center">
+                    <Row className="justify-content-center" style={{paddingTop: '25px'}}>
                     <Col xs={12} md={8} className="text-center">
                         <Form.Group controlId="username">
                         <Form.Label className="custom-text">Username</Form.Label>
@@ -135,22 +137,36 @@ function Authentication() {
                                 <div className="text-danger">{formik.errors.userType}</div>
                             ) : null}
                             </Form.Group>
-                            <Button
-                            type="submit"
-                            variant="primary"
-                            className="rounded-pill p-2 shadow"
-                            style={{ cursor: 'pointer', background: '#34ce2c' }}
-                            >
-                            <span className="text-white p-2">Register</span>
-                            </Button>
                         </>
                         )}
+
                     </Col>
                     </Row>
+                    <Col xs={8} className="visible rounded-pill p-4 mb-1 mx-8" style={{ paddingLeft: '20px', paddingRight: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
+                    <div className="text-center text-warning px-4 mx-8">
+                        <div
+                        type='submit'
+                        className="d-inline-block p-2 rounded-pill shadow"
+                        onClick={handleClick}
+                        style={{ cursor: 'pointer', background: '#34ce2c' }}
+                        >
+                        <span className="text-white p-2">{!signUp ? 'Log In' : 'Register'}</span>
+                        </div>
+                    </div>
+                    </Col>
+
+                    {/* <Button
+                        type="submit"
+                        variant="primary"
+                        className="rounded-pill p-2 shadow"
+                        style={{ cursor: 'pointer', background: '#34ce2c'}}
+                    >
+                        {<span className="text-white p-2">{!signUp ? 'Log In' : 'Register'}</span>}
+                    </Button> */}
                 </Form>
                 </Container>
     
-                {!signUp && (
+                {/* {!signUp && (
                 <Container className="text-center">
                     <Button
                     type="submit"
@@ -161,10 +177,12 @@ function Authentication() {
                     <span className="text-white p-2">Log In!</span>
                     </Button>
                 </Container>
-                )}
+                )} */}
             </Col>
             </Row>
         </Container>
+    </Container>
+    </>
     )
 }
 

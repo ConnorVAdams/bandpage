@@ -5,6 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/modal'
 import Image from 'react-bootstrap/Image'
+import { Row, Col } from 'react-bootstrap'
 import { FaEdit, FaSignOutAlt, FaSpotify, FaTrash } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
@@ -79,7 +80,9 @@ const NavBar = () => {
 
     return (
         <>
+
         <Navbar bg="light" expand="lg" id='main-nav' style={{ flexDirection: 'column'}}>
+
             <Navbar.Brand>
                 <img
                 src={process.env.PUBLIC_URL + '/assets/logo.png'}
