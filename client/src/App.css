@@ -1,12 +1,15 @@
-:root {
+/* :root {
   --bg: #282c34;
   --header: #fff;
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
-}
+} */
 
 body {
-  background-color: #788585;
+  background-image: url('https://i.imgur.com/MRMoK0Y.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
 .custom-text {
@@ -15,7 +18,7 @@ body {
 }
 
 #register-switch {
-  width: 80%;
+  width: 50%;
   margin-left: 100%;
   margin-right: 100%;
 }
@@ -84,9 +87,9 @@ Button {
 
 /* Additional styling can be added based on your preferences */
 
-/* Media query for responsiveness (adjust as needed) */
-@media (max-width: 768px) {
+
+/* @media (max-width: 768px) {
   .Col {
-    width: 90%; /* Adjust width for smaller screens */
+    width: 90%; 
   }
-}
+} */

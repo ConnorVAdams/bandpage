@@ -21,6 +21,9 @@ import { useLocation } from 'react-router-dom'
 import { setArtist } from './features/artist/artistSlice'
 import SpotifyCallback from './features/spotify/SpotifyCallback'
 import SpotifyProfile from './features/spotify/SpotifyProfile'
+import { Navbar } from 'react-bootstrap'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 const App = () => {
     const user = useSelector(state => state.user.data)
@@ -111,8 +114,9 @@ const App = () => {
     if(!user) return (
         <>
             <Toaster />
-            <NavBar />
+            <Header />
             <Authentication />
+            <Footer />
         </>
     )
 
@@ -121,14 +125,10 @@ const App = () => {
         
         <div>
             <Toaster />
-            <Row className="justify-content-center" >
-        <Col className="mt-5" style={{ backgroundColor: "#788585", backgroundImage: 'url("https://i.imgur.com/njwdaAr.png")', backgroundSize: 'cover', backgroundPosition: 'center center', minHeight: '100vh' }}>
-            <Row className="justify-content-center mt-5 invisible">
-            </Row>
-        </Col>
-    </Row>
-                <NavBar />
-    </div>
+            <Header />
+            <NavBar />
+            <Footer />
+        </div>
                 <Routes>
 
                     <Route path='/artists/'>
