@@ -5,31 +5,42 @@ import { getSpotifyRefreshToken, getSpotifyToken } from "../../utils/main";
 
 const SpotifyProfile = () => {
     const [spotProf, setSpotProf ] = useState(null)
+
+    const fetchProf = async () => {
+        const response = fetch('/my_spotify_prof')
+        if (response.ok) {
+            debugger
+        } else {
+            debugger
+        }
+    }
+    
     useEffect(() => {
-        fetch('https://api.spotify.com/v1/me', {
-            headers: {
-                'Authorization': `Bearer ${getSpotifyToken()}`
-            }
-        })
-        .then(resp => resp.json())
-        .then(data => setSpotProf(data))
+        fetchProf()
     }, [])
 
     if (spotProf) {
         return (
-            <Card 
-            id={spotProf.id} 
-            className="mb-3">
-                <Card.Body>
-                <Container>
-                    <h2>{spotProf.id}</h2>
-                    <h4> Email: {spotProf.email}</h4>
-                    <h4>Country: {spotProf.country}</h4>
-                    <h4>Followers: {spotProf.followers.total}</h4>
-                </Container>
-                <Button as={Link} to={`${spotProf.external_urls.spotify}`} target="_blank" rel="noopener noreferrer">My Spotify Webpage</Button>
+            <Card className="mt-4 mb-4 p-3 shadow" style={{ maxWidth: '500px', margin: '0 auto', backgroundColor: '#f8f9fa' }}>
+                <Card.Body className="text-center">
+                    <Container>
+                    <h2 className="mb-4" style={{ color: '#1DB954' }}>My Spotify Profile</h2>
+                    <h4><strong>ID:</strong> {spotProf.id}</h4>
+                    <h4><strong>Email:</strong> {spotProf.email}</h4>
+                    <h4><strong>Country:</strong> {spotProf.country}</h4>
+                    <h4><strong>Followers:</strong> {spotProf.followers.total}</h4>
+                    </Container>
+                    <Button
+                    href={spotProf.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4"
+                    style={{ backgroundColor: '#1DB954', borderColor: '#1DB954' }}
+                    >
+                    Visit My Spotify Webpage
+                    </Button>
                 </Card.Body>
-            </Card>
+                </Card>
         );
     }
     };

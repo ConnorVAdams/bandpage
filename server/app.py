@@ -182,7 +182,6 @@ def user_lookup_callback(_jwt_header, jwt_data):
     identity = jwt_data["sub"]
     return db.session.get(User, identity)
 
-
 # #! Global Error Handling
 @app.errorhandler(NotFound)  #! 404
 def handle_404(error):

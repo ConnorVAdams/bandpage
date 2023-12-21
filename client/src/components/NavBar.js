@@ -104,22 +104,24 @@ const NavBar = () => {
                     <NavDropdown.Item as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
                         <FaEdit/> Edit Profile
                         </NavDropdown.Item>
-                    <NavDropdown.Item onClick={handleAuthorize}>
+                    {!spotify ?
+                        <NavDropdown.Item onClick={handleAuthorize}>
                         <FaSpotify/> Link Spotify Profile
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={handleShow}>
-                        <FaTrash/> Delete Account
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={handleLogout}>
-                        <FaSignOutAlt/> Log Out
-                    </NavDropdown.Item>
-                    </NavDropdown>
+                        </NavDropdown.Item>
+                        :
+                        null
+                    }
+                        <NavDropdown.Item onClick={handleShow}>
+                            <FaTrash/> Delete Account
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={handleLogout}>
+                            <FaSignOutAlt/> Log Out
+                        </NavDropdown.Item>
+                        </NavDropdown>
                     <Nav.Link  as={Link} to="/landing">Home</Nav.Link>
                     {user.genres ? <Nav.Link onClick={handleMyPage}>My Page</Nav.Link> : null}
-                    {spotify ?
-                    <Nav.Link  as={Link} to="/spotify_prof">My Spotify Profile</Nav.Link> : 
-                    null }
+                    {spotify && <Nav.Link  as={Link} to="/spotify_prof">My Spotify Page</Nav.Link>}
                     <Button style={{height: '50%', margin: 'auto'}} as={Link} to="/artists">Explore Artists</Button>
             </Nav>
             </Navbar.Collapse>

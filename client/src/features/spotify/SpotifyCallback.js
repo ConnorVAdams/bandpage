@@ -18,11 +18,15 @@ const SpotifyCallback = () => {
       const code = urlParams.get('code');
       const state = urlParams.get('state');
       const response = await fetch('/callback')
-      
+
+      // debugger
       if (response.ok) {
+        // debugger
         dispatch(setSpotify(true))
         toast.success('Spotify authorization successful.')
         navigate('/landing')
+      } else {
+        toast.failure('Spotify authorization failed.')
       }
     }
 
