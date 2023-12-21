@@ -180,8 +180,6 @@ def refresh_spotify():
     now_aware = now.replace(tzinfo=pytz.UTC)
     diff_in_secs = (now_aware - acq_aware).seconds
 
-    diff_in_secs = 1000000000000
-
     if diff_in_secs > exp_in_secs:
 
         client_id = app.config['SPOTIFY_CLIENT_ID']
@@ -229,9 +227,8 @@ def my_spotify_prof():
 
         response = requests.get(url, headers=headers)
 
-    # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            data = response.json()  # Parse the JSON response
+            data = response.json()
         
             return jsonify({'response': data, 'ok': True}), 200
         
@@ -240,7 +237,7 @@ def my_spotify_prof():
     
 @app.route('/my_top_artists')
 def my_spotify_prof():
-    url = 'https://api.spotify.com/v1/me'
+    url = 'https://api.spotify.com/v1/me/top/artists'
     print(session.get("access_token"))
 
     refresh_rq = refresh_spotify()
@@ -253,9 +250,8 @@ def my_spotify_prof():
 
         response = requests.get(url, headers=headers)
 
-    # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            data = response.json()  # Parse the JSON response
+            data = response.json()
         
             return jsonify({'response': data, 'ok': True}), 200
         

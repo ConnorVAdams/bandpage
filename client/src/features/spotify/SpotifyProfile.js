@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 const SpotifyProfile = () => {
     const spotify = useSelector(state => state.user.spotify)
     const [ spotProf, setSpotProf ] = useState(null)
+    const [ Artists, setArtists ] = useState(null)
 
     const fetchProf = async () => {
         try {
@@ -15,19 +16,33 @@ const SpotifyProfile = () => {
             const data = await response.json();
     
             if (response.ok) {
-                console.log(data);
                 setSpotProf(data.response);
             } else {
                 console.log('Failed to fetch user data.');
             }
         } catch (error) {
             console.error('Error occurred:', error);
-            // Handle errors or show error message as needed
+        }
+    };
+
+    const fetchArtists = async () => {
+        try {
+            const response = await fetch('/my_top_artists');
+            const data = await response.json();
+    
+            if (response.ok) {
+                setArtists(data.response);
+            } else {
+                console.log('Failed to fetch user data.');
+            }
+        } catch (error) {
+            console.error('Error occurred:', error);
         }
     };
     
     useEffect(() => {
         fetchProf()
+        fetchArtists()
     }, [])
 
     if (spotProf) {
