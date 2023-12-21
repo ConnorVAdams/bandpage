@@ -11,15 +11,11 @@ const SpotifyCallback = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const loc = useLocation()
 
     const handleAuth = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      const state = urlParams.get('state');
       const response = await fetch('/callback')
 
-      // debugger
+      // The program never steps back into this component until the access tokens are inbound. this line divides those two discrete steps
       if (response.ok) {
         const data = await response.json()
         dispatch(setSpotify(data))

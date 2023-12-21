@@ -19,7 +19,6 @@ import ListContainer from './components/ListContainer'
 import { useLocation } from 'react-router-dom'
 import { setArtist } from './features/artist/artistSlice'
 import SpotifyCallback from './features/spotify/SpotifyCallback'
-import SpotifyAuth from './features/spotify/SpotifyAuth'
 import SpotifyProfile from './features/spotify/SpotifyProfile'
 
 const App = () => {

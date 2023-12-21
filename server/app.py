@@ -163,8 +163,6 @@ def callback():
         session['spotify_refresh_token'] = pr.get('refresh_token')
         session['spotify_exp'] = pr.get('expires_in')
         session['token_acquired'] = datetime.utcnow()
-        print(pr.get('access_token'))
-        print(pr.get('refresh_token'))
 
         return jsonify({'expires_in': pr.get('expires_in')}), 200
     else:
