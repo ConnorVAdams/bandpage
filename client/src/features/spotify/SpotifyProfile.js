@@ -8,6 +8,8 @@ const SpotifyProfile = () => {
 
     const fetchProf = async () => {
         const response = fetch('/my_spotify_prof')
+        const data = await (await response).json()
+        debugger
         if (response.ok) {
             debugger
         } else {

@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom'
-import { clearErrors as clearUserErrors} from './features/user/userSlice'
+import { clearErrors as clearUserErrors, setSpotify} from './features/user/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {useEffect} from 'react'
 import NotFound from './components/NotFound'
@@ -57,11 +57,12 @@ const App = () => {
         }
     }
 
-    useEffect(() => {
-        setTimeout(() => {
-            handleSpotifyRefresh()
-        }, spotify.expires_in)
-    })
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         dispatch(setSpotify(0))
+    //         handleSpotifyRefresh()
+    //     }, spotify.expires_in)
+    // })
     
     // useEffect(() => {
     //     if (user && user.artist && artist && user.artist.id === artist.id) {

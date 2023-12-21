@@ -163,8 +163,8 @@ def callback():
         session['spotify_refresh_token'] = pr.get('refresh_token')
         session['spotify_exp'] = pr.get('expires_in')
         session['token_acquired'] = datetime.utcnow()
-
-        # import ipdb; ipdb.set_trace()
+        print(pr.get('access_token'))
+        print(pr.get('refresh_token'))
 
         return jsonify({'expires_in': pr.get('expires_in')}), 200
     else:
@@ -208,28 +208,31 @@ def refresh_spotify():
             session['spotify_exp'] = response_data.get('expires_in')
             session['token_acquired'] = datetime.utcnow()
 
-            return response_data  # Return the updated tokens or relevant response
+            return 'Token refreshed successfully', 200  # Return the updated tokens or relevant response
         else:
             return 'Failed to refresh Spotify token.', 500 # Handle failed token refresh
     else: # if token is still valid
-        return '', 200
+        return 'Token refreshed successfully', 200
 
 @app.route('/my_spotify_prof')
 def my_spotify_prof():
     url = 'https://api.spotify.com/v1/me'
+    print(session.get("access_token"))
 
     refresh_rq = refresh_spotify()
 
-    headers = {
-        'Authorization': f'Bearer {session.get("access_token")}'
-    }
+    if refresh_rq:
 
-    response = requests.get(url, headers=headers)
+        headers = {
+            'Authorization': f'Bearer {session.get("spotify_access_token")}'
+        }
 
-    # import ipdb; ipdb.set_trace()
+        response = requests.get(url, headers=headers)
+        import ipdb; ipdb.set_trace()
+
     # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        data = response.json()  # Parse the JSON response
+        if response.status_code == 200:
+            data = response.json()  # Parse the JSON response
 
 
 # # Register a callback function that loads a user from your database whenever
