@@ -59,81 +59,109 @@ function Authentication() {
 
     return (
         <Container>
-            <Row className="justify-content-center mt-5">
-            <Col md={6}>
-                <div id="register-switch" className="text-center">
-                <h2>Please Log in or Sign up!</h2>
-                <h3>{signUp ? 'Already a member?' : 'Not a member?'}</h3>
-                <Button variant="link" onClick={handleClick}>
-                    {signUp ? 'Log In!' : 'Register now!'}
-                </Button>
+        <Row className="justify-content-center mt-5">
+            <Col md={6} className="bg-dark p-4 rounded shadow">
+                <Container id="title" className="rounded-pill border p-4 text-center text-warning mb-4">
+                <h2>Welcome to BandPage</h2>
+                <h4>Please log in or sign up!</h4>
+                </Container>
+                <Col xs={8} className="rounded-pill border p-4 mb-4 mx-8" style={{ paddingLeft: '20px', paddingRight: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
+                <div className="text-center text-warning px-4 mx-8">
+                    <h3>{signUp ? 'Already a member?' : 'Not a member?'}</h3>
+                    <div
+                    className="d-inline-block p-2 rounded-pill shadow"
+                    onClick={handleClick}
+                    style={{ cursor: 'pointer', background: '#34ce2c' }}
+                    >
+                    <span className="text-white p-2">{signUp ? 'Log In!' : 'Register now!'}</span>
+                    </div>
                 </div>
+                </Col>xs={6}
+                <Container className="rounded-pill border p-4 mb-4">
                 <Form onSubmit={formik.handleSubmit}>
-                <Form.Group controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                    type="text"
-                    name="username"
-                    value={formik.values.username}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    />
-                    {formik.errors.username && formik.touched.username ? (
-                    <div className="error-message show">{formik.errors.username}</div>
-                    ) : null}
-                </Form.Group>
-
-                <Form.Group controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                    type="password"
-                    name="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    />
-                    {formik.errors.password && formik.touched.password ? (
-                    <div className="error-message show">{formik.errors.password}</div>
-                    ) : null}
-                    {signUp &&
-                    <Form.Text muted>
-                        Password must contain one lowercase letter, one uppercase letter,
-                        one digit, and one special character, and be 8 or more characters.
-                    </Form.Text>
-                    }
-                </Form.Group>
-    
-                {signUp && (
-                    <>
-                    <Form.Group controlId="userType">
-                        <Form.Label>User Type</Form.Label>
+                    <Row className="justify-content-center">
+                    <Col xs={12} md={8} className="text-center">
+                        <Form.Group controlId="username">
+                        <Form.Label className="custom-text">Username</Form.Label>
                         <Form.Control
-                        as="select"
-                        name="userType"
-                        value={formik.values.userType}
-                        onChange={handleUserTypeChange}
-                        onBlur={formik.handleBlur}
-                        >
-                        <option value="">Select</option>
-                        <option value="artist">Artist</option>
-                        <option value="fan">Fan</option>
-                        </Form.Control>
-                        {formik.errors.userType && formik.touched.userType ? (
-                        <div className="error-message show">{formik.errors.userType}</div>
+                            type="text"
+                            name="username"
+                            value={formik.values.username}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className="bg-secondary text-white rounded rounded-pill"
+                        />
+                        {formik.errors.username && formik.touched.username ? (
+                            <div className="text-danger">{formik.errors.username}</div>
                         ) : null}
-                    </Form.Group>
-                    <Button type="submit" variant="primary">
-                        Register
-                    </Button>
-                    </>
-                )}
+                        </Form.Group>
+                        <Form.Group controlId="password">
+                        <Form.Label className="custom-text">Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className="bg-secondary text-white rounded rounded-pill"
+                        />
+                        {formik.errors.password && formik.touched.password ? (
+                            <div className="text-danger">{formik.errors.password}</div>
+                        ) : null}
+                        {signUp && (
+                            <Form.Text muted className="custom-text">
+                            Password must contain one lowercase letter, one uppercase letter, one digit, and one
+                            special character, and be 8 or more characters.
+                            </Form.Text>
+                        )}
+                        </Form.Group>
+                        {signUp && (
+                        <>
+                            <Form.Group controlId="userType">
+                            <Form.Label className="custom-text rounded-pill">User Type</Form.Label>
+                            <Form.Control
+                                as="select"
+                                name="userType"
+                                value={formik.values.userType}
+                                onChange={handleUserTypeChange}
+                                onBlur={formik.handleBlur}
+                                className="bg-secondary text-white rounded"
+                            >
+                                <option value="">Select</option>
+                                <option value="artist">Artist</option>
+                                <option value="fan">Fan</option>
+                            </Form.Control>
+                            {formik.errors.userType && formik.touched.userType ? (
+                                <div className="text-danger">{formik.errors.userType}</div>
+                            ) : null}
+                            </Form.Group>
+                            <Button
+                            type="submit"
+                            variant="primary"
+                            className="rounded-pill p-2 shadow"
+                            style={{ cursor: 'pointer', background: '#34ce2c' }}
+                            >
+                            <span className="text-white p-2">Register</span>
+                            </Button>
+                        </>
+                        )}
+                    </Col>
+                    </Row>
+                </Form>
+                </Container>
     
                 {!signUp && (
-                    <Button type="submit" variant="primary">
-                    Log In!
+                <Container className="text-center">
+                    <Button
+                    type="submit"
+                    variant="primary"
+                    className="rounded-pill p-2 shadow"
+                    style={{ cursor: 'pointer', background: '#34ce2c' }}
+                    >
+                    <span className="text-white p-2">Log In!</span>
                     </Button>
+                </Container>
                 )}
-                </Form>
             </Col>
             </Row>
         </Container>

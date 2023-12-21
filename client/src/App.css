@@ -5,6 +5,21 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+body {
+  background-color: #788585;
+}
+
+.custom-text {
+  color: #ffffff !important; /* Set the text color to white */
+  opacity: 0.65; /* Adjust opacity if necessary */
+}
+
+#register-switch {
+  width: 80%;
+  margin-left: 100%;
+  margin-right: 100%;
+}
+
 /* #user-nav {
   flex-direction: column;
 } */
@@ -16,4 +31,62 @@
 
 h1 {
   text-align: center;
+}
+
+/* Container styling */
+.Container {
+  /* Center the container on the screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+}
+
+/* Form container styling */
+.Col {
+  background-color: #2c2828; /* Use one of the darker grays for the background */
+  padding: 40px;
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+}
+
+/* Text styling */
+h2, h3 {
+  color: #f1f153; /* Yellow for heading text */
+}
+
+/* Input field styling */
+Form.Control {
+  background-color: #788585; /* Use a gray for input background */
+  color: #ffffff; /* White text */
+  border-radius: 8px; /* Slight border-radius */
+  border: none;
+  margin-bottom: 15px;
+  padding: 10px 15px;
+}
+
+/* Button styling */
+Button {
+  background-color: #34ce2c; /* Green for buttons */
+  border-radius: 25px; /* Create pill-shaped buttons */
+  padding: 10px 20px;
+  border: none;
+  color: #ffffff; /* White text */
+  margin-top: 10px;
+}
+
+/* Error message styling */
+.error-message {
+  color: #f52cbf; /* Pink for error messages */
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* Additional styling can be added based on your preferences */
+
+/* Media query for responsiveness (adjust as needed) */
+@media (max-width: 768px) {
+  .Col {
+    width: 90%; /* Adjust width for smaller screens */
+  }
 }
