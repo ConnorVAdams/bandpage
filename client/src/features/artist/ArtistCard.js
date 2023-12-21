@@ -53,18 +53,18 @@ const ArtistCard = ({ artist }) => {
         }
     }, [])
 
-    const { 
-        id, 
-        name, 
-        location, 
-        img, 
-        genres, 
-        artist_followers, 
-        fan_followers,
-        followed_artists,
-        created_at
-    } = artist 
-    
+        const { 
+            id, 
+            name, 
+            location, 
+            img, 
+            genres, 
+            artist_followers, 
+            fan_followers,
+            followed_artists,
+            created_at
+        } = artist 
+
     const inUserFollows = user.followed_artists.some(artist => artist.id === id);
 
     const num_followers = fan_followers && artist_followers && [...fan_followers, ...artist_followers].length

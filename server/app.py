@@ -93,7 +93,7 @@ def authorize():
 
     client_id = app.config['SPOTIFY_CLIENT_ID']
     redirect_uri = 'http://localhost:4000/callback'
-    scope = 'user-read-private user-read-email'
+    scope = 'user-read-private user-read-email user-top-read'
 
     # # Generate a random state value and store it in the session
     state = secrets.token_urlsafe(16)
@@ -215,7 +215,6 @@ def refresh_spotify():
 @app.route('/my_spotify_prof')
 def my_spotify_prof():
     url = 'https://api.spotify.com/v1/me'
-    print(session.get("access_token"))
 
     refresh_rq = refresh_spotify()
 
@@ -236,9 +235,8 @@ def my_spotify_prof():
             return jsonify({'ok': False}), response.status_code
     
 @app.route('/my_top_artists')
-def my_spotify_prof():
+def my_top_artists():
     url = 'https://api.spotify.com/v1/me/top/artists'
-    print(session.get("access_token"))
 
     refresh_rq = refresh_spotify()
 
