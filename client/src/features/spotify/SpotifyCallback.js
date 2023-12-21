@@ -14,36 +14,52 @@ const SpotifyCallback = () => {
 
     const handleCallback = async () => {
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      const state = urlParams.get('state');
-
       try {
-        const response = await fetch('/get_spotify_token', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ 
-            "code": `${code}`, 
-            "state": `${state}` }),
-        });
-    
+        const response = await fetch('/callback')
         if (response.ok) {
           debugger
-          dispatch(setSpotify(true))
-          navigate('/spotify_prof')
         } else {
-            toast('Authorization request failed');
+          debugger
         }
-      } catch (error) {
-        toast('Error during authorization request:', error);
+      } 
+      catch (error) {
+        console.log(error)
       }
-    };
 
-      if (!user.spotify) {
-        handleCallback()
-      }
+    //   const urlParams = new URLSearchParams(window.location.search);
+    //   const code = urlParams.get('code');
+    //   const state = urlParams.get('state');
+
+    //   debugger
+
+    //   try {
+    //     const response = await fetch('/get_spotify_token', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({ 
+    //         "code": `${code}`, 
+    //         "state": `${state}` }),
+    //     });
+    
+    //     if (response.ok) {
+    //       // debugger
+    //       if (!user.spotify) {
+    //         dispatch(setSpotify(true))
+    //       } else {
+    //         navigate('/spotify_prof')
+    //       }
+    //     } else {
+    //       toast('Authorization request failed');
+    //     }
+    //   } catch (error) {
+    //     toast('Error during authorization request:', error);
+    //   }
+    // };
+    
+    // handleCallback()
+    }
 }
 
 export default SpotifyCallback

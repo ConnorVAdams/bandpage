@@ -5,8 +5,8 @@ import { getSpotifyRefreshToken, getSpotifyToken } from "../../utils/main";
 
 const SpotifyProfile = () => {
     const [spotProf, setSpotProf ] = useState(null)
-
     useEffect(() => {
+        // debugger
         fetch('https://api.spotify.com/v1/me', {
             headers: {
                 'Authorization': `Bearer ${getSpotifyToken()}`

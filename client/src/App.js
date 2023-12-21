@@ -134,7 +134,7 @@ const App = () => {
                         <Route path='events' element={<EventList />} /> */}
                     </Route>
 
-                    <Route path='/authorize' element={<SpotifyAuth />} />
+                    {/* <Route path='/authorize' element={<SpotifyAuth />} /> */}
                     <Route path='/callback' element={<SpotifyCallback />} />
                     <Route path='/spotify_prof' element={<SpotifyProfile />} />
 

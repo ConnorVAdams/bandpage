@@ -5,7 +5,7 @@ from flask_cors import cross_origin
 import logging
 import time
 import re
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse, parse_qs
 import requests
 import base64
 import secrets
@@ -87,6 +87,7 @@ api.add_resource(CheckToken, "/check")
 
 @app.route('/authorize')
 def authorize():
+    # request comes from http://localhost/authorize
 
     client_id = app.config['SPOTIFY_CLIENT_ID']
     redirect_uri = 'http://localhost:4000/callback'
@@ -109,14 +110,12 @@ def authorize():
 
     try:
         response = redirect(authorization_url)
-        # response.headers.add("Access-Control-Allow-Origin", "*")
         return response, 200
     except Exception as e:
         abort(400, str(e))
         
-
-@app.route('/get_spotify_token', methods=['POST'])
-def get_spotify_token():
+@app.route('/callback')
+def callback():
     client_id = app.config['SPOTIFY_CLIENT_ID']
     client_secret= app.config['SPOTIFY_CLIENT_SECRET']
     token_url = 'https://accounts.spotify.com/api/token'
@@ -148,6 +147,7 @@ def get_spotify_token():
             }
 
     post_response = requests.post(token_url,headers=headers,data=body)
+    import ipdb; ipdb.set_trace()
 
     if post_response.status_code == 200:
         pr = post_response.json()
@@ -167,6 +167,62 @@ def get_spotify_token():
         return jsonify(response_data)
     else:
         return jsonify({'error': 'Failed to obtain access token.'}), 500    
+
+# @app.route('/get_spotify_token', methods=['POST'])
+# def get_spotify_token():
+#     import ipdb; ipdb.set_trace()
+
+#     client_id = app.config['SPOTIFY_CLIENT_ID']
+#     client_secret= app.config['SPOTIFY_CLIENT_SECRET']
+#     token_url = 'https://accounts.spotify.com/api/token'
+#     redirect_uri = 'http://localhost:4000/callback'
+
+#     data = request.get_json()
+#     code = data.get('code')
+#     refresh_token = data.get('refresh_token')
+
+#     headers = {
+#             'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
+#             'Content-Type': 'application/x-www-form-urlencoded'
+#             }
+#     body = {}
+
+#     if code:
+#         body = {
+#             'code': code,
+#             'redirect_uri': redirect_uri,
+#             'grant_type': 'authorization_code'
+#         }
+
+#     elif refresh_token:
+
+#         body = {
+#                 "grant_type": "refresh_token",
+#                 "refresh_token": refresh_token,
+#                 "client_id": client_id
+#             }
+#     # if not code:
+
+#     post_response = requests.post(token_url,headers=headers,data=body)
+
+#     if post_response.status_code == 200:
+#         pr = post_response.json()
+#         if pr.get('refresh_token'):
+#             response_data = {
+#                 'access_token': pr['access_token'],
+#                 'refresh_token': pr['refresh_token'],
+#                 'expires_in': pr['expires_in']
+#             }
+#         else:
+#             response_data = {
+#                 'access_token': pr['access_token'],
+#                 'refresh_token': refresh_token,
+#                 'expires_in': pr['expires_in']
+#             }
+
+#         return jsonify(response_data)
+#     else:
+#         return jsonify({'error': 'Failed to obtain access token.'}), 500    
 
 # # Register a callback function that loads a user from your database whenever
 # # a protected route is accessed. This should return any python object on a
