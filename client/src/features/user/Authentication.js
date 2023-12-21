@@ -71,7 +71,7 @@ function Authentication() {
           <div
             className="d-inline-block p-2 rounded-pill shadow"
             onClick={handleClick}
-            style={{ cursor: 'pointer', background: '#34ce2c' }}
+            style={{ cursor: 'pointer', background: '#FFB120' }}
           >
             <span className="text-white p-2">{signUp ? 'Log In!' : 'Register now!'}</span>
           </div>
@@ -91,8 +91,8 @@ function Authentication() {
       >
         <Form onSubmit={formik.handleSubmit}>
           <Row className="justify-content-center" style={{ paddingTop: '25px' }}>
-            <Col xs={12} md={8} className="text-center">
-              <Form.Group controlId="username" className="shadow">
+            <Col xs={12} md={8} >
+              <Form.Group controlId="username" className='invisble'>
                 <Form.Label className="custom-text">Username</Form.Label>
                 <Form.Control
                   type="text"
@@ -103,10 +103,10 @@ function Authentication() {
                   className="shadow-lg bg-secondary text-white rounded rounded-pill"
                 />
                 {formik.errors.username && formik.touched.username ? (
-                  <div className="text-danger shadow">{formik.errors.username}</div>
+                  <div className="text-danger">{formik.errors.username}</div>
                 ) : null}
               </Form.Group>
-              <Form.Group controlId="password" className="shadow">
+              <Form.Group controlId="password" >
                 <Form.Label className="custom-text">Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -117,16 +117,16 @@ function Authentication() {
                   className="bg-secondary text-white rounded rounded-pill shadow"
                 />
                 {formik.errors.password && formik.touched.password ? (
-                  <div className="text-danger shadow">{formik.errors.password}</div>
+                  <div className="text-danger">{formik.errors.password}</div>
                 ) : null}
-                {signUp && (
+                {/* {signUp && (
                   <Form.Text muted className="custom-text shadow" style={{ opacity: '50%' }}>
                     Password must contain one lowercase letter, one uppercase letter, one digit, and one special character, and be 8 or more characters.
                   </Form.Text>
-                )}
+                )} */}
               </Form.Group>
               {signUp && (
-                <Form.Group controlId="userType" className="shadow">
+                <Form.Group controlId="userType">
                   <Form.Label className="custom-text rounded-pill">User Type</Form.Label>
                   <Form.Control
                     as="select"
@@ -141,7 +141,7 @@ function Authentication() {
                     <option value="fan">Fan</option>
                   </Form.Control>
                   {formik.errors.userType && formik.touched.userType ? (
-                    <div className="text-danger shadow">{formik.errors.userType}</div>
+                    <div className="text-danger">{formik.errors.userType}</div>
                   ) : null}
                 </Form.Group>
               )}
@@ -152,7 +152,7 @@ function Authentication() {
               <Button
                 type='submit'
                 className="d-inline-block p-2 rounded-pill shadow"
-                style={{ cursor: 'pointer', background: '#34ce2c', border: 'none' }}
+                style={{ cursor: 'pointer', background: '#FFB120', border: 'none' }}
               >
                 <span className="text-white p-2">{!signUp ? 'Log In' : 'Register'}</span>
               </Button>

@@ -112,12 +112,12 @@ const App = () => {
     }
 
     if(!user) return (
-        <>
+        <div className="vh-100 d-flex flex-column">
             <Toaster />
             <Header />
             <Authentication />
             <Footer />
-        </>
+        </div>
     )
 
     return (
@@ -127,8 +127,7 @@ const App = () => {
             <Toaster />
             <Header />
             <NavBar />
-            <Footer />
-        </div>
+
                 <Routes>
 
                     <Route path='/artists/'>
@@ -159,6 +158,8 @@ const App = () => {
                     
                     <Route path='/*' element={<NotFound />} />
                 </Routes>
+                <Footer />
+        </div>
         </>
     )
     }

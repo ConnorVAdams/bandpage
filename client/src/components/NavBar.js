@@ -79,70 +79,71 @@ const NavBar = () => {
 
 
     return (
-    <>
-<Navbar bg="light" expand="lg" id='main-nav' style={{ marginTop: '10px', flexDirection: 'column', height: '30%' }}>
-      <Container id='user-nav' className="w-100">
-        {user ? (
-          <>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Container>
-                <Nav className="me-auto">
-                  <NavDropdown title={<Image roundedCircle src={user.img} alt="User" style={{ width: '55px', height: '55px', marginLeft: '15px', marginRight: '15px' }} className="user-image" />}>
-                    <NavDropdown.Item>
-                      {acct.username}
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
-                      <FaEdit /> Edit Profile
-                    </NavDropdown.Item>
-                    {!spotify ?
-                      <NavDropdown.Item onClick={handleAuthorize}>
-                        <FaSpotify /> Link Spotify Profile
-                      </NavDropdown.Item>
-                      :
-                      null
-                    }
-                    <NavDropdown.Item onClick={handleShow}>
-                      <FaTrash /> Delete Account
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={handleLogout}>
-                      <FaSignOutAlt /> Log Out
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                  <Nav.Link as={Link} to="/landing" style={{ height: '35px', marginTop: 'auto', marginBottom: 'auto', marginLeft: '15px', marginRight: '15px' }}>Home</Nav.Link>
-                  {user.genres ? <Nav.Link onClick={handleMyPage} style={{ height: '35px', marginTop: 'auto', marginBottom: 'auto', marginLeft: '15px', marginRight: '15px' }}>My Page</Nav.Link> : null}
-                  {spotify ? <Nav.Link as={Link} to="/spotify_prof" style={{ height: '35px', marginTop: 'auto', marginBottom: 'auto', marginLeft: '15px', marginRight: '15px' }}>My Spotify Page</Nav.Link> : null}
-                </Nav>
-              </Container>
-
-              <Nav className="ms-auto">
-                <Button as={Link} to="/artists">Explore Artists</Button>
-              </Nav>
-            </Navbar.Collapse>
-          </>
-        ) : null}
-      </Container>
-    </Navbar>
-
-    <Modal show={show} onHide={handleClose}>
-    <Modal.Header closeButton>
-    <Modal.Title>Delete Account</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>Are you sure you want to delete your account? This cannot be undone!</Modal.Body>
-    <Modal.Footer>
-    <Button variant="primary" onClick={handleDelete}>
-        Delete
-    </Button>
-    <Button variant="secondary" onClick={handleClose}>
-        Cancel
-    </Button>
-    </Modal.Footer>
-    </Modal>
-    </>
+      (!user || (!user.artist && !user.fan)) ? null : (
+        <div>
+          <Navbar bg="light" expand="lg" id='main-nav' style={{ marginTop: '10px', flexDirection: 'column', height: '30%' }}>
+            <Container id='user-nav' className="w-100">
+              {user ? (
+                <>
+                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                  <Navbar.Collapse id="basic-navbar-nav">
+                    <Container>
+                      <Nav className="me-auto">
+                        <NavDropdown title={<Image roundedCircle src={user.img} alt="User" style={{ width: '55px', height: '55px', marginLeft: '15px', marginRight: '15px' }} className="user-image" />}>
+                          <NavDropdown.Item>
+                            {acct.username}
+                          </NavDropdown.Item>
+                          <NavDropdown.Divider />
+                          <NavDropdown.Item as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
+                            <FaEdit /> Edit Profile
+                          </NavDropdown.Item>
+                          {!spotify ?
+                            <NavDropdown.Item onClick={handleAuthorize}>
+                              <FaSpotify /> Link Spotify Profile
+                            </NavDropdown.Item>
+                            :
+                            null
+                          }
+                          <NavDropdown.Item onClick={handleShow}>
+                            <FaTrash /> Delete Account
+                          </NavDropdown.Item>
+                          <NavDropdown.Divider />
+                          <NavDropdown.Item onClick={handleLogout}>
+                            <FaSignOutAlt /> Log Out
+                          </NavDropdown.Item>
+                        </NavDropdown>
+                        <Nav.Link as={Link} to="/landing" style={{ height: '35px', marginTop: 'auto', marginBottom: 'auto', marginLeft: '15px', marginRight: '15px' }}>Home</Nav.Link>
+                        {user.genres ? <Nav.Link onClick={handleMyPage} style={{ height: '35px', marginTop: 'auto', marginBottom: 'auto', marginLeft: '15px', marginRight: '15px' }}>My Page</Nav.Link> : null}
+                        {spotify ? <Nav.Link as={Link} to="/spotify_prof" style={{ height: '35px', marginTop: 'auto', marginBottom: 'auto', marginLeft: '15px', marginRight: '15px' }}>My Spotify Page</Nav.Link> : null}
+                      </Nav>
+                    </Container>
+    
+                    <Nav className="ms-auto">
+                      <Button as={Link} to="/artists">Explore Artists</Button>
+                    </Nav>
+                  </Navbar.Collapse>
+                </>
+              ) : null}
+            </Container>
+          </Navbar>
+    
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Delete Account</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to delete your account? This cannot be undone!</Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleDelete}>
+                Delete
+              </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+      )
     );
-
     }
 
 export default NavBar;
