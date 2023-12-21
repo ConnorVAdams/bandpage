@@ -65,13 +65,14 @@ const NavBar = () => {
             const locationHeader = response.headers.get('location');
             if (locationHeader) {
             window.location.href = locationHeader;
-            return response
             }
         } else {
             toast('Access request failed.');
+            navigate('/landing')
         }
         } catch (error) {
         toast('Error during access:', error);
+        navigate('/landing')
         }
     };
 
