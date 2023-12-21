@@ -61,11 +61,9 @@ const NavBar = () => {
     const handleAuthorize = async () => {
         try {
         const response = await fetch('/authorize');
-        debugger
         if (response.ok) {
             const locationHeader = response.headers.get('location');
             if (locationHeader) {
-                debugger
             window.location.href = locationHeader;
             return response
             }

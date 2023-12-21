@@ -13,18 +13,40 @@ const SpotifyCallback = () => {
     const dispatch = useDispatch()
 
     const handleCallback = async () => {
-
-      try {
-        const response = await fetch('/callback')
-        if (response.ok) {
-          debugger
-        } else {
-          debugger
-        }
-      } 
-      catch (error) {
-        console.log(error)
+      if (!user.spotify) { // if user has been authorized but not yet given tokens
+        debugger
+        try {
+            const response = await fetch('/callback')
+            if (response.ok) {
+              debugger
+            } else {
+              debugger
+            }
+          } 
+          catch (error) {
+            console.log(error)
+          }
       }
+    }  
+
+    useEffect(() => {
+      handleCallback()
+    }, [user])
+    
+    // try {
+    //   const response = await fetch('/callback')
+    //   if (response.ok) {
+    //     debugger
+    //   } else {
+    //     debugger
+    //   }
+    // } 
+    // catch (error) {
+    //   console.log(error)
+    // }
+    // const handleCallback = async () => {
+      // debugger
+
 
     //   const urlParams = new URLSearchParams(window.location.search);
     //   const code = urlParams.get('code');
@@ -59,7 +81,7 @@ const SpotifyCallback = () => {
     // };
     
     // handleCallback()
-    }
+    // }
 }
 
 export default SpotifyCallback
