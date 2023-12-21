@@ -8,7 +8,7 @@ export const createSlice = buildCreateSlice({
 const initialState =  {
         data: null,
         // admin: false,
-        spotify: false,
+        spotify: 0,
         errors: [],
         loading: true
     }

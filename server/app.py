@@ -10,6 +10,7 @@ import requests
 import base64
 import secrets
 from datetime import datetime
+import pytz
 
 from werkzeug.exceptions import NotFound
 from app_setup import app, db, api, jwt
@@ -144,7 +145,6 @@ def callback():
             }
 
     else: # if this is a refresh request for a token
-        # import ipdb; ipdb.set_trace()
         data = request.get_json()
         refresh_token = data.get('refresh_token')
 
@@ -164,14 +164,73 @@ def callback():
         session['spotify_exp'] = pr.get('expires_in')
         session['token_acquired'] = datetime.utcnow()
 
-        return '', 200
+        # import ipdb; ipdb.set_trace()
+
+        return jsonify({'expires_in': pr.get('expires_in')}), 200
     else:
         return jsonify({'error': 'Failed to obtain access token.'}), 500    
 
+@app.route('/refresh_spotify')
+def refresh_spotify():
+    refresh_token = session.get('spotify_refresh_token')
+    exp_in_secs = session.get('spotify_exp') * 60
+    acq = session.get('token_acquired')
+    now = datetime.utcnow()
+    acq_aware = acq.replace(tzinfo=pytz.UTC)
+    now_aware = now.replace(tzinfo=pytz.UTC)
+    diff_in_secs = (now_aware - acq_aware).seconds
+
+    diff_in_secs = 1000000000000
+
+    if diff_in_secs > exp_in_secs:
+
+        client_id = app.config['SPOTIFY_CLIENT_ID']
+        client_secret = app.config['SPOTIFY_CLIENT_SECRET']
+        token_url = 'https://accounts.spotify.com/api/token'
+
+        headers = {
+            'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+
+        body = {
+            'grant_type': 'refresh_token',
+            'refresh_token': refresh_token
+        }
+
+        post_response = requests.post(token_url, headers=headers, data=body)
+
+        if post_response.status_code == 200:
+            response_data = post_response.json()
+            # Update your session or storage with the new tokens
+            session['spotify_access_token'] = response_data.get('access_token')
+            session['spotify_refresh_token'] = response_data.get('refresh_token', refresh_token)  # New or existing refresh token
+            session['spotify_exp'] = response_data.get('expires_in')
+            session['token_acquired'] = datetime.utcnow()
+
+            return response_data  # Return the updated tokens or relevant response
+        else:
+            return 'Failed to refresh Spotify token.', 500 # Handle failed token refresh
+    else: # if token is still valid
+        return '', 200
+
 @app.route('/my_spotify_prof')
 def my_spotify_prof():
-    api = 'https://api.spotify.com/v1/me'
-    import ipdb; ipdb.set_trace()
+    url = 'https://api.spotify.com/v1/me'
+
+    refresh_rq = refresh_spotify()
+
+    headers = {
+        'Authorization': f'Bearer {session.get("access_token")}'
+    }
+
+    response = requests.get(url, headers=headers)
+
+    # import ipdb; ipdb.set_trace()
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        data = response.json()  # Parse the JSON response
+
 
 # # Register a callback function that loads a user from your database whenever
 # # a protected route is accessed. This should return any python object on a

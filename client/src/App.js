@@ -48,6 +48,20 @@ const App = () => {
         })()
     }, [user])
 
+    const handleSpotifyRefresh = async () => {
+        const response = await fetch('/refresh_spotify')
+        if (response.ok) {
+            console.log('Spotify tokens refreshed.')
+        } else {
+            console.log('Failed to refresh Spotify tokens.')
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            handleSpotifyRefresh()
+        }, spotify.expires_in)
+    })
     
     // useEffect(() => {
     //     if (user && user.artist && artist && user.artist.id === artist.id) {

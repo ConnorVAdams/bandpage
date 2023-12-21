@@ -21,12 +21,12 @@ const SpotifyCallback = () => {
 
       // debugger
       if (response.ok) {
-        // debugger
-        dispatch(setSpotify(true))
+        const data = await response.json()
+        dispatch(setSpotify(data))
         toast.success('Spotify authorization successful.')
         navigate('/landing')
       } else {
-        toast.failure('Spotify authorization failed.')
+        toast('Spotify authorization failed.')
       }
     }
 
