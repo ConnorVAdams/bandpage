@@ -186,17 +186,17 @@ const ListContainer = () => {
 
 
     return (
-        <Container fluid>
+        <Container style= {{ overflow: 'auto' }}fluid>
         <Row>
             {/* Search, Sort, Filter Utility Box */}
-            <Col md={4}>
+            {/* <Col md={4}>
             </Col>
-            <Col md={8} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-                <ListGroup>
+            <Col md={8} style={{ maxHeight: '70vh', overflowY: 'auto' }}> */}
+                <ListGroup style= {{ overflow: 'auto' }}>
 
                     {cardDisplay}
                 </ListGroup>
-            </Col>
+            {/* </Col> */}
         </Row>
         </Container>
     );

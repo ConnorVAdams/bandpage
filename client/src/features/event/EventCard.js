@@ -106,8 +106,8 @@ const EventCard = ({ event }) => {
                             <div style={{ marginBottom: 'auto', marginTop: 'auto', display: 'flex', flexDirection: 'column' }} xs={4} md={8}>
                                 <h4 style={{ color: 'white', display: 'inline', marginTop: 'auto', marginBottom: '5px', marginLeft: '0px' }}><FaBuilding style={{ color: 'black', marginRight: '5px'}} />{venue}</h4>
                                 <h6 as={Link} to={`/artists/${artist_id}`} style={{ color: 'white' }}><FaUser style={{ color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {artist_name}</h6>
-                                <h6 style={{ color: 'white' }}><FaCalendar style={{ color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {datetime.date}</h6>
-                                <h6 style={{ color: 'white' }}><FaClock style={{ color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {datetime.time}</h6>
+                                <h6 style={{ display: 'inline', color: 'white' }}><FaCalendar style={{ display: 'inline', color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {datetime.date}</h6>
+                                <h6 style={{ display: 'inline',color: 'white' }}><FaClock style={{ display: 'inline', color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {datetime.time}</h6>
 
                             </div>
                         </Container>
