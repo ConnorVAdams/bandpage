@@ -61,7 +61,6 @@ const TrackCard = ({ track }) => {
                 dispatch(fetchCurrentUser())
             }
         } else {
-            debugger
             const resp = await dispatch(fetchPostLike(likeValues));
             if (resp.payload === 201) {
                 dispatch(fetchCurrentUser())
