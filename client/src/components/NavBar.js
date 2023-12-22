@@ -79,8 +79,8 @@ const NavBar = () => {
 
 
     return (
-<div className='' style={{ marginTop: '10px', marginBottom: '10px', maxWidth: '95vw', borderRadius: '5px', margin: '0 auto', width: '95vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-  <Navbar bg="light" expand="lg" id='main-nav' style={{ marginTop: '10px', marginBottom: '10px', borderRadius: '10px', width: '90vw', paddingTop: '0', paddingBottom: '0' }}>
+<div className='' style={{ marginTop: '10px', marginBottom: '10px', maxWidth: '95vw', borderRadius: '20px', margin: '0 auto', width: '95vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <Navbar bg="light" expand="lg" id='main-nav' style={{ marginTop: '10px', marginBottom: '10px', borderRadius: '20px', width: '90vw', paddingTop: '0', paddingBottom: '0' }}>
     <Container id='user-nav' style={{ height: '60px', marginLeft: '0'}}>
       {user ? (
         <>
@@ -88,8 +88,8 @@ const NavBar = () => {
           <Navbar.Collapse id="basic-navbar-nav" >
             <Container >
               <Nav className="me-auto" style={{ }}>
-                <NavDropdown title={<Image roundedCircle src={user.img} alt="User" style={{ width: '30px', height: '30px', marginLeft: '10px', marginRight: '10px' }} className="user-image" />}>
-                  <NavDropdown.Item style={{ color: 'black'}}>
+                <NavDropdown className="d-inline-block rounded-pill" title={<Image roundedCircle src={user.img} alt="User" style={{ border: '#FFB120', width: '30px', height: '30px', marginLeft: '10px', marginRight: '10px' }} className="user-image" />}>
+                  <NavDropdown.Item style={{ color: 'black'}} >
                     {acct.username}
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
@@ -111,9 +111,9 @@ const NavBar = () => {
                     <FaSignOutAlt /> Log Out
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link as={Link} to="/landing" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto', marginLeft: '10px' }}>Home</Nav.Link>
-                {user.genres ? <Nav.Link onClick={handleMyPage} style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '15px', marginRight: '15px',  marginTop: 'auto', marginBottom: 'auto' }}>My Page</Nav.Link> : null}
-                {spotify ? <Nav.Link as={Link} to="/spotify_prof" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '15px', marginRight: '15px',  marginTop: 'auto', marginBottom: 'auto' }}>My Spotify Page</Nav.Link> : null}
+                <Nav.Link className="d-inline-block rounded-pill shadow" as={Link} to="/landing" style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '10px' }}>Home</Nav.Link>
+                {user.genres ? <Nav.Link className="d-inline-block rounded-pill shadow" onClick={handleMyPage} style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '15px', marginRight: '15px' }}>My Page</Nav.Link> : null}
+                {spotify ? <Nav.Link className="d-inline-block rounded-pill shadow" as={Link} to="/spotify_prof" style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '15px', marginRight: '15px' }}>My Spotify Page</Nav.Link> : null}
               </Nav>
             </Container>
 
