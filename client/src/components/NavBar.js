@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/modal'
+import Modal from 'react-bootstrap/Modal'
 import Image from 'react-bootstrap/Image'
 import { Row, Col } from 'react-bootstrap'
 import { FaEdit, FaSignOutAlt, FaSpotify, FaTrash } from 'react-icons/fa';
