@@ -44,7 +44,7 @@ const UserLanding = () => {
         return(
             <>
                 <div id={user_id} style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', height: '68vh', width: '100%', marginTop: '20px' }}>
-                <div style={{ position: 'relative', display: 'flex', width: '50%' }}>
+                <div style={{ overflow: 'auto', position: 'relative', display: 'flex', width: '50%' }}>
                     <Container>
                     <h5
                         className='visible rounded-pill mb-1 mx-8 shadow'
@@ -88,7 +88,7 @@ const UserLanding = () => {
                     </Container>
                 </div>
             
-                <div style={{ flex: '1', display: 'flex', flexDirection: 'column', width: '50%' }}>
+                <div style={{ overflow: 'auto', flex: '1', display: 'flex', flexDirection: 'column', width: '50%' }}>
                     <Container style={{ textAlign: 'center', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '40px', paddingRight: '40px' }}>
                     
                     <h6

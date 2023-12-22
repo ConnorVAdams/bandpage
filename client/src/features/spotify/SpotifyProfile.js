@@ -47,7 +47,7 @@ const SpotifyProfile = () => {
     }, [])
 
     if (spotProf && artists) {
-        const topFive = artists.items.slice(0,5)
+        const topFive = artists.items.slice(0,20)
         return (
 <>
     <Container style={{ display: 'flex' }}>
@@ -74,7 +74,21 @@ const SpotifyProfile = () => {
         </Card>
 
         <Col md={8} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-        <h5>My Liked Artists</h5>
+        <h4 
+                        className='visible rounded-pill mb-1 mx-8'
+                        style={{
+                            backgroundColor: '#FFB120',
+                            color: 'white',
+                            padding: '10px',
+                            width: '18vw',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            marginTop: '1vh',
+                            marginBottom: '1vh',
+                            textAlign: 'center'
+                            }}>
+                                TOP ARTISTS
+                            </h4>
             <ListGroup>
             {artists && topFive.map(artist => artist && (
                 <SpotifyArtistCard key={artist.id} artist={artist} />

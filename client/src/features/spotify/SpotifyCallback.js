@@ -22,7 +22,7 @@ const SpotifyCallback = () => {
         toast.success('Spotify authorization successful.')
         navigate('/landing')
       } else {
-        toast('Spotify authorization failed.')
+        // toast('Spotify authorization failed.')
       }
     }
 
