@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
 import { Card, Button, Row, Col, Image, Container } from 'react-bootstrap';
-import { FaBook, FaCalendar, FaFolderPlus, FaMapMarker, FaMusic, FaPlay, FaUser, FaUserPlus } from 'react-icons/fa';
+import { FaBook, FaCalendar, FaFolderPlus, FaMapMarker, FaMusic, FaPlay, FaScroll, FaUser, FaUserPlus } from 'react-icons/fa';
 import { convertDateFormat } from '../../utils/helpers'
 import { useSelector } from 'react-redux';
 import { setArtist } from './artistSlice';
@@ -103,13 +103,12 @@ const ArtistCard = ({ artist }) => {
             }
             navigate(path)
         }
-    
-
 
         return (
     <Card id={id} 
     style={{
         width: '90%',
+        height: '17vh',
         backgroundColor: 'rgba(109, 100, 102, 0.5)', // Adjust the color and transparency here
         borderRadius: '100px',
         border: 'none',
@@ -118,7 +117,7 @@ const ArtistCard = ({ artist }) => {
         alignItems: 'center',
         position: 'relative',
         margin: 'auto', // Center the card
-        marginTop: '10px',
+        marginTop: '20px',
         marginBottom: '10px',
         boxShadow: '0 0 10px 10px rgba(109, 100, 102, 0.5)', // Apply a fuzzy border effect
         }}
@@ -143,18 +142,18 @@ const ArtistCard = ({ artist }) => {
             }}
             >
             {/* Left margin for the image */}
-            <div style={{ marginLeft: '40px', marginRight: '20px' }}>
-                <Image
+            <Link to={`/artists/${id}`} style={{ marginLeft: '40px', marginRight: '20px' }}>
+            <Image
                 src={img}
                 style={{
-                    border: '3px solid black',
+                    border: !inUserFollows ? '5px solid black' : '5px solid #43CE2B',
                     width: '150px',
                     height: '150px',
                     padding: '0',
                     borderRadius: '50%'
                 }}
-                />
-            </div>
+            />
+            </Link>
 
         <Container style={{ display: 'flex', flexDirection: 'column', padding: '0px'}}>
             <Container className='custom-text' style={{ width: '100%', padding: '0px' }}>
@@ -164,17 +163,19 @@ const ArtistCard = ({ artist }) => {
                     marginTop: 'auto',
                     display: 'flex',
                     flexDirection: 'row' }} xs={4} md={8}>
+                <Link to={`/artists/${id}`}>
                 <h2 style={{ 
                     display: 'inline',
                     marginTop: 'auto',
                     marginBottom: 'auto',
-                    marginLeft: '0px'
+                    marginRight: '0px'
                 }}>{name}</h2>
+                </Link>
                 </div>
                 <div style={{ display: 'flex', marginTop: '4px' }}>
                     <div style={{ marginBottom: 'auto', marginTop: 'auto', width: '30%' }}>
-                        <h6>
-                            <FaCalendar style={{ color: 'black', marginBottom: '4px', marginTop: 'auto', }} /> Est. {convertDateFormat(created_at)}
+                        <h6 >
+                            <FaScroll style={{ color: 'black', marginBottom: '4px', marginTop: 'auto', }}/> Est. {convertDateFormat(created_at)}
                         </h6> 
                     </div>
                 <div style={{ marginBottom: 'auto', marginTop: 'auto', width: '40%' }} >
@@ -214,23 +215,25 @@ const ArtistCard = ({ artist }) => {
                 onClick={handleFollow}
                 className="d-inline-block p-2 rounded-pill shadow" 
                 style={{ 
-                    width: '90px', 
+                    width: '160px', 
                     height: '40px',
                     border: 'none', 
                     cursor: 'pointer', 
                     background: inUserFollows ? '#43CE2B' : '#141416',
                     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
                     marginLeft: '5px',
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    marginTop: 'auto',
+                    marginBottom: 'auto'
                 }} 
                 as={Link} 
                 to="/artists"
                 >
-                    Follow
+                    {!inUserFollows ? 'Follow' : 'Followed'}
                 </Button>
                 ) : null}
 
-                <Container style={{ width: '30%', display: 'flex', flexDirection: 'column', marginTop: 'auto', marginBottom: 'auto', padding: '0px' }}>
+                <Container style={{ width: '40%', display: 'flex', flexDirection: 'column', marginTop: 'auto', marginBottom: 'auto', padding: '10px' }}>
                     <div style={{ textAlign: 'left' }} className='text-center custom-text'>
                         {num_followers} Followers
                     </div>
@@ -239,58 +242,18 @@ const ArtistCard = ({ artist }) => {
                     </div>
                 </Container>
             
-                    <Container style={{ textAlign: 'center', height: '45px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-    <h6
-        className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'events' ? 'active-view' : ''}`}
-        onClick={() => setView('events')}
-        style={{
-            borderRadius: '20px',
-            cursor: 'pointer',
-            backgroundColor: '#FFB120',
-            color: 'white',
-            padding: '10px',
-            width: '40px',
-            marginLeft: '5px',
-            marginRight: '5px'
-        }}
-    >
-        <FaBook />
-    </h6>
-    <h6
-        className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'followers' ? 'active-view' : ''}`}
-        onClick={() => setView('followers')}
-        style={{
-            borderRadius: '20px',
-            cursor: 'pointer',
-            backgroundColor: '#FFB120',
-            color: 'white',
-            padding: '10px',
-            width: '40px',
-            marginLeft: '5px',
-            marginRight: '5px',
-            marginBottom: '10px',
-        }}
-    >
-        <FaUserPlus />
-    </h6>
-    <h6
-        className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'tracks' ? 'active-view' : ''}`}
-        onClick={() => setView('tracks')}
-        style={{
-            borderRadius: '20px',
-            cursor: 'pointer',
-            backgroundColor: '#FFB120',
-            color: 'white',
-            padding: '10px',
-            width: '40px',
-            marginLeft: '5px',
-            marginRight: '5px',
-            marginBottom: '10px',
-        }}
-    >
-        <FaPlay />
-    </h6>
-</Container>
+            <Container style={{ marginTop: 'auto', marginBottom: 'auto', textAlign: 'center', height: '45px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Link to={`/artists/${id}`} className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'events' ? 'active-view' : ''}`} style={{ borderRadius: '20px', cursor: 'pointer', backgroundColor: '#FFB120', color: 'white', padding: '10px', marginLeft: '5px', marginRight: '5px', width: /\d/.test(loc.pathname) ? '100px' : '45px' }}>
+                    {/\d/.test(loc.pathname) ? 'About' : <FaBook />}
+                </Link>
+                <Link to={`/artists/${id}/events`} className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'followers' ? 'active-view' : ''}`} style={{ borderRadius: '20px', cursor: 'pointer', backgroundColor: '#FFB120', color: 'white', padding: '10px', marginLeft: '5px', marginRight: '5px', marginBottom: '10px', width: /\d/.test(loc.pathname) ? '100px' : '45px' }}>
+                    {/\d/.test(loc.pathname) ? 'Events' : <FaCalendar />}
+                </Link>
+                <Link to={`/artists/${id}/tracks`} className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'tracks' ? 'active-view' : ''}`} style={{ borderRadius: '20px', cursor: 'pointer', backgroundColor: '#FFB120', color: 'white', padding: '10px', marginLeft: '5px', marginRight: '5px', marginBottom: '10px', width: /\d/.test(loc.pathname) ? '100px' : '45px' }}>
+                    {/\d/.test(loc.pathname) ? 'Tracks' : <FaPlay />}
+                </Link>
+            </Container>
+
                 </div>
             </Container>
 

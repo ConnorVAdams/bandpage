@@ -27,7 +27,21 @@ const ListContainer = () => {
         if (path.includes('/tracks')) {
             return (
                 <>
-                <h1>MUSIC</h1>
+                <h4 
+                        className='visible rounded-pill mb-1 mx-8'
+                        style={{
+                            backgroundColor: '#FFB120',
+                            color: 'white',
+                            padding: '10px',
+                            width: '18vw',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            marginTop: '1vh',
+                            marginBottom: '1vh',
+                            textAlign: 'center'
+                            }}>
+                                TRACKS
+                            </h4>
                 {artist.tracks && artist.tracks.map(
                     track => <TrackCard 
                         key={track.id} 
@@ -39,7 +53,21 @@ const ListContainer = () => {
         } else if (path.includes('/events')) {
             return (
                 <>
-                <h1>EVENTS</h1>
+                <h4 
+                        className='visible rounded-pill mb-1 mx-8'
+                        style={{
+                            backgroundColor: '#FFB120',
+                            color: 'white',
+                            padding: '10px',
+                            width: '18vw',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            marginTop: '1vh',
+                            marginBottom: '1vh',
+                            textAlign: 'center'
+                            }}>
+                                EVENTS
+                            </h4>
                 {artist.upcoming_events && artist.upcoming_events.map(
                     event => <EventCard 
                         key={event.id} 
@@ -50,7 +78,21 @@ const ListContainer = () => {
         } else if (path.includes('/artists') && artists) {
             return (
                 <>
-                    <h1>EXPLORE ARTISTS</h1>
+                    <h4 
+                        className='visible rounded-pill mb-1 mx-8'
+                        style={{
+                            backgroundColor: '#FFB120',
+                            color: 'white',
+                            padding: '10px',
+                            width: '18vw',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            marginTop: '1vh',
+                            marginBottom: '1vh',
+                            textAlign: 'center'
+                            }}>
+                                EXPLORE ARTISTS
+                            </h4>
                     {artists && artists.map(
                         artist => <ArtistCard 
                             key={artist.id} 
@@ -83,11 +125,10 @@ const ListContainer = () => {
             </InputGroup>
             </Col>
 
-            {/* Container to Hold List Items */}
-            <Col md={8}>
-            <ListGroup>
-                {cardDisplay}
-            </ListGroup>
+            <Col md={8} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+                <ListGroup>
+                    {cardDisplay}
+                </ListGroup>
             </Col>
         </Row>
         </Container>

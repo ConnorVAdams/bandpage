@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { formatDateTime } from '../../utils/helpers'
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button, Container } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { FaCheck, FaTimes } from 'react-icons/fa'
+import { FaBuilding, FaCalendar, FaCheck, FaClock, FaRecordVinyl, FaTimes, FaUser } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import { fetchPostLike, fetchDeleteLike } from '../like/likeSlice'
 import { fetchCurrentUser } from '../user/userSlice'
@@ -71,23 +71,43 @@ const EventCard = ({ event }) => {
     };
 
     return (
-        <Card id={id} className="mb-3">
-            <Card.Body>
-            <Link to={`/artists/${artist_id}`}>
-            <Card.Subtitle as={Link} to={`/artists/${artist_id}`}>{artist_name}</Card.Subtitle>
-            </Link>
-            <Card.Text>{venue}</Card.Text>
-            <Card.Text>Date: {datetime.date}</Card.Text>
-            <Card.Text>Time: {datetime.time}</Card.Text>
-            <Button
-                variant={inUserEvents ? 'success' : 'danger'}
-                onClick={handleClick}
-                className="mr-2"
-                >
-                Attending {inUserEvents ? <FaCheck /> : <FaTimes />}
-            </Button>
+
+        <Card id={id} className="gray-pill-shape" style={{ width: '80%', backgroundColor: '#6D6466', borderRadius: '100px', display: 'flex', flexDirection: 'row', alignItems: 'center', position: 'relative', margin: 'auto', marginTop: '10px', marginBottom: '10px' }} >
+            <Card.Body style={{ backgroundColor: 'transparent' }}>
+                {/* Gray oblong pill shape */}
+                <div className="gray-pill-shape" style={{ width: '100%', backgroundColor: '#6D6466', borderRadius: '100px', display: 'flex', flexDirection: 'row', alignItems: 'center', position: 'relative', margin: 'auto', marginTop: '5px', marginBottom: '5px' }}>
+                    {/* Left margin for the icon */}
+                    <div style={{ marginLeft: '40px', marginRight: '20px' }}>
+                        <FaCalendar size={80} />
+                    </div>
+        
+                    <Container style={{ display: 'flex', flexDirection: 'column', padding: '0px', width: '100%' }}>
+                        <Container className='custom-text' style={{ width: '100%', padding: '0px' }}>
+                            {/* Title and Artist */}
+                            <div style={{ marginBottom: 'auto', marginTop: 'auto', display: 'flex', flexDirection: 'column' }} xs={4} md={8}>
+                                <h4 style={{ color: 'white', display: 'inline', marginTop: 'auto', marginBottom: '5px', marginLeft: '0px' }}><FaBuilding style={{ color: 'black', marginRight: '5px'}} />{venue}</h4>
+                                <h6 as={Link} to={`/artists/${artist_id}`} style={{ color: 'white' }}><FaUser style={{ color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {artist_name}</h6>
+                                <h6 style={{ color: 'white' }}><FaCalendar style={{ color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {datetime.date}</h6>
+                                <h6 style={{ color: 'white' }}><FaClock style={{ color: 'black', marginLeft: '9px', marginRight: '4px' }} /> {datetime.time}</h6>
+
+                            </div>
+                        </Container>
+        
+                        {/* Event details */}
+                        <Container style={{ display: 'flex', padding: '0px' }}>
+                            <Container style={{ marginTop: '10px', marginBottom: 'auto', padding: '0px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '0px' }}>
+                                    <Button variant={inUserEvents ? 'success' : 'danger'} onClick={handleClick} className="d-inline-block p-2 rounded-pill shadow" style={{ width: '120px', height: '40px', border: 'none', cursor: 'pointer', background: inUserEvents ? '#43CE2B' : '#141416', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', marginLeft: '5px', marginRight: '5px', marginTop: 'auto', marginBottom: 'auto' }}>
+                                    {!inUserEvents ? 'Like' : 'Liked'} {inUserEvents ? <FaCheck /> : null }
+                                    </Button>
+                                </div>
+                            </Container>
+                        </Container>
+                    </Container>
+                </div>
             </Card.Body>
         </Card>
+
         )
     }
     
