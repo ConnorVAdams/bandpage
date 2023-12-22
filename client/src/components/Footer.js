@@ -1,4 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -11,24 +12,23 @@ const Footer = () => {
       bottom: 0,
       width: '100%',
     }}>
-      <Container>
-        <Row>
-          <Col md={6}>
+      <Container style= {{ display: 'flex', maxHeight: '100px' }}>
+        {/* <Row> */}
+          {/* <Col md={6}> */}
             <div>
-              <p className='custom-text'>© Connor Adams</p>
+            <h5 style={{ padding: '0', marginTop: 'auto', marginBottom: 'auto' }} className='custom-text'>© Connor Adams</h5>
             </div>
-          </Col>
-          <Col md={6} className="d-flex justify-content-end">
-            <div>
-              <h5 className='custom-text'>Connect:
-                <a href="https://github.com/ConnorVAdams" target="_blank" rel="noopener noreferrer" style={{ color: 'blue', marginLeft: '15px', marginRight: '15px' }}>GitHub</a>
-                <a href="https://www.facebook.com/thepackstrings/" target="_blank" rel="noopener noreferrer" style={{ color: 'blue', marginLeft: '15px', marginRight: '15px' }}>Facebook</a>
-                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: 'blue', marginLeft: '15px', marginRight: '15px' }}>Instagram</a>
-                <a href="https://www.youtube.com/@thepackstrings7902" target="_blank" rel="noopener noreferrer" style={{ color: 'blue', marginLeft: '15px', marginRight: '15px' }}>YouTube</a>
-              </h5>
+          {/* </Col> */}
+          {/* <Col md={6} className="d-flex justify-content-end"> */}
+            <div style={{ display: 'flex', marginLeft: 'auto'}}>
+              <h5 style={{ padding: '0', marginTop: '0', marginBottom: 'auto' }} className='custom-text'>Connect: </h5>
+              <h4 as={Link} to="https://github.com/ConnorVAdams" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '35px', marginRight: '15px', color: '#FFB120' }}>GitHub</h4>
+              <h4 as={Link} to="https://www.facebook.com/thepackstrings/" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '20px', marginRight: '15px', color: '#FFB120' }}>Facebook</h4>
+              <h4 as={Link} to="https://www.instagram.com" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '20px', marginRight: '15px', color: '#FFB120' }}>Instagram</h4>
+              <h4 as={Link} to="https://www.youtube.com/@thepackstrings7902" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '20px', marginRight: '15px', color: '#FFB120' }}>YouTube</h4>
             </div>
-          </Col>
-        </Row>
+          {/* </Col> */}
+        {/* </Row> */}
       </Container>
     </footer>
   );
