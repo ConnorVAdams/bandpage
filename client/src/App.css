@@ -9,7 +9,13 @@ body {
   background-image: url('https://i.imgur.com/MRMoK0Y.png');
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
+  height: 100vh;
+}
+
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
 }
 
 .custom-text {

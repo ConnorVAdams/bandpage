@@ -112,21 +112,23 @@ const App = () => {
     }
 
     if(!user) return (
-        <div className="vh-100 d-flex flex-column">
-            <Toaster />
+        <>
+        <Toaster />
+        {/* <div style={{ marginRight: 'auto', marginLeft: 'auto', maxHeight: '90vh', maxWidth: '1200px'}}> */}
             <Header />
             <Authentication />
             <Footer />
-        </div>
+        {/* </div> */}
+        </>
     )
 
     return (
         <>
         
-        <div>
             <Toaster />
             <Header />
             <NavBar />
+        <div className="vh-100 d-flex flex-column" style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: '1200px'}}>
 
                 <Routes>
 
@@ -158,8 +160,8 @@ const App = () => {
                     
                     <Route path='/*' element={<NotFound />} />
                 </Routes>
-                <Footer />
         </div>
+                <Footer />
         </>
     )
     }

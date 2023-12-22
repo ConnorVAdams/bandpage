@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 const Header = () => {
   const user = useSelector(state => state.user.data)
   return (
-    <header style={{ display: 'flex', height: '70px', backgroundColor: '#141316', padding: '20px', marginTop: '20px' }}>
-      <Container className={user.artist || user.fan ? 'invisible' : ''} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '1' }}>
+    <header style={{ marginBottom: '0px', display: 'flex', height: '70px', backgroundColor: '#141316', padding: '20px', marginTop: '20px' }}>
+      <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: '1' }}>
         <img
           src={process.env.PUBLIC_URL + '/assets/logo.png'}
           alt="Logo"
