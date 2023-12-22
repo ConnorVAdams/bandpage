@@ -145,6 +145,7 @@ const App = () => {
 
                     <Route path='/fans/'>
                         <Route path='new' element={<ProfileForm />} />
+                        <Route path='edit/:id' element={<ProfileForm />} />
                     </Route>
 
                     <Route path='/landing/'>

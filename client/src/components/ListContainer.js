@@ -27,7 +27,7 @@ const ListContainer = () => {
         if (path.includes('/tracks')) {
             return (
                 <>
-                <h4 
+                {/* <h4 
                         className='visible rounded-pill mb-1 mx-8'
                         style={{
                             backgroundColor: '#FFB120',
@@ -41,7 +41,7 @@ const ListContainer = () => {
                             textAlign: 'center'
                             }}>
                                 TRACKS
-                            </h4>
+                            </h4> */}
                 {artist.tracks && artist.tracks.map(
                     track => <TrackCard 
                         key={track.id} 
@@ -53,7 +53,7 @@ const ListContainer = () => {
         } else if (path.includes('/events')) {
             return (
                 <>
-                <h4 
+                {/* <h4 
                         className='visible rounded-pill mb-1 mx-8'
                         style={{
                             backgroundColor: '#FFB120',
@@ -67,7 +67,7 @@ const ListContainer = () => {
                             textAlign: 'center'
                             }}>
                                 EVENTS
-                            </h4>
+                            </h4> */}
                 {artist.upcoming_events && artist.upcoming_events.map(
                     event => <EventCard 
                         key={event.id} 

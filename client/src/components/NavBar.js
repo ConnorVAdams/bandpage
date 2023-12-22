@@ -94,7 +94,7 @@ const NavBar = () => {
                     {acct.username}
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item style={{ textShadow: 'none' }} as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
+                  <NavDropdown.Item style={{ color: 'black', textShadow: 'none' }} as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
                     <FaEdit /> Edit Profile
                   </NavDropdown.Item>
                   {!spotify ?

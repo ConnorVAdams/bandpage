@@ -43,12 +43,17 @@ const ProfileForm = () => {
         }
     }
 
+    // debugger
+
     const formik = useFormik({
-        initialValues: initialValues
-        ,
+        initialValues: initialValues,
         validationSchema: profFormSchema,
         onSubmit: async (values, event) => {
-            if (path.includes('edit')) {
+          debugger
+            if (path.includes('fan') && path.includes('new')) {
+              debugger
+            }
+            if (path.includes('edit') && path.includes('artist')) {
                 const action = await dispatch(fetchPatchArtist({user, values}))
                 if (typeof action.payload !== "string") {
                     dispatch(fetchCurrentUser())
@@ -56,9 +61,15 @@ const ProfileForm = () => {
                 } else {
                     toast.error(action.payload)
                 }
-            }
-
-            else if (path.includes('artist')) {
+            } else if (path.includes('edit') && path.includes('fan')) { // if (path.includes('fan'))
+                // const action = await dispatch(fetchPatchFan(values))
+                // if (typeof action.payload !== "string") {
+                //     dispatch(setUserType(action.payload))
+                //     navigate('/landing')
+                // } else {
+                //     toast.error(action.payload)
+                // }
+          } else if (path.includes('artist') && path.includes('new')) {
                 const action = await dispatch(fetchPostArtist(values))
                 if (typeof action.payload !== "string") {
                     toast.success(`Loaded new artist!`)
@@ -67,16 +78,17 @@ const ProfileForm = () => {
                 } else {
                     toast.error(action.payload)
                 }
+            } else { // if (path.includes('fan') && path.includes('new')) {
+              const action = await dispatch(fetchPostFan(values))
+              if (typeof action.payload !== "string") {
+                  toast.success(`Loaded new artist!`)
+                  dispatch(setUserType(action.payload))
+                  navigate('/landing')
+              } else {
+                  toast.error(action.payload)
+              }
 
-            } else { // if (path.includes('fan'))
-                const action = await dispatch(fetchPostFan(values))
-                if (typeof action.payload !== "string") {
-                    dispatch(setUserType(action.payload))
-                    navigate('/landing')
-                } else {
-                    toast.error(action.payload)
-                }
-            }
+          } 
         }
     })
     
@@ -179,9 +191,12 @@ const ProfileForm = () => {
           )}
         </Form.Group>
 
-        <Col xs={8} className="visible rounded-pill mb-1 mx-8" style={{ paddingLeft: '20px', paddingRight: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
+        <div xs={8} className="visible rounded-pill mb-1 mx-8" style={{ paddingLeft: '20px', paddingRight: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
             <div className="text-center text-warning px-4 mx-8">
               <Button
+                // onClick={() => {
+                //   debugger
+                // }}
                 type='submit'
                 className="d-inline-block p-2 rounded-pill shadow"
                 style={{ cursor: 'pointer', background: '#FFB120', border: 'none' }}
@@ -189,7 +204,7 @@ const ProfileForm = () => {
                 <span className="text-white p-2">Register</span>
               </Button>
             </div>
-        </Col>
+        </div>
       </Form>
     </Col>
   </Row>

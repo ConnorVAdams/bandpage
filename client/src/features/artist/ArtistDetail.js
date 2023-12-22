@@ -22,27 +22,68 @@ const ArtistDetail = () => {
             <div id={id}>
             <Container>
                 
-                <Container>
-                    <p>{bio}</p>
+                <Container className='custom-text' style={{ padding: '10px', paddingLeft: '15px', paddingRight: '15px', borderRadius: '35px', backgroundColor: '#6D6466' }}>
+                    <h6 style={{ marginLeft: '15px', marginRight: '15px' }}>{bio}</h6>
                 </Container>
-                <Container>
-                    <h3>Top Track</h3>
+
+                <Container style={{ display: 'flex' }}>
+
+                <Container style={{
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    flexDirection: 'column',
+                }}>
+                    <h4 style={{
+                        marginTop: '0px',
+                        width: '175px',
+                        color: '#CFCD67',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        textAlign: 'center',
+                        backgroundColor: '#585052'
+                    }} className="d-inline-block p-2 rounded-pill shadow" >Top Track</h4>
                     {topTrack ?
                     <TrackCard 
                     key={topTrack.id} 
                     track={topTrack}/>
                     :
-                    'No tracks liked yet!'}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        marginTop: '50px'
+                        }}>
+                        <h5 style={{ textAlign: 'center' }} className='custom-text mb-4'>No liked tracks yet!</h5>
+                    </div>  }
                 </Container>
 
-                <Container>
-                    <h3>Next Event</h3>
+                <Container style={{
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    flexDirection: 'column'
+                }}>
+                <h4 style={{
+                        width: '175px',
+                        color: '#CFCD67',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        textAlign: 'center',
+                        backgroundColor: '#585052'
+                    }} className="d-inline-block p-2 rounded-pill shadow" >Next Event</h4>
                     {nextEvent ?
                         <EventCard 
                         key={nextEvent.id} 
                         event={nextEvent} />
                         :
-                        'No events scheduled yet!'}
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-evenly',
+                            marginTop: '50px'
+                            }}>
+                            <h5 style={{ textAlign: 'center' }} className='custom-text mb-4'>No events yet!</h5>
+                        </div>  }
+                </Container>
                 </Container>
 
             </Container>

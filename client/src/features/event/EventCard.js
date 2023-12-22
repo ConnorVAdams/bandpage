@@ -98,7 +98,7 @@ const EventCard = ({ event }) => {
                             <Container style={{ marginTop: '10px', marginBottom: 'auto', padding: '0px' }}>
                                 <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '0px' }}>
                                     <Button variant={inUserEvents ? 'success' : 'danger'} onClick={handleClick} className="d-inline-block p-2 rounded-pill shadow" style={{ width: '120px', height: '40px', border: 'none', cursor: 'pointer', background: inUserEvents ? '#43CE2B' : '#141416', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', marginLeft: '5px', marginRight: '5px', marginTop: 'auto', marginBottom: 'auto' }}>
-                                    {!inUserEvents ? 'Like' : 'Liked'} {inUserEvents ? <FaCheck /> : null }
+                                    {!inUserEvents ? 'RSVP' : 'Attending'} {inUserEvents ? <FaCheck /> : null }
                                     </Button>
                                 </div>
                             </Container>
