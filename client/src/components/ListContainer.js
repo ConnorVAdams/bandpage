@@ -25,19 +25,44 @@ const ListContainer = () => {
     }
     
     const [searchObj, setSearchObj] = useState(defaultObj)
+        
+    // const sortArtistsAlphabetically = (artistsArray) => {
+    //         const sortedArtists = [...artistsArray]; // Create a copy of the artists array
+        
+    //         sortedArtists.sort((a, b) => {
+    //         const nameA = a.name.toLowerCase();
+    //         const nameB = b.name.toLowerCase();
+        
+    //         if (nameA < nameB) {
+    //             return -1;
+    //         }
+    //         if (nameA > nameB) {
+    //             return 1;
+    //         }
+    //         return 0;
+    //         });
+        
+    //         return sortedArtists;
+    //     };
+        
+    const searchArtistsByName = (artistsArray, searchTerm) => {
+        if (!searchTerm) {
+        return artistsArray; // Return the original array if searchTerm is empty
+        }
     
-    let filteredArtists
+        const filteredArtists = artistsArray.filter((artist) =>
+        artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
     
+        return filteredArtists;
+    };
+
+    let sortedAndFilteredArtists = artists;
+
     if (searchObj.search) {
-        filteredArtists = artists.filter(artist => {
-            // Convert both artist name and search string to lowercase for case-insensitive search
-            const artistName = artist.name.toLowerCase();
-            const searchTerm = searchObj.search.toLowerCase();
-            
-            // Check if the artist's name includes the search string
-            return artistName.includes(searchTerm)
-        })
+    sortedAndFilteredArtists = searchArtistsByName(sortedAndFilteredArtists, searchObj.search);
     }
+
 
     useEffect(() => {
         if (path.includes('/artists')) {
@@ -55,6 +80,46 @@ const ListContainer = () => {
     const handleReset = () => {
         setSearchObj(defaultObj)
     }
+
+    const searchComponent = () => {
+        return (
+            <form style={{ marginRight: 'auto', marginLeft: ' auto' }} className="search-form">
+                <div className="search-list-sort">
+                <div className="search-bar">
+                    <label htmlFor="search">
+
+                    </label>
+                    <input
+                    onChange={(e) => handleSearchChange(e)}
+                    id="search"
+                    name="search"
+                    type="text"
+                    placeholder="Search by name"
+                    value={searchObj.search}
+                    style={{ marginTop: '10px', minWidth: '250px', borderRadius: '25px'}}
+                    />
+                </div>
+                {/* <div>
+                    <label htmlFor="sort">
+                    <strong>Sort</strong>
+                    </label>
+                    <select
+                    onChange={(e) => handleSearchChange(e)}
+                    id="sort"
+                    name="sort"
+                    value={searchObj.sort}
+                    >
+                    <option value="Alphabetically">A-Z</option>
+                    <option value="Oldest-Newest">Oldest-Newest</option>
+                    <option value="Visitors">Visitors</option>
+                    </select>
+                </div> */}
+                </div>
+            </form>
+            );
+        };
+
+    const searchBox = searchComponent()
 
     const cardComponent = () => {
         if (path.includes('/tracks')) {
@@ -97,14 +162,15 @@ const ListContainer = () => {
                             }}>
                                 EXPLORE ARTISTS
                             </h4>
+                            {path === '/artists' && searchBox}
                             {
                                 !searchObj.search
                                     ? (artists &&
                                         artists.map((artist) => (
                                         <ArtistCard key={artist.id} artist={artist} />
                                         )))
-                                    : (filteredArtists &&
-                                        filteredArtists.map((artist) => (
+                                    : (sortedAndFilteredArtists &&
+                                        sortedAndFilteredArtists.map((artist) => (
                                         <ArtistCard key={artist.id} artist={artist} />
                                         )))
                                 }
@@ -118,80 +184,16 @@ const ListContainer = () => {
 
     const cardDisplay = cardComponent()
 
-    const searchComponent = () => {
-        return (
-            <form className="search-form">
-                <div className="search-list-sort">
-                <div className="search-bar">
-                    <label htmlFor="search">
-                    <strong>Search</strong>
-                    </label>
-                    <input
-                    onChange={(e) => handleSearchChange(e)}
-                    id="search"
-                    name="search"
-                    type="text"
-                    placeholder="Search by name"
-                    value={searchObj.search}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="list">
-                    <strong>Lists</strong>
-                    </label>
-                    <select
-                    onChange={(e) => handleSearchChange(e)}
-                    id="list"
-                    name="list"
-                    value={searchObj.list}
-                    >
-                    <option value="All">All</option>
-                    <option value="Cards Collected">Cards Collected</option>
-                    <option value="Cards Remaining">Cards Remaining</option>
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="sort">
-                    <strong>Sort</strong>
-                    </label>
-                    <select
-                    onChange={(e) => handleSearchChange(e)}
-                    id="sort"
-                    name="sort"
-                    value={searchObj.sort}
-                    >
-                    <option value="Alphabetically">A-Z</option>
-                    <option value="Oldest-Newest">Oldest-Newest</option>
-                    <option value="Visitors">Visitors</option>
-                    </select>
-                </div>
-                </div>
-                <div id="filters-container" className="filters-container">
-                <label htmlFor="filters-container">
-                    <strong>Filters</strong>
-                </label>
-                <button onClick={handleReset}>Reset Filters</button>
-                </div>
-            </form>
-            );
-        };
-
-    const searchBox = searchComponent()
-
-    
-    
-    console.log(filteredArtists)
 
     return (
         <Container fluid>
         <Row>
             {/* Search, Sort, Filter Utility Box */}
             <Col md={4}>
-                {path === '/artists' && searchBox}
             </Col>
-
             <Col md={8} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
                 <ListGroup>
+
                     {cardDisplay}
                 </ListGroup>
             </Col>
