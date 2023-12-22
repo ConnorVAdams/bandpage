@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import EventCard from '../event/EventCard'
 import ArtistCard from '../artist/ArtistCard'
 import TrackCard from '../track/TrackCard'
@@ -13,6 +13,7 @@ const UserLanding = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [ view, setView ] = useState('')
+    const loc = useLocation()
 
     useEffect(() => {
         // console.log(user.followed_artists)
@@ -99,7 +100,7 @@ const UserLanding = () => {
                         backgroundColor: '#FFB120',
                         color: 'white',
                         padding: '10px',
-                        width: '7vw',
+                        width: '150px',
                         marginLeft: '15px',
                         marginRight: '15px',
                         marginBottom: '10px'
@@ -116,7 +117,7 @@ const UserLanding = () => {
                         backgroundColor: '#FFB120',
                         color: 'white',
                         padding: '10px',
-                        width: '7vw',
+                        width: '150px',
                         marginLeft: '15px',
                         marginRight: '15px',
                         marginBottom: '10px'
@@ -133,7 +134,7 @@ const UserLanding = () => {
                         backgroundColor: '#FFB120',
                         color: 'white',
                         padding: '10px',
-                        width: '7vw',
+                        width: '150px',
                         marginLeft: '15px',
                         marginRight: '15px',
                         marginBottom: '10px'
@@ -143,19 +144,19 @@ const UserLanding = () => {
                     </h6>
                     </Container>
 
-                    {view === 'events' &&
-                    <div style={{ flex: '1', padding: '30px', backgroundColor: '#6D6466', borderRadius: '30px', marginRight: '10px', marginLeft: '25px' }}>
+                    {(view === 'events' || loc.pathname === '/landing') && view !== 'followers' && view !== 'tracks' && (
+                        <div style={{ flex: '1', padding: '30px', backgroundColor: '#6D6466', borderRadius: '30px', marginRight: '10px', marginLeft: '25px' }}>
                         <div style={{ minHeight: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} id="events-attending">
-                        
-                        {events_attending && events_attending.map(event => event && (
-                        <EventCard key={event.id} event={event} />
-                        ))}
-                    
-                        {user.events_attending.length === 0 && (
+                            {events_attending && events_attending.map(event => event && (
+                            <EventCard key={event.id} event={event} />
+                            ))}
+
+                            {user.events_attending.length === 0 && (
                             <h5 style={{ textAlign: 'center' }} className='custom-text mb-4'>No events yet!</h5>
-                        )}
+                            )}
                         </div>
-                    </div>}
+                        </div>
+                    )}
 
                     {view === 'followers' &&
                     <div style={{ flex: '1', padding: '30px', backgroundColor: '#6D6466', borderRadius: '30px', marginRight: '10px', marginLeft: '25px' }}>
@@ -188,29 +189,8 @@ const UserLanding = () => {
                         )}
                         </div>
                     </div>}
-
-            
-                    {/* <div style={{ flex: '1', padding: '10px' }}>
-                    {view === 'followers' && (
-                        <div>
-
-                        </div>
-                    )}
-            
-                    {view === 'tracks' && (
-                        <div>
-
-                        </div>
-                    )}
-            
-                    {view === 'events' && (
-                        <div id="events-attending-div">
-
-                        </div>
-                    )}
-                    </div> */}
                 </div>
-                </div>
+            </div>
             </>
     )} else if (user && user.fan) {
         const { 

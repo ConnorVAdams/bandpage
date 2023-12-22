@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/modal'
 import Image from 'react-bootstrap/Image'
 import { Row, Col } from 'react-bootstrap'
 import { FaEdit, FaSignOutAlt, FaSpotify, FaTrash } from 'react-icons/fa';
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, fetchDeleteUser, setSpotify } from '../features/user/userSlice';
 import { toast } from 'react-hot-toast'
@@ -20,6 +20,7 @@ const NavBar = () => {
     const acct = useSelector(state => state.user.data)
     const user = acct ? acct.artist || acct.fan : null
     const spotify = useSelector(state => state.user.spotify)
+    const loc = useLocation()
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -79,7 +80,7 @@ const NavBar = () => {
 
 
     return (
-<div className='' style={{ marginTop: '10px', marginBottom: '10px', maxWidth: '95vw', borderRadius: '20px', margin: '0 auto', width: '95vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+<div style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', marginTop: '10px', marginBottom: '10px', maxWidth: '95vw', borderRadius: '20px', margin: '0 auto', width: '95vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
   <Navbar bg="light" expand="lg" id='main-nav' style={{ marginTop: '10px', marginBottom: '10px', borderRadius: '20px', width: '90vw', paddingTop: '0', paddingBottom: '0' }}>
     <Container id='user-nav' style={{ height: '60px', marginLeft: '0'}}>
       {user ? (
@@ -122,7 +123,7 @@ const NavBar = () => {
         </>
       ) : null}
     </Container>
-      <Button className="d-inline-block p-2 rounded-pill shadow" style={{ width: '150px', border: 'none', cursor: 'pointer', background: '#FFB120', marginRight: '40px'}} as={Link} to="/artists">Explore Artists</Button>
+      <Button className="d-inline-block p-2 rounded-pill shadow" style={{ width: '150px', border: 'none', cursor: 'pointer', background: '#141416', marginRight: '40px'}} as={Link} to="/artists">Explore Artists</Button>
   </Navbar>
 
   <Modal show={show} onHide={handleClose}>
