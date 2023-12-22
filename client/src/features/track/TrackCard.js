@@ -51,6 +51,7 @@ const TrackCard = ({ track }) => {
     }, [])
 
     const handleClick = async () => {
+        // debugger
         if (inUserTracks) {
             const track = user.favorited_tracks.find(track => track.id === id)
             const like_id = track.likes.find(like => acct.artist ? like.artist_id : like.fan_id).id
@@ -60,6 +61,7 @@ const TrackCard = ({ track }) => {
                 dispatch(fetchCurrentUser())
             }
         } else {
+            debugger
             const resp = await dispatch(fetchPostLike(likeValues));
             if (resp.payload === 201) {
                 dispatch(fetchCurrentUser())
