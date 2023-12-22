@@ -23,8 +23,8 @@ class ArtistSchema(ma.SQLAlchemySchema):
     artist_followers = fields.List(fields.Nested('ArtistSchema', only=('id', 'name', 'location', 'img', 'created_at', 'genres')))
     followed_artists = fields.List(fields.Nested('ArtistSchema', only=('id', 'name', 'location', 'img')))
     followed_artists = fields.List(fields.Nested('ArtistSchema', only=('id', 'name', 'location', 'img', 'created_at', 'genres')))
-    favorited_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio", 'likes', 'artist_id'))))
-    events_attending = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue', 'likes'))))
+    favorited_tracks = fields.List(fields.Nested(TrackSchema(only=("id", "name", "audio", 'likes', 'artist_id', 'artist_name'))))
+    events_attending = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue', 'likes', 'artist_name'))))
     events_attended = fields.List(fields.Nested(EventSchema(only=('id', 'date_time', 'venue'))))
     class Meta():
         model: Artist

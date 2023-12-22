@@ -20,26 +20,45 @@ const EventCard = ({ event }) => {
             fan_id: null,
         }
     )
+
     
-
     const dispatch = useDispatch()
-
+    
     const acct = useSelector(state => state.user.data)
     const user = useSelector(state => state.user.data.artist || state.user.data.fan)
-
+    
     const admin = user.id === event.artist_id
-
+    
     const inUserEvents = user.events_attending.some(event => event.id === id);
-
+    
+    // console.log(likeValues)
+    // debugger
+    
     useEffect(() => {
-        if (event && user) {
+        if (event && acct.artist) {
             const newValues = {
                 likeable_type: 'event',
                 likeable_id: id,
-                liker_type: !user.artist ? 'artist' : 'fan',
-                // artist_id: acct.artist || acct.artist.id,
-                // fan_id: acct.fan || acct.fan.id,
+                liker_type: 'artist',
+
                 ...(user
+                    ? { 
+                        artist_id: user.id,
+                        fan_id: null
+                        }
+                    : {                         
+                        artist_id: null ,
+                        fan_id: user.id
+                    }),
+                };
+            setLikeValues(newValues)
+        } else {
+            const newValues = {
+                likeable_type: 'event',
+                likeable_id: id,
+                liker_type: 'fan',
+
+                ...(acct.artist
                     ? { 
                         artist_id: user.id,
                         fan_id: null

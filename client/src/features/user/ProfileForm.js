@@ -49,9 +49,7 @@ const ProfileForm = () => {
         initialValues: initialValues,
         validationSchema: profFormSchema,
         onSubmit: async (values, event) => {
-          debugger
-            if (path.includes('fan') && path.includes('new')) {
-              debugger
+            if (!values.genres) {
             }
             if (path.includes('edit') && path.includes('artist')) {
                 const action = await dispatch(fetchPatchArtist({user, values}))
@@ -194,14 +192,11 @@ const ProfileForm = () => {
         <div xs={8} className="visible rounded-pill mb-1 mx-8" style={{ paddingLeft: '20px', paddingRight: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
             <div className="text-center text-warning px-4 mx-8">
               <Button
-                // onClick={() => {
-                //   debugger
-                // }}
                 type='submit'
                 className="d-inline-block p-2 rounded-pill shadow"
                 style={{ cursor: 'pointer', background: '#FFB120', border: 'none' }}
               >
-                <span className="text-white p-2">Register</span>
+                <span className="text-white p-2">{path.includes('edit') ? 'Submit' : 'Register'}</span>
               </Button>
             </div>
         </div>

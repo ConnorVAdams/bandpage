@@ -16,6 +16,7 @@ class Fans(Resource):
 
     @jwt_required()
     def post(self):
+        import ipdb; ipdb.set_trace()
         try:
             data = request.get_json()
             # fan_schema.validate(data)
