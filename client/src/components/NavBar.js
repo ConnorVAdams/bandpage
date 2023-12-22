@@ -88,7 +88,7 @@ const NavBar = () => {
           <Navbar.Collapse id="basic-navbar-nav" >
             <Container >
               <Nav className="me-auto" style={{ }}>
-                <NavDropdown className="d-inline-block rounded-pill" title={<Image roundedCircle src={user.img} alt="User" style={{ border: '#FFB120', width: '30px', height: '30px', marginLeft: '10px', marginRight: '10px' }} className="user-image" />}>
+                <NavDropdown className="d-inline-block rounded-pill" title={<Image roundedCircle src={user.img} alt="User" style={{ border: '2px solid #FFB120', width: '40px', height: '40px', marginLeft: '5px', marginRight: '5px' }} className="user-image shadow" />}>
                   <NavDropdown.Item style={{ color: 'black'}} >
                     {acct.username}
                   </NavDropdown.Item>
@@ -111,9 +111,9 @@ const NavBar = () => {
                     <FaSignOutAlt /> Log Out
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link className="d-inline-block rounded-pill shadow" as={Link} to="/landing" style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '10px' }}>Home</Nav.Link>
-                {user.genres ? <Nav.Link className="d-inline-block rounded-pill shadow" onClick={handleMyPage} style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '15px', marginRight: '15px' }}>My Page</Nav.Link> : null}
-                {spotify ? <Nav.Link className="d-inline-block rounded-pill shadow" as={Link} to="/spotify_prof" style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '15px', marginRight: '15px' }}>My Spotify Page</Nav.Link> : null}
+                <Nav.Link className="d-inline-block rounded-pill shadow" as={Link} to="/landing" style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '10px', color: 'white' }}>Home</Nav.Link>
+                {user.genres ? <Nav.Link className="d-inline-block rounded-pill shadow" onClick={handleMyPage} style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '15px', marginRight: '15px', color: 'white' }}>My Page</Nav.Link> : null}
+                {spotify ? <Nav.Link className="d-inline-block rounded-pill shadow" as={Link} to="/spotify_prof" style={{ cursor: 'pointer', background: '#FFB120', paddingLeft: '10px', paddingRight: '10px', height: '40px', display: 'flex', alignItems: 'center', margin: 'auto 0', marginLeft: '0px', marginRight: '15px', color: 'white' }}>My Spotify</Nav.Link> : null}
               </Nav>
             </Container>
 
