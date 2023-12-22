@@ -91,11 +91,12 @@ const ProfileForm = () => {
         width: '30vw',
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginTop: '2vh',
+        marginTop: '1vh',
+        marginBottom: '1vh'
         }}>
     {path.includes('new') ? `NEW ${path.includes('artist') ? 'ARTIST' : 'FAN'}` : 'EDIT PROFILE'}</h1>
-  <Row style={{ marginTop: '2vh' }}className="justify-content-md-center">
-    <Col md={6} className="bg-dark p-4 rounded shadow">
+  <Row style={{ marginTop: '2vh' }} className="justify-content-md-center">
+    <Col style={{ borderRadius: '20px', maxHeight: '61vh' }} md={6} className="bg-dark p-4 shadow">
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group controlId="name">
           <Form.Label style={{ color: 'white' }}>{path.includes('artist') ? 'Artist Name' : 'Name'}</Form.Label>
@@ -105,7 +106,7 @@ const ProfileForm = () => {
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="bg-secondary text-white rounded shadow"
+            className="bg-secondary text-white rounded shadow visible rounded-pill mb-1 mx-8"
           />
           {formik.errors.name && formik.touched.name && (
             <Form.Text className="text-danger">{formik.errors.name}</Form.Text>
@@ -122,7 +123,7 @@ const ProfileForm = () => {
                 value={formik.values.genres}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="bg-secondary text-white rounded shadow"
+                className="bg-secondary text-white rounded shadow visible rounded-pill mb-1 mx-8"
               />
               {formik.errors.genres && formik.touched.genres && (
                 <Form.Text className="text-danger">{formik.errors.genres}</Form.Text>
@@ -140,7 +141,8 @@ const ProfileForm = () => {
             value={formik.values.bio}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="bg-secondary text-white rounded shadow"
+            style={{ borderRadius: '20px' }}
+            className="bg-secondary text-white shadow visible mb-1 mx-8"
           />
           {formik.errors.bio && formik.touched.bio && (
             <Form.Text className="text-danger">{formik.errors.bio}</Form.Text>
@@ -155,7 +157,7 @@ const ProfileForm = () => {
             value={formik.values.location}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="bg-secondary text-white rounded shadow"
+            className="bg-secondary text-white rounded shadow visible rounded-pill mb-1 mx-8"
           />
           {formik.errors.location && formik.touched.location && (
             <Form.Text className="text-danger">{formik.errors.location}</Form.Text>
@@ -170,7 +172,7 @@ const ProfileForm = () => {
             value={formik.values.img}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="bg-secondary text-white rounded shadow"
+            className="bg-secondary text-white rounded shadow visible rounded-pill mb-1 mx-8"
           />
           {formik.errors.img && formik.touched.img && (
             <Form.Text className="text-danger">{formik.errors.img}</Form.Text>
