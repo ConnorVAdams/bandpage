@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { fetchOneArtist } from './artistSlice'
 import { Card, Button, Row, Col, Image, Container } from 'react-bootstrap';
-import { FaCalendar, FaMapMarker, FaMusic } from 'react-icons/fa';
+import { FaBook, FaCalendar, FaFolderPlus, FaMapMarker, FaMusic, FaPlay, FaUser, FaUserPlus } from 'react-icons/fa';
 import { convertDateFormat } from '../../utils/helpers'
 import { useSelector } from 'react-redux';
 import { setArtist } from './artistSlice';
@@ -20,6 +20,7 @@ const ArtistCard = ({ artist }) => {
     const user = useSelector(state => state.user.data.artist || state.user.data.fan)
     const acct = useSelector(state => state.user.data)
     const admin = user.id === artist.id
+    const [ view, setView ] = useState()
 
     const defaultValues = {
         likeable_type: 'artist',
@@ -106,97 +107,199 @@ const ArtistCard = ({ artist }) => {
 
 
         return (
-            <Card id={id} className="mb-3">
-                <Card.Body>
-                <Container
-                    as={Link}
-                    to={`/artists/${id}`}
-                    onClick={handleClick}
-                    style={{
+    <Card id={id} 
+    style={{
+        width: '90%',
+        backgroundColor: 'rgba(109, 100, 102, 0.5)', // Adjust the color and transparency here
+        borderRadius: '100px',
+        border: 'none',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'relative',
+        margin: 'auto', // Center the card
+        marginTop: '10px',
+        marginBottom: '10px',
+        boxShadow: '0 0 10px 10px rgba(109, 100, 102, 0.5)', // Apply a fuzzy border effect
+        }}
+        className="mb-3">
+        <Card.Body style={{ backgroundColor: 'transparent' }}>
+            {/* Gray oblong pill shape */}
+            <div
+            className="gray-pill-shape"
+            style={{
+                width: '98%',
+                backgroundColor: '#6D6466',
+                borderRadius: '100px',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingTop: '10px',
+                paddingBottom: '10px',
+                position: 'relative',
+                margin: 'auto',
+                marginTop: '5px',
+                marginBottom: '5px'
+            }}
+            >
+            {/* Left margin for the image */}
+            <div style={{ marginLeft: '40px', marginRight: '20px' }}>
+                <Image
+                src={img}
+                style={{
+                    border: '3px solid black',
+                    width: '150px',
+                    height: '150px',
+                    padding: '0',
+                    borderRadius: '50%'
+                }}
+                />
+            </div>
+
+        <Container style={{ display: 'flex', flexDirection: 'column', padding: '0px'}}>
+            <Container className='custom-text' style={{ width: '100%', padding: '0px' }}>
+                {/* Name, genres, location, and established date */}
+                <div style={{ 
+                    marginBottom: 'auto', 
+                    marginTop: 'auto',
                     display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    textDecoration: 'none',
-                    color: 'black'
-                    }}
+                    flexDirection: 'row' }} xs={4} md={8}>
+                <h2 style={{ 
+                    display: 'inline',
+                    marginTop: 'auto',
+                    marginBottom: 'auto',
+                    marginLeft: '0px'
+                }}>{name}</h2>
+                </div>
+                <div style={{ display: 'flex', marginTop: '4px' }}>
+                    <div style={{ marginBottom: 'auto', marginTop: 'auto', width: '30%' }}>
+                        <h6>
+                            <FaCalendar style={{ color: 'black', marginBottom: '4px', marginTop: 'auto', }} /> Est. {convertDateFormat(created_at)}
+                        </h6> 
+                    </div>
+                <div style={{ marginBottom: 'auto', marginTop: 'auto', width: '40%' }} >
+                    <h6>
+                    <FaMapMarker style={{ color: 'black', marginBottom: '4px' }} /> {location}
+                    </h6>
+                </div>
+                <div style={{ marginBottom: 'auto', marginTop: 'auto', width: '25%' }} >
+                    <h6>
+                    <FaMusic style={{ color: 'black', marginBottom: '4px' }} /> {genres}
+                    </h6>
+                </div>
+                </div>
+            </Container>
+
+            {/* Stats and follow button */}
+            <Container style={{ 
+                display: 'flex', 
+                padding: '0px' 
+            }}>
+            <Container style ={{                     
+                    marginTop: '10px',
+                    marginBottom: 'auto',
+                    padding: '0px'
+                }}>
+                <div 
+                style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    padding: '0px'
+                }}>
+                    
+
+            {/* Follow button */}
+            {(!admin && path !== '/artists') || inUserFollows ? (
+                <Button 
+                onClick={handleFollow}
+                className="d-inline-block p-2 rounded-pill shadow" 
+                style={{ 
+                    width: '90px', 
+                    height: '40px',
+                    border: 'none', 
+                    cursor: 'pointer', 
+                    background: inUserFollows ? '#43CE2B' : '#141416',
+                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                    marginLeft: '5px',
+                    marginRight: '5px'
+                }} 
+                as={Link} 
+                to="/artists"
                 >
-                    <Container style={{ width: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Image
-                        src={img}
-                        style={{
-                            border: '3px solid black',
-                            width: '150px',
-                            height: '150px',
-                            padding: '0',
-                        }}
-                        roundedCircle
-                    />
+                    Follow
+                </Button>
+                ) : null}
 
-                    </Container>
-                    <Container style={{ width: '1000%' }}>
-                    <h2>{name}</h2>
-                        <Row
-                            style={{
-                                alignItems: 'center',
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                marginBottom: '20px'
-                            }}
-                            
-                        >
-                            <Col xs={2} md={4}>
-                            <h6>
-                                <FaCalendar /> Est. {convertDateFormat(created_at)}
-                            </h6>
-                            </Col>
-                            <Col xs={2} md={4}>
-                            <h6>
-                                <FaMapMarker /> {location}
-                            </h6>
-                            </Col>
-                            <Col xs={2} md={4}>
-                            <h6>
-                                <FaMusic /> {genres}
-                            </h6>
-                            </Col>
-                        </Row>
+                <Container style={{ width: '30%', display: 'flex', flexDirection: 'column', marginTop: 'auto', marginBottom: 'auto', padding: '0px' }}>
+                    <div style={{ textAlign: 'left' }} className='text-center custom-text'>
+                        {num_followers} Followers
+                    </div>
+                    <div style={{ textAlign: 'left' }} className='text-center custom-text'>
+                        {num_followed} Followed
+                    </div>
+                </Container>
+            
+                    <Container style={{ textAlign: 'center', height: '45px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+    <h6
+        className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'events' ? 'active-view' : ''}`}
+        onClick={() => setView('events')}
+        style={{
+            borderRadius: '20px',
+            cursor: 'pointer',
+            backgroundColor: '#FFB120',
+            color: 'white',
+            padding: '10px',
+            width: '40px',
+            marginLeft: '5px',
+            marginRight: '5px'
+        }}
+    >
+        <FaBook />
+    </h6>
+    <h6
+        className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'followers' ? 'active-view' : ''}`}
+        onClick={() => setView('followers')}
+        style={{
+            borderRadius: '20px',
+            cursor: 'pointer',
+            backgroundColor: '#FFB120',
+            color: 'white',
+            padding: '10px',
+            width: '40px',
+            marginLeft: '5px',
+            marginRight: '5px',
+            marginBottom: '10px',
+        }}
+    >
+        <FaUserPlus />
+    </h6>
+    <h6
+        className={`visible rounded-pill mb-1 mx-8 shadow ${view === 'tracks' ? 'active-view' : ''}`}
+        onClick={() => setView('tracks')}
+        style={{
+            borderRadius: '20px',
+            cursor: 'pointer',
+            backgroundColor: '#FFB120',
+            color: 'white',
+            padding: '10px',
+            width: '40px',
+            marginLeft: '5px',
+            marginRight: '5px',
+            marginBottom: '10px',
+        }}
+    >
+        <FaPlay />
+    </h6>
+</Container>
+                </div>
+            </Container>
 
-                    <Container
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            
-                        }}
-                    >
-                        <Button as={Link} to={`/artists/${id}`}>
-                        About
-                        </Button>
-                        <Button as={Link} to={`/artists/${id}/events`}>
-                        Events
-                        </Button>
-                        <Button as={Link} to={`/artists/${id}/tracks`}>
-                        Music
-                        </Button>
-                    </Container>
-                    <>
-                                    <div className='text-center'>{num_followers} Followers</div>
-                                    <div className='text-center'>{num_followed} Followed</div>
-                                    {(!admin && path !== '/artists') || inUserFollows ? (
-                                        <Button
-                                        variant={inUserFollows ? 'success' : 'danger'}
-                                        onClick={handleFollow}
-                                        className="mr-2 mb-2"
-                                        >
-                                            {inUserFollows ? 'Following' : 'Follow'}
-                                        </Button>
-                                    ) : null}
-                                </> 
-                    </Container>
-                    </Container>
-                </Card.Body>
-            </Card>
+            </Container>
+
+            </Container>
+            </div>
+        </Card.Body>
+        </Card>
             )
     }
     

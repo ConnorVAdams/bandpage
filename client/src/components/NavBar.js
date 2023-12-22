@@ -88,27 +88,27 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" >
             <Container >
-              <Nav className="me-auto" style={{ }}>
+              <Nav className="me-auto">
                 <NavDropdown className="d-inline-block rounded-pill" title={<Image roundedCircle src={user.img} alt="User" style={{ border: '2px solid #FFB120', width: '40px', height: '40px', marginLeft: '5px', marginRight: '5px' }} className="user-image shadow" />}>
-                  <NavDropdown.Item style={{ color: 'black'}} >
+                  <NavDropdown.Item style={{ textShadow: 'none', color: 'black'}} >
                     {acct.username}
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
+                  <NavDropdown.Item style={{ textShadow: 'none' }} as={Link} to={acct.artist ? `/artists/edit/${user.id}` : `/fans/edit/${user.id}`}>
                     <FaEdit /> Edit Profile
                   </NavDropdown.Item>
                   {!spotify ?
-                    <NavDropdown.Item style={{ color: 'black'}} onClick={handleAuthorize}>
+                    <NavDropdown.Item style={{ textShadow: 'none', color: 'black'}} onClick={handleAuthorize}>
                       <FaSpotify /> Link Spotify Profile
                     </NavDropdown.Item>
                     :
                     null
                   }
-                  <NavDropdown.Item style={{ color: 'black'}} onClick={handleShow}>
+                  <NavDropdown.Item style={{ textShadow: 'none', color: 'black'}} onClick={handleShow}>
                     <FaTrash /> Delete Account
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item style={{ color: 'black'}} onClick={handleLogout}>
+                  <NavDropdown.Item style={{ textShadow: 'none', color: 'black'}} onClick={handleLogout}>
                     <FaSignOutAlt /> Log Out
                   </NavDropdown.Item>
                 </NavDropdown>

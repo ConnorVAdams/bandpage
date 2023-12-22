@@ -43,7 +43,7 @@ const UserLanding = () => {
 
         return(
             <>
-                <div id={user_id} style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', width: '100%', marginTop: '20px' }}>
+                <div id={user_id} style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', height: '68vh', width: '100%', marginTop: '20px' }}>
                 <div style={{ position: 'relative', display: 'flex', width: '50%' }}>
                     <Container>
                     <h5
@@ -62,7 +62,7 @@ const UserLanding = () => {
                     >
                         ARTISTS
                     </h5>
-                    <div style={{ flex: '1', padding: '30px', backgroundColor: '#6D6466', borderRadius: '30px', marginTop: '10px', marginRight: '15px' }}>
+                    <div style={{ flex: '1', padding: '30px', backgroundColor: '#6D6466', borderRadius: '30px', marginTop: '10px', marginRight: '15px', height: '61.75vh' }}>
                         <div style={{ minHeight: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} id="liked-artists">
                         
                         {followed_artists && followed_artists.map(artist => artist && (
