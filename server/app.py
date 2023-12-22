@@ -84,9 +84,6 @@ api.add_resource(CheckToken, "/check")
 #     # response.headers.add("Access-Control-Allow-Origin", "*")
 #     return response
 
-# @app.route('/spotify_api')
-# def spotify_api():
-
 @app.route('/authorize')
 def authorize():
     # request comes from http://localhost/authorize
@@ -269,12 +266,9 @@ def handle_404(error):
     response = {"message": error.description}
     return response, error.code
 
-# @app.route("/")
-# @app.route("/production-detail/<int:id>")
-# @app.route("/edit-production/<int:id>")
-# @app.route("/new-production")
-# def index(id=0):
-#     return render_template("index.html")
+@app.route("/")
+def index(id=0):
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
