@@ -266,7 +266,7 @@ def handle_404(error):
     response = {"message": error.description}
     return response, error.code
 
-@app.route("/")
+@app.route("/landing")
 def index(id=0):
     return render_template("index.html")
 
