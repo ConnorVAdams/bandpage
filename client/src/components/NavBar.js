@@ -79,17 +79,17 @@ const NavBar = () => {
 
 
     return (
-<div style={{ maxWidth: '1200px', borderRadius: '5px', margin: '0 auto', height: '175px', width: '95vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-  <Navbar bg="light" expand="lg" id='main-nav' style={{ flexDirection: 'column', marginBottom: '0', borderRadius: '10px', width: '195vw' }}>
-    <Container id='user-nav' style={{ width: '95vw'}}>
+<div className='' style={{ marginTop: '10px', marginBottom: '10px', maxWidth: '95vw', borderRadius: '5px', margin: '0 auto', width: '95vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <Navbar bg="light" expand="lg" id='main-nav' style={{ marginTop: '10px', marginBottom: '10px', borderRadius: '10px', width: '90vw', paddingTop: '0', paddingBottom: '0' }}>
+    <Container id='user-nav' style={{ height: '60px', marginLeft: '0'}}>
       {user ? (
         <>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav" style={{ padding: '0' }}>
-            <Container style={{ padding: '0' }}>
-              <Nav className="me-auto">
-                <NavDropdown title={<Image roundedCircle src={user.img} alt="User" style={{ width: '30px', height: '30px', marginLeft: '15px', marginRight: '15px' }} className="user-image" />}>
-                  <NavDropdown.Item>
+          <Navbar.Collapse id="basic-navbar-nav" >
+            <Container >
+              <Nav className="me-auto" style={{ }}>
+                <NavDropdown title={<Image roundedCircle src={user.img} alt="User" style={{ width: '30px', height: '30px', marginLeft: '10px', marginRight: '10px' }} className="user-image" />}>
+                  <NavDropdown.Item style={{ color: 'black'}}>
                     {acct.username}
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
@@ -97,33 +97,32 @@ const NavBar = () => {
                     <FaEdit /> Edit Profile
                   </NavDropdown.Item>
                   {!spotify ?
-                    <NavDropdown.Item onClick={handleAuthorize}>
+                    <NavDropdown.Item style={{ color: 'black'}} onClick={handleAuthorize}>
                       <FaSpotify /> Link Spotify Profile
                     </NavDropdown.Item>
                     :
                     null
                   }
-                  <NavDropdown.Item onClick={handleShow}>
+                  <NavDropdown.Item style={{ color: 'black'}} onClick={handleShow}>
                     <FaTrash /> Delete Account
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={handleLogout}>
+                  <NavDropdown.Item style={{ color: 'black'}} onClick={handleLogout}>
                     <FaSignOutAlt /> Log Out
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link as={Link} to="/landing" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '15px', marginRight: '15px' }}>Home</Nav.Link>
-                {user.genres ? <Nav.Link onClick={handleMyPage} style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '15px', marginRight: '15px' }}>My Page</Nav.Link> : null}
-                {spotify ? <Nav.Link as={Link} to="/spotify_prof" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '15px', marginRight: '15px' }}>My Spotify Page</Nav.Link> : null}
+                <Nav.Link as={Link} to="/landing" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto', marginLeft: '10px' }}>Home</Nav.Link>
+                {user.genres ? <Nav.Link onClick={handleMyPage} style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '15px', marginRight: '15px',  marginTop: 'auto', marginBottom: 'auto' }}>My Page</Nav.Link> : null}
+                {spotify ? <Nav.Link as={Link} to="/spotify_prof" style={{ height: '35px', padding: '0', display: 'flex', alignItems: 'center', marginLeft: '15px', marginRight: '15px',  marginTop: 'auto', marginBottom: 'auto' }}>My Spotify Page</Nav.Link> : null}
               </Nav>
             </Container>
 
-            <Nav className="ms-auto">
-              <Button as={Link} to="/artists">Explore Artists</Button>
-            </Nav>
+
           </Navbar.Collapse>
         </>
       ) : null}
     </Container>
+      <Button className="d-inline-block p-2 rounded-pill shadow" style={{ width: '150px', border: 'none', cursor: 'pointer', background: '#FFB120', marginRight: '40px'}} as={Link} to="/artists">Explore Artists</Button>
   </Navbar>
 
   <Modal show={show} onHide={handleClose}>
