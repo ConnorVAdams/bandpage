@@ -1,12 +1,12 @@
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { fetchOneArtist } from '../../../../env/artistSlice'
+import { fetchOneArtist } from './artistSlice'
 import { Card, Button, Row, Col, Image, Container } from 'react-bootstrap';
 import { FaBook, FaCalendar, FaFolderPlus, FaMapMarker, FaMusic, FaPlay, FaScroll, FaUser, FaUserPlus } from 'react-icons/fa';
 import { convertDateFormat } from '../../utils/helpers'
 import { useSelector } from 'react-redux';
-import { setArtist } from '../../../../env/artistSlice';
+import { setArtist } from './artistSlice';
 import { toast } from 'react-hot-toast';
 import { fetchDeleteLike, fetchPostLike } from '../like/likeSlice';
 import { fetchCurrentUser } from '../user/userSlice';
