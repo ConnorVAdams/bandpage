@@ -266,7 +266,11 @@ def handle_404(error):
     response = {"message": error.description}
     return response, error.code
 
-@app.route("/landing")
+@app.route("/")
+@app.route("/artists")
+@app.route('/fans')
+@app.route('/landing')
+@app.route('/spotify_prof')
 def index(id=0):
     return render_template("index.html")
 
