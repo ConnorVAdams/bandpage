@@ -129,7 +129,7 @@ const App = () => {
             <Toaster />
             <Header />
             <NavBar />
-        <div className="vh-100 d-flex flex-column" style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: '1200px'}}>
+        {/* <div className="vh-100 d-flex flex-column" style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: '1200px'}}> */}
 
                 <Routes>
 
@@ -162,7 +162,7 @@ const App = () => {
                     
                     <Route path='/*' element={<NotFound />} />
                 </Routes>
-        </div>
+        {/* </div> */}
                 <Footer />
         </>
     )
