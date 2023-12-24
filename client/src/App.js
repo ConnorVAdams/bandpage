@@ -162,7 +162,7 @@ const App = () => {
                     <Route path='/spotify_prof' element={<SpotifyProfile />} />
 
                     
-                    <Route path='/*' element={<NotFound />} />
+                    {/* <Route path='/*' element={<NotFound />} /> */}
                 </Routes>
         {/* </div> */}
                 <Footer />
