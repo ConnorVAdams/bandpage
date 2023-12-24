@@ -129,6 +129,8 @@ const App = () => {
             <Toaster />
             <Header />
             <NavBar />
+            <Authentication />
+
         {/* <div className="vh-100 d-flex flex-column" style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: '1200px'}}> */}
 
                 <Routes>
