@@ -24,6 +24,7 @@ const register =  async ({ url, values }) => {
         })
         const data = await resp.json()
         if (resp.ok) {
+            debugger
             return data
         } else throw data.message
     } catch (error) {
