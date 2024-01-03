@@ -163,9 +163,10 @@ const artistSlice = createSlice({
                     if (!action.payload.id) {
                         state.errors.push(action.payload)
                     } 
-                    // else {
-                    //     state.data.push(action.payload)
-                    // }
+                    else {
+                        console.log(action.payload)
+                        // state.data.push(action.payload)
+                    }
                 },
             }
         ),

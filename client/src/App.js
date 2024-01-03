@@ -111,17 +111,16 @@ const App = () => {
         return <SpotifyCallback loc={loc} handleCode={this.handleCode} />
     }
 
-    // if(!user) return (
-    //     <>
-    //     <Toaster />
-    //     {/* <div style={{ marginRight: 'auto', marginLeft: 'auto', maxHeight: '90vh', maxWidth: '1200px'}}> */}
-    //         <Header />
-    //         <Authentication />
-    //         <Footer />
-    //         <h1>deploy test</h1>
-    //     {/* </div> */}
-    //     </>
-    // )
+    if(!user) return (
+        <>
+        <Toaster />
+        {/* <div style={{ marginRight: 'auto', marginLeft: 'auto', maxHeight: '90vh', maxWidth: '1200px'}}> */}
+            <Header />
+            <Authentication />
+            <Footer />
+        {/* </div> */}
+        </>
+    )
 
     return (
         <>
@@ -133,7 +132,7 @@ const App = () => {
         {/* <div className="vh-100 d-flex flex-column" style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: '1200px'}}> */}
 
                 <Routes>
-                    <Route path='/' element={!user? <Authentication /> : <UserLanding />} />
+                    {/* <Route path='/' element={!user? <Authentication /> : <UserLanding />} /> */}
                     
                     <Route path='/artists/'>
                         <Route index element={<ListContainer />} />
@@ -162,7 +161,7 @@ const App = () => {
                     <Route path='/spotify_prof' element={<SpotifyProfile />} />
 
                     
-                    {/* <Route path='/*' element={<NotFound />} /> */}
+                    <Route path='/*' element={<NotFound />} />
                 </Routes>
         {/* </div> */}
                 <Footer />
