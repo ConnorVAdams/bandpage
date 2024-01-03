@@ -33,7 +33,7 @@ function Authentication() {
                 if (signUp) {
                     navigate(`${values.userType}s/new`)
                 } else {
-                    navigate('/')
+                    navigate('/landing')
                 }
 
             } else {

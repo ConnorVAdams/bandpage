@@ -158,6 +158,7 @@ const userSlice = createSlice({
                     if (typeof action.payload === "string") {
                         state.errors.push(action.payload)
                     } else {
+                        console.log(action.payload)
                         state.data = action.payload.user
                     }
                 },
