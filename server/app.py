@@ -89,7 +89,7 @@ def authorize():
     # request comes from http://localhost/authorize
 
     client_id = app.config['SPOTIFY_CLIENT_ID']
-    redirect_uri = 'http://localhost:4000/callback'
+    redirect_uri = 'https://bandpage.onrender.com/callback'
     scope = 'user-read-private user-read-email user-top-read'
 
     # # Generate a random state value and store it in the session
@@ -119,7 +119,7 @@ def callback():
     client_id = app.config['SPOTIFY_CLIENT_ID']
     client_secret= app.config['SPOTIFY_CLIENT_SECRET']
     token_url = 'https://accounts.spotify.com/api/token'
-    redirect_uri = 'http://localhost:4000/callback'
+    redirect_uri = 'https://bandpage.onrender.com/callback'
 
     headers = {
                 'Authorization': 'Basic ' + base64.b64encode(f"{client_id}:{client_secret}".encode()).decode('utf-8'),
