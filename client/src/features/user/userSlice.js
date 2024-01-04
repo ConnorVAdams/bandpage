@@ -14,7 +14,7 @@ const initialState =  {
     }
 
 const register =  async ({ url, values }) => {
-    console.log('func1')
+    console.log(url, values)
     try {
         const resp = await fetch(url, {
             method: 'POST',
