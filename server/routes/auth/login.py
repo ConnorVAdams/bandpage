@@ -21,8 +21,9 @@ class Login(Resource):
             #     jwt = create_access_token(identity=user.id)
             #     refresh_token = create_refresh_token(identity=user.id)
             #     serialized_user = user_schema.dump(user)
-            #     return make_response({"user": serialized_user, "jwt_token": jwt, "refresh_token": refresh_token}, 200)
-            return '', 200
+            # return make_response({"user": serialized_user, "jwt_token": jwt, "refresh_token": refresh_token}, 200)
+            
+            return user_schema.dump(user), 200
             return {"message": "Username or password incorrect."}, 403
         except Exception as e:
             return {"message": "Username or password incorrect."}, 403
