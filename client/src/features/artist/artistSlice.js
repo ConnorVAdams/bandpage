@@ -46,6 +46,7 @@ const fetchOne = async (artist_id, asyncThunk) => {
 const postArtist = async (values, asyncThunk) => {
     try {
         const respCheckToken = await checkToken()
+        debugger
         if (respCheckToken.ok) {
             const resp = await fetch('/artists', {
                 method: "POST",
@@ -57,8 +58,10 @@ const postArtist = async (values, asyncThunk) => {
             })
             const data = await resp.json()          
             if (resp.ok) {
+                debugger
                 return data
             } else {
+                debugger
                 throw data.message || data.msg
             }
         } else {
