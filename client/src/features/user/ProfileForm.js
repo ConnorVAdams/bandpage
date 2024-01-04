@@ -43,8 +43,6 @@ const ProfileForm = () => {
         }
     }
 
-    // debugger
-
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: profFormSchema,
@@ -68,12 +66,15 @@ const ProfileForm = () => {
                 //     toast.error(action.payload)
                 // }
           } else if (path.includes('artist') && path.includes('new')) {
+            console.log(values)
                 const action = await dispatch(fetchPostArtist(values))
                 if (typeof action.payload !== "string") {
+                    console.log('profile form success')
                     toast.success(`Loaded new artist!`)
                     dispatch(setUserType(action.payload))
                     navigate('/landing')
                 } else {
+                    console.log('profile form error')
                     toast.error(action.payload)
                 }
             } else { // if (path.includes('fan') && path.includes('new')) {
