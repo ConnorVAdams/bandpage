@@ -14,7 +14,7 @@ const initialState =  {
     }
 
 const register =  async ({ url, values }) => {
-    debugger
+    console.log('func1')
     try {
         const resp = await fetch(url, {
             method: 'POST',
@@ -25,9 +25,12 @@ const register =  async ({ url, values }) => {
         })
         const data = await resp.json()
         if (resp.ok) {
-            debugger
+            console.log('resp1')
             return data
-        } else throw data.message
+        } else {
+            console.log('resp2')
+            throw data.message
+        }
     } catch (error) {
         return error
     }
