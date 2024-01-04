@@ -24,6 +24,7 @@ const register =  async ({ url, values }) => {
             body: JSON.stringify(values)
         })
         const data = await resp.json()
+        console.log(resp)
         if (resp.ok) {
             console.log(data)
             return data
