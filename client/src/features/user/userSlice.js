@@ -25,7 +25,7 @@ const register =  async ({ url, values }) => {
         })
         const data = await resp.json()
         if (resp.ok) {
-            console.log('resp1')
+            console.log(data)
             return data
         } else {
             console.log('resp2')
