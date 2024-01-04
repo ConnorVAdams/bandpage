@@ -29,4 +29,4 @@ class Login(Resource):
             return make_response({"user": serialized_user, "jwt_token": jwt, "refresh_token": refresh_token}, 200)
             return {"message": "first msg."}, 403
         except Exception as e:
-            return {"message": "Username or password incorrect."}, 403
+            return {"message": "second msg."}, 403
