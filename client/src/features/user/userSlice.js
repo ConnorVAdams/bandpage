@@ -14,6 +14,7 @@ const initialState =  {
     }
 
 const register =  async ({ url, values }) => {
+    debugger
     try {
         const resp = await fetch(url, {
             method: 'POST',
