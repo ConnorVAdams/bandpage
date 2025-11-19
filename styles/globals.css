@@ -25,7 +25,8 @@
 html, body, #__next {
   height: 100%;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 body {
   margin: 0;
@@ -35,18 +36,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .container {
   max-width: 980px;
   margin: 0 auto;
   padding: 24px;
-  height: calc(100vh - 120px); /* Adjust for navbar and padding */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* Remove fixed height and centering for scrollability */
+  display: block;
 }
 
 h1 {
