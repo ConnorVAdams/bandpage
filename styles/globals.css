@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'Berlin FB Sans Demi';
+  src: url('/path-to-font/BerlinFB-Sans-Demi.woff2') format('woff2'),
+       url('/path-to-font/BerlinFB-Sans-Demi.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Berlin Sans FB Demi';
+  src: url('/fonts/BerlinFB-Sans-Demi.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --bg: #0f172a;
   --card: #0b1220;
@@ -10,7 +25,7 @@
 html,body,#__next { height: 100%; }
 body {
   margin: 0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg), #071024);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -36,4 +51,9 @@ p { color: var(--muted); margin: 0 0 8px 0; }
   border: 1px solid rgba(255,255,255,0.04);
   padding: 18px;
   border-radius: 10px;
+}
+
+/* Apply the font to nav buttons */
+button {
+  font-family: 'Inter', sans-serif;
 }
