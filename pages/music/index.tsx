@@ -2,6 +2,8 @@ import Head from "next/head";
 import { Container } from "@mui/material";
 import { GetServerSidePropsContext } from "next";
 import MusicComponent from "../../components/music/MusicComponent";
+import Navbar from "../../components/nav/Navbar/Navbar";
+import SocialBar from "../../components/shared/SocialBar";
 
 
 
@@ -17,7 +19,9 @@ export default function Music() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
           <Container disableGutters maxWidth={false}>
+            <Navbar />
             <MusicComponent />
+            <SocialBar />
           </Container>
     </>
   );

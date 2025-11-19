@@ -22,8 +22,9 @@ const navButtonStyles = {
   transition: 'filter 0.3s cubic-bezier(.25,.8,.25,1)',
   filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))',
   '&:hover': {
-    filter: 'drop-shadow(0 4px 12px rgba(124,58,237,0.25)) drop-shadow(0 1px 2px rgba(0,0,0,0.10))',
-  },
+              filter: 'drop-shadow(0 4px 12px rgba(124,58,237,0.25)) drop-shadow(0 1px 2px rgba(0,0,0,0.10))',
+              color: '#b2322f',
+            },
   color: '#341f04',
   fontFamily: 'Futura',
 };
@@ -31,7 +32,7 @@ const navButtonStyles = {
 export default function Navbar() {
   const isMobile = useMediaQuery('(max-width:1200px)');
   return (
-    <Box sx={{ flexGrow: 1, mt: '10vh', mb: 10 }}>
+    <Box sx={{ flexGrow: 1, mt: '10vh', mb: 3 }}>
       <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <AppBar position="static" sx={{ backgroundColor: "#f1d3ad", minHeight: 70, justifyContent: 'center', boxShadow: 3, zIndex: 1, width: '100%' }}>
           <Toolbar sx={{ minHeight: 64, display: 'flex', justifyContent: 'center', alignItems: 'center', px: 0 }}>
