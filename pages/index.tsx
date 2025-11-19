@@ -2,6 +2,8 @@ import Head from "next/head";
 import { Container } from "@mui/material";
 import { GetServerSidePropsContext } from "next";
 import HomeComponent from "../components/home/HomeComponent";
+import Navbar from "../components/nav/Navbar/Navbar";
+import SocialBar from "../components/shared/SocialBar";
 
 
 export default function Home() {
@@ -16,7 +18,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
           <Container disableGutters maxWidth={false}>
+      <Navbar />
             <HomeComponent />
+            <SocialBar />
           </Container>
     </>
   );

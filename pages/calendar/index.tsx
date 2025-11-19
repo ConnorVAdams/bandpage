@@ -4,6 +4,8 @@ import { GetServerSidePropsContext } from "next";
 import MusicComponent from "../../components/music/MusicComponent";
 import ContactComponent from "../../components/contact";
 import CalendarComponent from "../../components/calendar";
+import Navbar from "../../components/nav/Navbar/Navbar";
+import SocialBar from "../../components/shared/SocialBar";
 
 
 
@@ -19,7 +21,9 @@ export default function Calendar() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
           <Container disableGutters maxWidth={false}>
+          <Navbar />
             <CalendarComponent />
+          <SocialBar />
           </Container>
     </>
   );

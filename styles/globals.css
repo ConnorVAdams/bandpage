@@ -38,6 +38,13 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-bottom: 64px; /* Adjust to match the height of the social bar */
+}
+
+@media (max-width: 600px) {
+  body {
+    padding-bottom: 56px;
+  }
 }
 
 .container {
@@ -68,4 +75,8 @@ p { color: var(--muted); margin: 0 0 8px 0; }
 /* Apply the font to nav buttons */
 button {
   font-family: 'Inter', sans-serif;
+}
+
+body, html { 
+  overflow: hidden;
 }
