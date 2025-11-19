@@ -1,4 +1,5 @@
 import React from 'react';
+import getUserTimeZone from './getUserTimeZone';
 
 interface CalendarEmbedProps {
   calendarId: string;
@@ -6,7 +7,8 @@ interface CalendarEmbedProps {
 }
 
 const CalendarEmbed: React.FC<CalendarEmbedProps> = ({ calendarId, height = 600 }) => {
-  const src = `https://calendar.google.com/calendar/embed?src=${encodeURIComponent(calendarId)}&ctz=America%2FNew_York`;
+  const timeZone = typeof window !== 'undefined' ? getUserTimeZone() : 'UTC';
+  const src = `https://calendar.google.com/calendar/embed?src=${encodeURIComponent(calendarId)}&ctz=${encodeURIComponent(timeZone)}`;
   return (
     <div style={{ width: '100%', maxWidth: 900, margin: '0 auto' }}>
       <iframe
