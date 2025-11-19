@@ -29,7 +29,7 @@ const navButtonStyles = {
 };
 
 export default function Navbar() {
-  const isMobile = useMediaQuery('(max-width:900px)');
+  const isMobile = useMediaQuery('(max-width:1200px)');
   return (
     <Box sx={{ flexGrow: 1, mt: '10vh', mb: 10 }}>
       <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
