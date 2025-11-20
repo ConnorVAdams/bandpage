@@ -11,7 +11,7 @@ const backgrounds: Record<string, string> = {
 
 export default function Background() {
   const router = useRouter();
-  const currentBackground = backgrounds[router.pathname] || '/images/default-bg.jpg';
+  const currentBackground = '/images/default-bg.jpg';
 
   return (
     <Box

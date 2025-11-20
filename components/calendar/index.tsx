@@ -125,7 +125,7 @@ export default function CalendarComponent() {
         backgroundColor: 'transparent', // outermost transparent
       }}
     >
-      <Stack spacing={4} sx={{ width: '100%', maxWidth: 900, backgroundColor: '#f1d3ad', borderRadius: 2, p: 3 }}>
+      <Stack spacing={4} sx={{ width: '100%', maxWidth: 1080, backgroundColor: '#f1d3ad', borderRadius: 2, p: 3 }}>
 
 
       <Box sx={{ p: 2, borderRadius: 2, backgroundColor: 'black' }}>

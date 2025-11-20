@@ -21,7 +21,7 @@ const bandMembers: BandMember[] = [
   {
     name: "Marit Olson",
     image: "/images/marit.png",
-    bio: "Marit Olson's fiddle (violin) career is over two decades old. Classically trained, she played with high school and college orchestras (touring internationally), fiddled on rooftops in the musical classic Fiddler on the Roof (twice), learned tunes in Irish pubs, harmonized with seabirds along Scottish and New Zealand coastlines, and played 'Twinkle Twinkle Little Star' duets with a 10 year old in the forests of Thailand.\n\nShe's been playing (off and on) with The Packstrings for 6 years and loves collaboratively creating new music, finding vocal harmonies, and using solos to tug at heartstrings - especially in leaning into the “spooky sensual” voice of her violin. When she’s not fiddling you can find her doing trauma therapy with kids, building community solidarity, gardening, and exploring new crafting mediums on a regular basis.",
+    bio: "Marit's fiddle (violin) career is over two decades old. Classically trained, she played with high school and college orchestras (touring internationally), fiddled on rooftops in the musical classic Fiddler on the Roof (twice), learned tunes in Irish pubs, harmonized with seabirds along Scottish and New Zealand coastlines, and played 'Twinkle Twinkle Little Star' duets with a 10 year old in the forests of Thailand.\n\nShe's been playing (off and on) with The Packstrings for 6 years and loves collaboratively creating new music, finding vocal harmonies, and using solos to tug at heartstrings - especially in leaning into the “spooky sensual” voice of her violin. When she’s not fiddling you can find her doing trauma therapy with kids, building community solidarity, gardening, and exploring new crafting mediums on a regular basis.",
         instruments: "Fiddle, Vocals",
 
   },
@@ -35,7 +35,7 @@ const bandMembers: BandMember[] = [
   {
     name: "Silas Smith",
     image: "/images/silas.png",
-    bio: "Silas Smith was born in Olympia, Washington and currently lives in Bonner, Montana on the property his great-grandparents homesteaded. He graduated from the University of Montana, and when he is not playing music, enjoys hiking, traveling and hanging out with his friends, black lab, and 2 cats. Silas grew up playing the piano, but switched to playing guitar in middle school, and has enjoyed playing live music in bands since high school.\n\nHe is the newest member of The Pack Strings, and has quickly found a home with the band playing guitar, adding his influence to music he has been a fan of for some time. He enjoys the high level of musicianship and comradery in The Pack Strings, and looks forward to expanding his horizons together with the band!",
+    bio: "Silas was born in Olympia, Washington and currently lives in Bonner, Montana on the property his great-grandparents homesteaded. He graduated from the University of Montana, and when he is not playing music, enjoys hiking, traveling and hanging out with his friends, black lab, and 2 cats. Silas grew up playing the piano, but switched to playing guitar in middle school, and has enjoyed playing live music in bands since high school.\n\nHe is the newest member of The Pack Strings, and has quickly found a home with the band playing guitar, adding his influence to music he has been a fan of for some time. He enjoys the high level of musicianship and comradery in The Pack Strings, and looks forward to expanding his horizons together with the band!",
         instruments: "Guitar",
 
   },

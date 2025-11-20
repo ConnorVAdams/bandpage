@@ -37,7 +37,7 @@ export default function ContactComponent() {
         spacing={4}
         sx={{
           width: '100%',
-          maxWidth: 900,
+          maxWidth: 1080,
           backgroundColor: '#f1d3ad',
           borderRadius: 2,
           p: 3,

@@ -109,14 +109,25 @@ export default function MusicComponent() {
   const nextTrack = () => setCurrentTrackIndex(i => (i + 1) % dummySongs.length);
   const previousTrack = () => setCurrentTrackIndex(i => (i - 1 + dummySongs.length) % dummySongs.length);
 
-  const handleTrackSelect = (track: Track) => {
-    const index = dummySongs.indexOf(track);
-    setCurrentTrackIndex(index);
-    const audio = audioRef.current;
-    if (audio) { audio.pause(); audio.currentTime = 0; }
-    setIsPlaying(false);
-    setProgress(0);
-  };
+const handleTrackSelect = (track: Track) => {
+  const index = dummySongs.indexOf(track);
+  setCurrentTrackIndex(index);
+  setProgress(0);
+
+  const audio = audioRef.current;
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+
+    // Wait for the src to update in useEffect
+    setTimeout(() => {
+      audio.play();
+      setIsPlaying(true);
+    }, 50);
+  } else {
+    setIsPlaying(true);
+  }
+};
 
   const handleSeek = (value: number) => {
     const audio = audioRef.current;
