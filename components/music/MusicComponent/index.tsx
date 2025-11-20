@@ -10,7 +10,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { styled } from '@mui/material/styles';
-import { YouTubeEmbed } from '../../home/HomeComponent';
+import YouTube, { YouTubeProps } from 'react-youtube';
 
 interface Video {
   id: string;
@@ -35,11 +35,11 @@ const AudioCard = styled(Card)(({ theme }) => ({
 
 export default function MusicComponent() {
   const videos: Video[] = [
-    { id: '4v816Si_ysM', title: 'Sample Video 1', thumbnail: '', url: '' },
-    { id: 'wZkifBDBdZc', title: 'Sample Video 2', thumbnail: '', url: '' },
-    { id: 'LIdyyQ5oieY', title: 'Sample Video 3', thumbnail: '', url: '' },
-    { id: 'sCDML7q69iI', title: 'Sample Video 4', thumbnail: '', url: '' },
-    { id: 'ijr4EHPPuOM', title: 'Sample Video 5', thumbnail: '', url: '' },
+    { id: '4v816Si_ysM', title: 'Video 1', thumbnail: '', url: '' },
+    { id: 'wZkifBDBdZc', title: 'Video 2', thumbnail: '', url: '' },
+    { id: 'LIdyyQ5oieY', title: 'Video 3', thumbnail: '', url: '' },
+    { id: 'sCDML7q69iI', title: 'Video 4', thumbnail: '', url: '' },
+    { id: 'ijr4EHPPuOM', title: 'Video 5', thumbnail: '', url: '' },
   ];
 
   const track: Track = {
@@ -49,86 +49,93 @@ export default function MusicComponent() {
   };
 
   const [currentStartIndex, setCurrentStartIndex] = React.useState(0);
-  const [playing, setPlaying] = React.useState(false);
+  const [playingAudio, setPlayingAudio] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement>(null);
 
-  const thumbnailsPerPage = 3;
+  // Keep track of YouTube player refs
+  const playerRefs = React.useRef<{ [id: string]: any }>({});
 
-  const prevPage = () =>
-    setCurrentStartIndex((prev) => Math.max(prev - thumbnailsPerPage, 0));
+  const thumbnailsPerPage = 3;
+  const prevPage = () => setCurrentStartIndex((prev) => Math.max(prev - thumbnailsPerPage, 0));
   const nextPage = () =>
     setCurrentStartIndex((prev) =>
       Math.min(prev + thumbnailsPerPage, videos.length - thumbnailsPerPage)
     );
 
-  const togglePlay = () => {
+  const toggleAudio = () => {
     if (!audioRef.current) return;
-    if (playing) {
+    if (playingAudio) {
       audioRef.current.pause();
     } else {
       audioRef.current.play();
+      // stop all YouTube videos
+      Object.values(playerRefs.current).forEach((player) => player.pauseVideo?.());
     }
-    setPlaying(!playing);
+    setPlayingAudio(!playingAudio);
   };
 
-  const currentVideos = videos.slice(
-    currentStartIndex,
-    currentStartIndex + thumbnailsPerPage
-  );
+  const handleYouTubeReady = (event: any, id: string) => {
+    playerRefs.current[id] = event.target;
+  };
+
+  const handleYouTubePlay = (id: string) => {
+    // stop audio if playing
+    if (playingAudio && audioRef.current) {
+      audioRef.current.pause();
+      setPlayingAudio(false);
+    }
+
+    // pause all other players
+    Object.entries(playerRefs.current).forEach(([key, player]) => {
+      if (key !== id) player.pauseVideo?.();
+    });
+  };
+
+  const currentVideos = videos.slice(currentStartIndex, currentStartIndex + thumbnailsPerPage);
 
   return (
     <Box sx={{ width: '100vw', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', px: 2, backgroundColor: 'transparent' }}>
-      <Stack spacing={4} sx={{ width: '100%', maxWidth: 1200, p: 3, backgroundColor: '#f1d3ad', borderRadius: 2 }}>
-        {/* Top Box: YouTube Thumbnail Gallery */}
-<Box
-  sx={{
-    backgroundColor: 'black',
-    borderRadius: 2,
-    p: 2,
-    height: 220,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between', // space for arrows and videos
-    position: 'relative',
-  }}
->
-  {/* Left Arrow */}
-  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-    <IconButton
-      onClick={prevPage}
-      sx={{ color: 'white' }}
-      disabled={currentStartIndex === 0}
-    >
-      <ArrowBackIosIcon />
-    </IconButton>
-  </Box>
+      <Stack spacing={4} sx={{ width: '100%', maxWidth: 1080, p: 3, backgroundColor: '#f1d3ad', borderRadius: 2 }}>
+                <Box sx={{ p: 2, borderRadius: 2, backgroundColor: 'black' }}>
+          <Typography
+            fontFamily="Futura"
+            variant="h4"
+            sx={{ color: 'white', textAlign: 'left' }}
+          >
+            Listen to Our Music
+          </Typography>
+        </Box>
+        {/* Top Box: YouTube Gallery */}
+        <Box sx={{ backgroundColor: 'black', borderRadius: 2, p: 2, height: 250, display: 'flex', alignItems: 'center', position: 'relative' }}>
+          <IconButton
+            onClick={prevPage}
+            sx={{ position: 'absolute', left: 16, color: 'white', zIndex: 2 }}
+            disabled={currentStartIndex === 0}
+          >
+            <ArrowBackIosIcon />
+          </IconButton>
 
-  {/* Videos */}
-  <Box
-    sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      flex: 1, // take remaining space
-      overflow: 'hidden',
-      gap: 2,
-    }}
-  >
-    {currentVideos.map((video) => (
-      <YouTubeEmbed key={video.id} videoId={video.id} height={200} />
-    ))}
-  </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', gap: 2 }}>
+            {currentVideos.map((video) => (
+              <YouTube
+                key={video.id}
+                videoId={video.id}
+                opts={{ width: 320, height: 180, playerVars: { autoplay: 0 } }}
+                onReady={(e) => handleYouTubeReady(e, video.id)}
+                onPlay={() => handleYouTubePlay(video.id)}
+              />
+            ))}
+          </Box>
 
-  {/* Right Arrow */}
-  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-    <IconButton
-      onClick={nextPage}
-      sx={{ color: 'white' }}
-      disabled={currentStartIndex + thumbnailsPerPage >= videos.length}
-    >
-      <ArrowForwardIosIcon />
-    </IconButton>
-  </Box>
-</Box>
+          <IconButton
+            onClick={nextPage}
+            sx={{ position: 'absolute', right: 16, color: 'white', zIndex: 2 }}
+            disabled={currentStartIndex + thumbnailsPerPage >= videos.length}
+          >
+            <ArrowForwardIosIcon />
+          </IconButton>
+        </Box>
+
         {/* Bottom Box: Audio Track */}
         <AudioCard>
           <CardMedia
@@ -146,10 +153,10 @@ export default function MusicComponent() {
             </Typography>
             <Button
               variant="contained"
-              onClick={togglePlay}
+              onClick={toggleAudio}
               sx={{ mt: 1, backgroundColor: '#ee8220', '&:hover': { backgroundColor: '#d66f1a' } }}
             >
-              {playing ? 'Pause' : 'Play'}
+              {playingAudio ? 'Pause' : 'Play'}
             </Button>
             <audio ref={audioRef} src={track.audioUrl} />
           </CardContent>
