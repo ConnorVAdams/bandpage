@@ -14,27 +14,27 @@ interface BandMember {
 const bandMembers: BandMember[] = [
   {
     name: "Connor Adams",
-    image: "/images/connor.png",
+    image: "/bandpage/images/connor.png",
     bio: "Connor Bio.",
     instruments: "Bass, Guitar, Vocals",
   },
   {
     name: "Marit Olson",
-    image: "/images/marit.png",
+    image: "/bandpage/images/marit.png",
     bio: "Marit's fiddle (violin) career is over two decades old. Classically trained, she played with high school and college orchestras (touring internationally), fiddled on rooftops in the musical classic Fiddler on the Roof (twice), learned tunes in Irish pubs, harmonized with seabirds along Scottish and New Zealand coastlines, and played 'Twinkle Twinkle Little Star' duets with a 10 year old in the forests of Thailand.\n\nShe's been playing (off and on) with The Packstrings for 6 years and loves collaboratively creating new music, finding vocal harmonies, and using solos to tug at heartstrings - especially in leaning into the “spooky sensual” voice of her violin. When she’s not fiddling you can find her doing trauma therapy with kids, building community solidarity, gardening, and exploring new crafting mediums on a regular basis.",
         instruments: "Fiddle, Vocals",
 
   },
   {
     name: "Chad Pickett",
-    image: "/images/chad.png",
+    image: "/bandpage/images/chad.png",
     bio: "Busking for bus fare, jamming in garages and pickin around campfires, Chad developed his musical style from playing with other people and learning to adapt to different styles. In 2021 he was a featured artist for a Montana Area Music Association singer/songwriter showcase at The Roxy Theatre. After exploring musical ventures as a solo artist, various acoustic arrangements and a couple of rock band experiments, he’s found his place in The Pack Strings.\n\nHe thrives on the variety of genres the band explores, taking turns singing lead and back up, passing bass and guitar back and forth with Connor and most recently filling a new role on mandolin. He enjoys looking for ways to musically compliment his band mates and loves feeding off of each others’ style and energy.",
     instruments: "Bass, Guitar, Mandolin, Vocals",
 
   },
   {
     name: "Silas Smith",
-    image: "/images/silas.png",
+    image: "/bandpage/images/silas.png",
     bio: "Silas was born in Olympia, Washington and currently lives in Bonner, Montana on the property his great-grandparents homesteaded. He graduated from the University of Montana, and when he is not playing music, enjoys hiking, traveling and hanging out with his friends, black lab, and 2 cats. Silas grew up playing the piano, but switched to playing guitar in middle school, and has enjoyed playing live music in bands since high school.\n\nHe is the newest member of The Pack Strings, and has quickly found a home with the band playing guitar, adding his influence to music he has been a fan of for some time. He enjoys the high level of musicianship and comradery in The Pack Strings, and looks forward to expanding his horizons together with the band!",
         instruments: "Guitar",
 
@@ -61,7 +61,7 @@ export default function AboutComponent() {
 {/* Banner */}
 <Box sx={{ width: "100%", height: 400, borderRadius: 2, overflow: "hidden" }}>
   <img
-    src="/images/banner.png"
+    src="/bandpage/images/banner.png"
     alt="Band Banner"
     style={{ width: "100%", height: "100%", objectFit: "cover" }}
   />
