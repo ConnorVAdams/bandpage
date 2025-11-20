@@ -74,7 +74,7 @@ export default function Navbar() {
         </AppBar>
         {!isMobile && (
           <Box sx={{ position: 'absolute', left: '50%', top: '36%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-            <Logo imageUrl='/images/navbar-logo.png'/>
+            <Logo imageUrl='/bandpage/images/navbar-logo.png'/>
           </Box>
         )}
       </Box>
