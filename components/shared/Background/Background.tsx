@@ -2,16 +2,12 @@ import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 
 const backgrounds: Record<string, string> = {
-  '/': '/images/home-bg.jpg',
-//   '/about': '/images/about-bg.jpg',
-//   '/calendar': '/images/calendar-bg.jpg',
-//   '/music': '/images/music-bg.jpg',
-//   '/contact': '/images/contact-bg.jpg',
+  '/': '/bandpage/images/home-bg.jpg',
 };
 
 export default function Background() {
   const router = useRouter();
-  const currentBackground = '/images/default-bg.jpg';
+  const currentBackground = '/bandpage/images/default-bg.jpg';
 
   return (
     <Box

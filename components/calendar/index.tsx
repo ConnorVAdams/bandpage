@@ -25,7 +25,7 @@ const STATE_ABBREVIATIONS: Record<string, string> = {
 };
 
 export default function CalendarComponent() {
-  const GOOGLE_API_KEY = "AIzaSyDKRk7UpyIppxMksNr0FcKoVp-wUFuUYt4";
+  const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
   const CALENDAR_ID = "48636ab3da6e7b90dbbfde8ac83bf050ad92a886d5ebf6ee51f908e677121326@group.calendar.google.com";
 
   const [events, setEvents] = React.useState<EventItem[]>([]);

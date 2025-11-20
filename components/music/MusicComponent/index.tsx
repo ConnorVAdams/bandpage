@@ -35,13 +35,13 @@ export default function MusicComponent() {
   ];
 
   const dummySongs: Track[] = [
-    { title: "Up Til Dawn", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: "3:42", cover: "/images/lonesome-dreams.jpg" },
-    { title: "Set in Stone", artist: "Chad Pickett", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: "4:12", cover: "/images/lonesome-dreams.jpg" },
-    { title: "Like a Pine", artist: "Chad Pickett", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: "3:18", cover: "/images/lonesome-dreams.jpg" },
-    { title: "Mehoopany", artist: "Chad Pickett", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: "5:02", cover: "/images/lonesome-dreams.jpg" },
-    { title: "The Serpent", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: "4:26", cover: "/images/lonesome-dreams.jpg" },
-    { title: "Ithaca", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duration: "3:57", cover: "/images/lonesome-dreams.jpg" },
-    { title: "How Come the Mountains", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duration: "4:45", cover: "/images/lonesome-dreams.jpg" },
+    { title: "Up Til Dawn", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: "3:42", cover: "/bandpage/images/lonesome-dreams.jpg" },
+    { title: "Set in Stone", artist: "Chad Pickett", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: "4:12", cover: "/bandpage/images/lonesome-dreams.jpg" },
+    { title: "Like a Pine", artist: "Chad Pickett", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: "3:18", cover: "/bandpage/images/lonesome-dreams.jpg" },
+    { title: "Mehoopany", artist: "Chad Pickett", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: "5:02", cover: "/bandpage/images/lonesome-dreams.jpg" },
+    { title: "The Serpent", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: "4:26", cover: "/bandpage/images/lonesome-dreams.jpg" },
+    { title: "Ithaca", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duration: "3:57", cover: "/bandpage/images/lonesome-dreams.jpg" },
+    { title: "How Come the Mountains", artist: "Connor Adams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duration: "4:45", cover: "/bandpage/images/lonesome-dreams.jpg" },
   ];
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);

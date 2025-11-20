@@ -15,7 +15,7 @@ const sampleBlogs: BlogPost[] = [
     date: "March 10, 2025",
     snippet:
       "The Pack Strings are hitting the road this spring! Check out our upcoming tour dates across Montana and neighboring states. Expect lively performances and some new arrangements of your favorite tunes!",
-    image: "/images/blogs/spring-tour.jpg",
+    image: "/bandpage/images/blogs/spring-tour.jpg",
     link: "#",
   },
   {
@@ -23,7 +23,7 @@ const sampleBlogs: BlogPost[] = [
     date: "February 18, 2025",
     snippet:
       "Go behind the scenes with The Pack Strings as we lay down tracks for our latest single. From creative jams to late-night harmonies, see how the magic happens in the studio.",
-    image: "/images/blogs/recording.jpg",
+    image: "/bandpage/images/blogs/recording.jpg",
     link: "#",
   },
   {
@@ -31,7 +31,7 @@ const sampleBlogs: BlogPost[] = [
     date: "January 30, 2025",
     snippet:
       "Ever wonder what songs The Pack Strings can't resist covering? From folk classics to rock anthems, we break down five covers that always get the crowd moving.",
-    image: "/images/blogs/covers.jpg",
+    image: "/bandpage/images/blogs/covers.jpg",
     link: "#",
   },
 ];
