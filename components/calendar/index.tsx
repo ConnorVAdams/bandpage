@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -24,6 +24,60 @@ const STATE_ABBREVIATIONS: Record<string, string> = {
   Wyoming: "WY",
 };
 
+const dummyEvents = [
+  [
+    {
+        "id": "5n1alceuoai42dtngfb4b195ks",
+        "title": "MISSOULA, MT - Draught Works",
+        "date": "Nov 22",
+        "time": "7:00 PM – 9:00 PM",
+        "location": "Draught Works, 915 Toole Ave, Missoula, MT 59802, USA"
+    },
+    {
+        "id": "1n5skedco9fot3tc32st5031ae",
+        "title": "BONNER, MT - KettleHouse Brewing Co.",
+        "date": "Dec 13",
+        "time": "5:00 PM – 7:45 PM",
+        "location": "KettleHouse Brewing Co. - Bonner, 605 Cold Smoke Ave, Bonner, MT 59823, USA"
+    },
+    {
+        "id": "1td2cds451db1qgfgdahp9pu8f",
+        "title": "HAMILTON, MT - Bitterroot Brewing",
+        "date": "Dec 18",
+        "time": "6:00 PM – 8:00 PM",
+        "location": "Bitter Root Brewing, 101 Marcus St, Hamilton, MT 59840, USA"
+    },
+    {
+        "id": "2q156vl5c7p23pml5g28gkrkfc",
+        "title": "LOLO PASS, ID - Moonlight Ski at Lolo Pass Visitor Center",
+        "date": "Jan 2",
+        "time": "7:00 PM – 10:00 PM",
+        "location": "Lolo Pass Visitor Center, 21200 US-12, Lolo, MT 59847, USA"
+    },
+    {
+        "id": "319g1s6s1bgf2kfnn8sic53nq0",
+        "title": "BOZEMAN, MT - The Filling Staton",
+        "date": "Feb 6",
+        "time": "",
+        "location": "Filling Station, 2005 N Rouse Ave, Bozeman, MT 59715, USA"
+    },
+    {
+        "id": "38bj243vq0bgd1ddjmrg6cs49c",
+        "title": "MISSOULA, MT - Highlander Beer",
+        "date": "Feb 21",
+        "time": "6:00 PM – 8:00 PM",
+        "location": "Highlander Beer - Missoula Brewing Co, 200 International Dr, Missoula, MT 59808, USA"
+    },
+    {
+        "id": "16hgn0oabv123si4v31vqdecnf",
+        "title": "MISSOULA, MT - ☘️ St. Paddy's Day at Cranky Sam Public House ☘️ ",
+        "date": "Mar 17",
+        "time": "7:00 PM – 10:00 PM",
+        "location": "Cranky Sam Public House, 233 W Main St, Missoula, MT 59802, USA"
+    }
+]
+]
+
 export default function CalendarComponent() {
   const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
   const CALENDAR_ID = "48636ab3da6e7b90dbbfde8ac83bf050ad92a886d5ebf6ee51f908e677121326@group.calendar.google.com";
@@ -34,56 +88,77 @@ export default function CalendarComponent() {
   const [currentPage, setCurrentPage] = React.useState(1);
   const eventsPerPage = 5;
 
-  React.useEffect(() => {
-    async function fetchCalendarEvents() {
-      const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(
-        CALENDAR_ID
-      )}/events?key=${GOOGLE_API_KEY}&singleEvents=true&orderBy=startTime`;
+useEffect(() => {
+  const formattedEvents: EventItem[] = [];
 
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-
-        const mapped: EventItem[] = (data.items || []).map((ev: any) => {
-          const start = ev.start.dateTime || ev.start.date;
-          const end = ev.end?.dateTime;
-
-          const date = new Date(start).toLocaleDateString(undefined, {
-            month: "short",
-            day: "numeric",
-          });
-
-          let time = "";
-          if (ev.start.dateTime && ev.end?.dateTime) {
-            const s = new Date(ev.start.dateTime);
-            const e = new Date(ev.end.dateTime);
-            time = `${s.toLocaleTimeString(undefined, {
-              hour: "numeric",
-              minute: "2-digit",
-            })} – ${e.toLocaleTimeString(undefined, {
-              hour: "numeric",
-              minute: "2-digit",
-            })}`;
-          }
-
-          return {
-            id: ev.id,
-            title: ev.summary,
-            date,
-            time,
-            location: ev.location,
-            description: ev.description,
-          };
-        });
-
-        setEvents(mapped);
-      } catch (error) {
-        console.error("Error fetching Google Calendar events:", error);
-      }
+  // Flatten the nested array first
+  for (const eventArray of dummyEvents) {
+    for (const ev of eventArray) {
+      formattedEvents.push({
+        id: ev.id,
+        title: ev.title,       // not ev.summary
+        date: ev.date,
+        time: ev.time,
+        location: ev.location,
+      });
     }
+  }
 
-    fetchCalendarEvents();
-  }, []);
+  setEvents(formattedEvents);
+}, []);
+
+  // React.useEffect(() => {
+  //   async function fetchCalendarEvents() {
+  //     const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(
+  //       CALENDAR_ID
+  //     )}/events?key=${GOOGLE_API_KEY}&singleEvents=true&orderBy=startTime`;
+
+  //     try {
+  //       const res = await fetch(url);
+  //       const data = await res.json();
+
+  //       const mapped: EventItem[] = (data.items || []).map((ev: any) => {
+  //         const start = ev.start.dateTime || ev.start.date;
+  //         const end = ev.end?.dateTime;
+
+  //         const date = new Date(start).toLocaleDateString(undefined, {
+  //           month: "short",
+  //           day: "numeric",
+  //         });
+
+  //         let time = "";
+  //         if (ev.start.dateTime && ev.end?.dateTime) {
+  //           const s = new Date(ev.start.dateTime);
+  //           const e = new Date(ev.end.dateTime);
+  //           time = `${s.toLocaleTimeString(undefined, {
+  //             hour: "numeric",
+  //             minute: "2-digit",
+  //           })} – ${e.toLocaleTimeString(undefined, {
+  //             hour: "numeric",
+  //             minute: "2-digit",
+  //           })}`;
+  //         }
+
+  //         return {
+  //           id: ev.id,
+  //           title: ev.summary,
+  //           date,
+  //           time,
+  //           location: ev.location,
+  //           description: ev.description,
+  //         };
+  //       });
+
+  //       setEvents(mapped);
+  //     } catch (error) {
+  //       console.error("Error fetching Google Calendar events:", error);
+  //     }
+  //   }
+
+  //   fetchCalendarEvents();
+  // }, []);
+
+  // console.log(events)
 
   // Filter + search
   const filteredEvents = events.filter((ev) => {
