@@ -23,12 +23,17 @@ const navButtonStyles = {
   textTransform: 'uppercase',
   transition: 'filter 0.3s cubic-bezier(.25,.8,.25,1)',
   filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))',
-  '&:hover': {
-              filter: 'drop-shadow(0 4px 12px rgba(124,58,237,0.25)) drop-shadow(0 1px 2px rgba(0,0,0,0.10))',
-              color: '#b2322f',
-            },
   color: '#341f04',
   fontFamily: 'Futura',
+  padding: 0,               // remove default button padding
+  minWidth: 'auto',         // let width match text
+  '& .MuiButton-label': {   // target the text container
+    display: 'inline-block',
+  },
+  '&:hover': {
+    filter: 'drop-shadow(0 4px 12px rgba(124,58,237,0.25)) drop-shadow(0 1px 2px rgba(0,0,0,0.10))',
+    color: '#b2322f',
+  },
 };
 
 export default function Navbar() {
@@ -44,7 +49,7 @@ export default function Navbar() {
               </Box>
             ) : (
               <>
-                <Box sx={{ display: 'flex', gap: 14, justifyContent: 'flex-end', flex: 1, maxWidth: 400, marginRight: '3rem' }}>
+                <Box sx={{ display: 'flex', gap: 8, justifyContent: 'flex-end', flex: 1, maxWidth: 400, marginRight: '1rem' }}>
                   {leftTabs.map((page) => (
                     <Link key={page.path} href={page.path} passHref legacyBehavior>
                       <Button color="inherit" component="a" sx={navButtonStyles}>
@@ -54,7 +59,7 @@ export default function Navbar() {
                   ))}
                 </Box>
                 <Box sx={{ width: 400, display: 'flex', justifyContent: 'center', pointerEvents: 'none', margin: '0 2rem' }} />
-                <Box sx={{ display: 'flex', gap: 14, justifyContent: 'flex-start', flex: 1, maxWidth: 400, marginLeft: '3rem' }}>
+                <Box sx={{ display: 'flex', gap: 8, justifyContent: 'flex-start', flex: 1, maxWidth: 400, marginLeft: '1rem' }}>
                   {rightTabs.map((page) => (
                     <Link key={page.path} href={page.path} passHref legacyBehavior>
                       <Button color="inherit" component="a" sx={navButtonStyles}>
