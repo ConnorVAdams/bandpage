@@ -33,15 +33,10 @@ export default function HomeComponent() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        // mt: -11,
-        px: 2,
       }}
     >
-      <Stack spacing={4} sx={{ width: '100%', maxWidth: 900 }}>
-        <Box className="card" sx={{ p: 3, width: '100%' }}>
-          {/* <Typography fontFamily="Futura" variant="h5" component="h1" gutterBottom>
-            The Pack Strings
-          </Typography> */}
+      <Stack spacing={4} sx={{ width: '100%', maxWidth: 900, backgroundColor: '#f1d3ad', borderRadius: 2, p: 3 }}>
+        <Box className="card" sx={{ p: 3, width: '100%', backgroundColor: "black" }}>
           <Typography fontFamily="Futura" variant="body1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet tincidunt
             fermentum, erat nulla facilisis dolor, a scelerisque arcu urna nec metus. Praesent id justo
@@ -50,7 +45,7 @@ export default function HomeComponent() {
         </Box>
 
         {/* YouTube Embed Section */}
-        <Box className="card" sx={{ p: 3, width: '100%' }}>
+        <Box className="card" sx={{ p: 3, width: '100%', backgroundColor: "black" }}>
           <YouTubeEmbed videoId="5YvtoQgsqnA" height={450} />
         </Box>
       </Stack>
