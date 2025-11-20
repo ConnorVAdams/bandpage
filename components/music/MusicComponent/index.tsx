@@ -181,7 +181,7 @@ export default function MusicComponent() {
       <YouTube
         key={video.id}
         videoId={video.id}
-        opts={{ width: 290, height: 240 }}
+        opts={{ width: 290, height: 230 }}
         onReady={(e) => handleYouTubeReady(e, video.id)}
         onPlay={() => handleYouTubePlay(video.id)}
       />
@@ -219,7 +219,7 @@ export default function MusicComponent() {
     </Stack>
 
     {/* Volume Slider */}
-    <Box sx={{ display: "flex", alignItems: "center", minWidth: 120, mr: 1.5
+    <Box sx={{ display: "flex", alignItems: "center", minWidth: 200, mr: 1.5
      }}>
       <VolumeUp sx={{ color: "#fff" }} />
       <Slider
