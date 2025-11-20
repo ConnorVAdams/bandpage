@@ -1,0 +1,82 @@
+@font-face {
+  font-family: 'Berlin FB Sans Demi';
+  src: url('/path-to-font/BerlinFB-Sans-Demi.woff2') format('woff2'),
+       url('/path-to-font/BerlinFB-Sans-Demi.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Berlin Sans FB Demi';
+  src: url('/fonts/BerlinFB-Sans-Demi.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --bg: #0f172a;
+  --card: #0b1220;
+  --muted: #94a3b8;
+  --accent: #7c3aed;
+  --text: #e6eef8;
+}
+
+* { box-sizing: border-box; }
+html, body, #__next {
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+body {
+  margin: 0;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg), #071024);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 64px; /* Adjust to match the height of the social bar */
+}
+
+@media (max-width: 600px) {
+  body {
+    padding-bottom: 56px;
+  }
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px;
+  /* Remove fixed height and centering for scrollability */
+  display: block;
+}
+
+h1 {
+  margin: 0 0 12px 0;
+  font-size: 2.25rem;
+  letter-spacing: -0.02em;
+}
+
+p { color: var(--muted); margin: 0 0 8px 0; }
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 18px;
+  border-radius: 10px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Apply the font to nav buttons */
+button {
+  font-family: 'Inter', sans-serif;
+}
+
+body, html { 
+  overflow: hidden;
+}
