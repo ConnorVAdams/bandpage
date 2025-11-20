@@ -46,7 +46,7 @@ export default function HomeComponent() {
         alignItems: 'flex-start',
       }}
     >
-      <Stack spacing={4} sx={{ width: '100%', maxWidth: 900, backgroundColor: '#f1d3ad', borderRadius: 2, p: 3 }}>
+      <Stack spacing={4} sx={{ width: '100%', maxWidth: 1080, backgroundColor: '#f1d3ad', borderRadius: 2, p: 3 }}>
         <Box className="card" sx={{ p: 3, width: '100%', backgroundColor: "black" }}>
           <Typography fontFamily="Futura" variant="body1">
 An Americana string band hailing from Missoula MT, The Pack Strings deliver lively performances full of catchy originals and creative cover tunes. Check out our latest relase below!
@@ -55,7 +55,7 @@ An Americana string band hailing from Missoula MT, The Pack Strings deliver live
 
         {/* YouTube Embed Section */}
         <Box className="card" sx={{ p: 3, width: '100%', backgroundColor: "black" }}>
-          <YouTube videoId="5YvtoQgsqnA" opts={{ width: 800, height: 400 }} />
+          <YouTube videoId="5YvtoQgsqnA" opts={{ width: 980, height: 500 }} />
         </Box>
       </Stack>
     </Box>
