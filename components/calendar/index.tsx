@@ -19,7 +19,7 @@ interface EventItem {
 
 const STATE_ABBREVIATIONS: Record<string, string> = {
   Montana: 'MT',
-  Idaho: "MT"
+  Idaho: 'ID',
 };
 
 export default function CalendarComponent() {
@@ -29,6 +29,7 @@ export default function CalendarComponent() {
 
   const [events, setEvents] = React.useState<EventItem[]>([]);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [selectedStates, setSelectedStates] = React.useState<string[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
@@ -54,13 +55,7 @@ export default function CalendarComponent() {
           if (ev.start.dateTime && ev.end?.dateTime) {
             const s = new Date(ev.start.dateTime);
             const e = new Date(ev.end.dateTime);
-            time = `${s.toLocaleTimeString(undefined, {
-              hour: "numeric",
-              minute: "2-digit",
-            })} – ${e.toLocaleTimeString(undefined, {
-              hour: "numeric",
-              minute: "2-digit",
-            })}`;
+            time = `${s.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })} – ${e.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}`;
           }
 
           return {
@@ -82,24 +77,33 @@ export default function CalendarComponent() {
     fetchCalendarEvents();
   }, []);
 
-  // Filter events based on search query
+  // Toggle state selection
+  const toggleState = (state: string) => {
+    setCurrentPage(1);
+    setSelectedStates((prev) =>
+      prev.includes(state) ? prev.filter((s) => s !== state) : [...prev, state]
+    );
+  };
+
+  // Filter events by search query and selected states
   const filteredEvents = events.filter((ev) => {
-    const query = searchQuery.toLowerCase();
+    const query = searchQuery.toLowerCase().trim();
 
-    // Check title
-    if (ev.title.toLowerCase().includes(query)) return true;
+    // Check search match
+    const matchesQuery =
+      query === '' ||
+      ev.title.toLowerCase().includes(query) ||
+      Object.entries(STATE_ABBREVIATIONS).some(
+        ([stateName, abbr]) =>
+          stateName.toLowerCase().includes(query) && ev.title.includes(abbr)
+      );
 
-    // Check abbreviations (Montana → MT)
-    for (const [full, abbr] of Object.entries(STATE_ABBREVIATIONS)) {
-      if (
-        query.includes(full.toLowerCase()) &&
-        ev.title.toLowerCase().includes(abbr.toLowerCase())
-      ) {
-        return true;
-      }
-    }
+    // Check state filter match
+    const matchesState =
+      selectedStates.length === 0 ||
+      selectedStates.some((state) => ev.title.includes(STATE_ABBREVIATIONS[state]));
 
-    return false;
+    return matchesQuery && matchesState;
   });
 
   const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE);
@@ -117,27 +121,49 @@ export default function CalendarComponent() {
         justifyContent: 'center',
         alignItems: 'flex-start',
         px: 2,
-        py: 4,
       }}
     >
       <Stack spacing={4} sx={{ width: '100%', maxWidth: 900 }}>
-        <Box className="card" sx={{ p: 3, width: '100%' }}>
+        <Box className="card" sx={{ py: 2, width: '100%' }}>
           <Typography fontFamily="Futura" variant="h4" component="h1" gutterBottom>
             Upcoming Events
           </Typography>
 
-          {/* Search input */}
-          <TextField
-            fullWidth
-            placeholder="Search events by title..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1); // reset to first page on search
-            }}
-            sx={{ mb: 3 }}
-          />
+      {/* Search + State Toggle below */}
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 3 }}>
+        {/* Search box */}
+        <TextField
+          fullWidth
+          placeholder="Search events by title or location..."
+          value={searchQuery}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            setCurrentPage(1); // reset pagination
+          }}
+        />
 
+        {/* Buttons + caption below */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
+          <Typography variant="caption" sx={{ textAlign: 'center' }}>
+            Show events in...
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {Object.keys(STATE_ABBREVIATIONS).map((state) => (
+              <Button
+                key={state}
+                variant={selectedStates.includes(state) ? 'contained' : 'outlined'}
+                onClick={() => toggleState(state)}
+              >
+                {state}
+              </Button>
+            ))}
+          </Box>
+        </Box>
+      </Box>
+
+
+
+          {/* Events List */}
           <Stack spacing={3}>
             {eventsToDisplay.map((ev) => (
               <Box
