@@ -25,7 +25,8 @@ export default function SocialBar() {
         zIndex: 1300,
         boxShadow: 3,
         gap: 2,
-        backgroundColor: "#f1d3ad"
+        backgroundColor: "#f1d3ad",
+        mt: 5
       }}
     >
       {socials.map((social) => (
