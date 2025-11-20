@@ -10,8 +10,10 @@ import ResponsiveMenu from './ResponsiveMenu';
 const leftTabs = [
   { label: 'About', path: '/about' },
   { label: 'Calendar', path: '/calendar' },
+  { label: 'Blog', path: '/blog' },
 ];
 const rightTabs = [
+  { label: 'Gallery', path: '/gallery' },
   { label: 'Music', path: '/music' },
   { label: 'Contact', path: '/contact' },
 ];
@@ -42,7 +44,7 @@ export default function Navbar() {
               </Box>
             ) : (
               <>
-                <Box sx={{ display: 'flex', gap: 16, justifyContent: 'flex-end', flex: 1, maxWidth: 400, marginRight: '3rem' }}>
+                <Box sx={{ display: 'flex', gap: 14, justifyContent: 'flex-end', flex: 1, maxWidth: 400, marginRight: '3rem' }}>
                   {leftTabs.map((page) => (
                     <Link key={page.path} href={page.path} passHref legacyBehavior>
                       <Button color="inherit" component="a" sx={navButtonStyles}>
@@ -52,7 +54,7 @@ export default function Navbar() {
                   ))}
                 </Box>
                 <Box sx={{ width: 400, display: 'flex', justifyContent: 'center', pointerEvents: 'none', margin: '0 2rem' }} />
-                <Box sx={{ display: 'flex', gap: 16, justifyContent: 'flex-start', flex: 1, maxWidth: 400, marginLeft: '3rem' }}>
+                <Box sx={{ display: 'flex', gap: 14, justifyContent: 'flex-start', flex: 1, maxWidth: 400, marginLeft: '3rem' }}>
                   {rightTabs.map((page) => (
                     <Link key={page.path} href={page.path} passHref legacyBehavior>
                       <Button color="inherit" component="a" sx={navButtonStyles}>

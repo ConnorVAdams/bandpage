@@ -38,11 +38,10 @@ export default function HomeComponent() {
       }}
     >
       <Stack spacing={4} sx={{ width: '100%', maxWidth: 900 }}>
-        {/* Typography Section */}
         <Box className="card" sx={{ p: 3, width: '100%' }}>
-          <Typography fontFamily="Futura" variant="h4" component="h1" gutterBottom>
+          {/* <Typography fontFamily="Futura" variant="h5" component="h1" gutterBottom>
             The Pack Strings
-          </Typography>
+          </Typography> */}
           <Typography fontFamily="Futura" variant="body1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet tincidunt
             fermentum, erat nulla facilisis dolor, a scelerisque arcu urna nec metus. Praesent id justo
