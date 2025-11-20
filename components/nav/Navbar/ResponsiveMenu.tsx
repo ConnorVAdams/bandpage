@@ -8,6 +8,8 @@ import Link from 'next/link';
 const navLinks = [
   { label: 'About', path: '/about' },
   { label: 'Calendar', path: '/calendar' },
+  { label: 'Blog', path: '/blog' },
+  { label: 'Gallery', path: '/gallery' },
   { label: 'Music', path: '/music' },
   { label: 'Contact', path: '/contact' },
 ];

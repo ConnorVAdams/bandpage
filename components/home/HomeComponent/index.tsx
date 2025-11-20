@@ -2,12 +2,13 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-interface YouTubeEmbedProps {
+export interface YouTubeEmbedProps {
   videoId: string;
   height?: number;
+  width?: number;
 }
 
-const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ videoId, height = 400 }) => {
+export const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ videoId, height = 400, width = 711 }) => {
   const src = `https://www.youtube.com/embed/${videoId}`;
   return (
     <Box sx={{ position: 'relative', width: '100%', height, borderRadius: 2, overflow: 'hidden' }}>
